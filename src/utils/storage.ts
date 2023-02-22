@@ -23,6 +23,11 @@ export const getCoursesFromStorage = async (): Promise<Course[] | undefined> => 
   }
 }
 
+export const getCourseFromStorage = async (id: string) => {
+  const courses = await getCoursesFromStorage();
+  return courses?.find(v => pipe(v.id, getOrElse(() => '')) === id);
+}
+
 export const removeCourseFromStorage = async (id: string) => {
   const courses = await getCoursesFromStorage();
   if (courses) {
