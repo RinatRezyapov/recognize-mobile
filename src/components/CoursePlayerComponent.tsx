@@ -14,6 +14,7 @@ import {
 import { NavigationType } from '../../App';
 import Course from '../models/Course';
 import { getCourseFromStorage, removeCourseFromStorage } from '../utils/storage';
+import styled from '@emotion/native';
 
 
 
@@ -37,11 +38,10 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
   const [currentPhrase, setCurrentPhrase] = useState<string[]>([]);
   const [answer, setAnswer] = useState<string[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
-  const [userInput, setUserInput] = useState('');
   const [intervalMs, setIntervalMs] = useState(1000);
   const [wordsCount, setWordsCount] = useState(2);
   const [answersCount, setAnswersCount] = useState(7);
-  const [background, setBackground] = useState<string>('teal');
+  const [background, setBackground] = useState<string>('#009688');
   const [phraseVisibility, setPhraseVisibility] = useState(true);
 
 
@@ -49,21 +49,20 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (!course) {
-        return
-      }
-      if (pause) {
-        return
-      }
+      if (!course) return;
+      if (pause) return;
+
       const data = pipe(course.data, getOrElse(() => ''))
         .replace(/[^\w\s]|_/g, '')
         .replace(/\s+/g, ' ')
         .toLowerCase()
         .split(' ')
-      setBackground('teal');
+
+      setAnswer([]);
+      setBackground('#009688');
+
       const words = [...Array(wordsCount)].map(e => {
         const idx = getRandomInt(0, data.length);
         const word = data[idx];
@@ -88,15 +87,11 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
 
   const onUserInputSubmit = (userInput: string) => {
     if (userInput === currentPhrase.join(' ')) {
-      setBackground('green');
-      setUserInput('');
+      setBackground('#03a9f4');
       setPause(false);
-      setAnswer([]);
     } else {
-      setBackground('red');
-      setUserInput('');
+      setBackground('#ff4569');
       setPause(false);
-      setAnswer([]);
     }
   }
 
@@ -104,23 +99,17 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
     const newAnswer = [...answer, ans];
     setAnswer(newAnswer);
     if (newAnswer.length === wordsCount) {
-      onUserInputSubmit(answer.join(' '))
+      setTimeout(() => onUserInputSubmit(newAnswer.join(' ')), 1000)
     }
   }
 
   if (!course) return <ActivityIndicator size="large" />;
 
   return (
-    <View style={styles.container}>
+    <Container backgroundColor={background}>
       <View style={styles.viewer}>
-        {phraseVisibility && <Text style={styles.phrase}>{currentPhrase.join(' ')}</Text>}
+        <Text style={styles.phrase}>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</Text>
       </View>
-      <TextInput
-        style={styles.input}
-        onChangeText={setUserInput}
-        value={answer.join(' ')}
-      />
-      {/* <Button title='Submit' onPress={onUserInputSubmit} /> */}
       <View style={styles.answersContainer}>
         {answers.map(answer => (
           <TouchableOpacity style={styles.answerButton} onPress={onAnswerSelect(answer)}>
@@ -130,20 +119,21 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
           </TouchableOpacity >
         ))}
       </View>
-    </View>
+    </Container>
   );
 }
 
 export default CoursePlayerComponent;
 
+const Container = styled.View<{ backgroundColor: string }>`
+  display: flex;
+  height: 100%;
+  gap: 16px;
+  padding: 16px;
+  background-color: ${props => props.backgroundColor};
+`
+
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    height: '100%',
-    gap: 16,
-    padding: 16,
-    backgroundColor: 'teal',
-  },
   viewer: {
     display: 'flex',
     justifyContent: 'center',
@@ -188,6 +178,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 24,
     fontWeight: '700',
+  },
+  selectedAnswers: {
+    color: 'white',
+    fontSize: 36,
+    fontWeight: '700',
+    textAlign: 'center',
   }
 });
 
