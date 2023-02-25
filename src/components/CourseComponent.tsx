@@ -36,6 +36,10 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
     navigation.navigate('Courses');
   };
 
+  const onEditCourseClick = (id: string) => async () => {
+    navigation.navigate('CourseEdit', { id });
+  } 
+
   const onStartCourseClick = (id: string) => async () => {
     navigation.navigate('CoursePlayer', { id });
   };
@@ -48,7 +52,7 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
     <Text>Data: {pipe(course.data, getOrElse(() => ''))}</Text>
     <View style={styles.buttonsContainer}>
       <Button title='Start' onPress={onStartCourseClick(route?.params?.id)} />
-      <Button title='Edit' onPress={onDeleteCourseClick(route?.params?.id)} />
+      <Button title='Edit' onPress={onEditCourseClick(route?.params?.id)} />
       <Button title='Remove' onPress={onDeleteCourseClick(route?.params?.id)} />
     </View>
   </View>;

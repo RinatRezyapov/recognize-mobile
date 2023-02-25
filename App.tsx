@@ -4,15 +4,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import CoursesComponent from './src/components/CoursesComponent';
 import CourseComponent from './src/components/CourseComponent';
-import NewCourseForm from './src/forms/NewCourseForm';
 import CoursePlayerComponent from './src/components/CoursePlayerComponent';
+import CourseEditComponent from './src/components/CourseEditComponent';
+import CourseCreateComponent from './src/components/CourseCreateComponent';
 
 const Stack = createNativeStackNavigator();
 
 type RootStackParamList = {
   Courses: undefined;
-  NewCourse: undefined;
   Course: { id: string };
+  CourseCreate: undefined;
+  CourseEdit: { id: string };
   CoursePlayer: { id: string };
 };
 
@@ -28,8 +30,9 @@ const App = () => {
           options={{ title: 'Courses' }}
         />
         <Stack.Screen name="Course" component={CourseComponent} />
-        <Stack.Screen name="CoursePlayer" component={CoursePlayerComponent} />
-        <Stack.Screen name="NewCourse" component={NewCourseForm}  options={{ title: 'New Course' }} />
+        <Stack.Screen name="CoursePlayer" component={CoursePlayerComponent} options={{ title: 'Course Player' }} />
+        <Stack.Screen name="CourseCreate" component={CourseCreateComponent}  options={{ title: 'New Course' }} />
+        <Stack.Screen name="CourseEdit" component={CourseEditComponent}  options={{ title: 'Edit Course' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

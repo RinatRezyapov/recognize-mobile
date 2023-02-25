@@ -10,6 +10,14 @@ export const addCourseToStorage = async (course: Course) => {
   await AsyncStorage.setItem('@courses', coursesJson)
 }
 
+export const updateCourseToStorage = async (id: string, newCourse: Course) => {
+  const course = await getCourseFromStorage(id);
+  if (course) {
+    await removeCourseFromStorage(id);
+    await addCourseToStorage(newCourse)
+  }
+}
+
 export const getCoursesFromStorage = async (): Promise<Course[] | undefined> => {
   try {
     const coursesJson = await AsyncStorage.getItem('@courses')

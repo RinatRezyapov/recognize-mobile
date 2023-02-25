@@ -33,7 +33,7 @@ const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
   return (
     <View>
       <View style={styles.newCourseButton}>
-        <Button title='New course' onPress={() => navigation.navigate('NewCourse')} />
+        <Button title='New course' onPress={() => navigation.navigate('CourseCreate')} />
       </View>
       <ScrollView>
         {courses.map((v, idx) => {

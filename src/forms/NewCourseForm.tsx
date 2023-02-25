@@ -1,44 +1,34 @@
+import { useFocusEffect } from "@react-navigation/native";
 import { fromNullable, none, of } from "fp-ts/lib/Option";
 import React, { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { v4 as uuidv4 } from 'uuid';
+import { NavigationType } from "../../App";
 import Course from "../models/Course";
-import { addCourseToStorage } from "../utils/storage";
+import { addCourseToStorage, getCourseFromStorage } from "../utils/storage";
 
-interface IFormFields {
+export interface IFormFields {
   title: string;
   description: string;
   data: string;
 }
 
 interface IProps {
-  navigation: any;
+  defaultValues?: Partial<IFormFields>;
+  onSubmit: (value: IFormFields) => void;
 }
 
-const NewCourseForm: FC<IProps> = ({ navigation }) => {
+
+const NewCourseForm: FC<IProps> = ({ defaultValues, onSubmit }) => {
+
   const { control, handleSubmit, formState: { errors } } = useForm<IFormFields>({
-    defaultValues: {
+    defaultValues: defaultValues || {
       title: '',
       description: '',
       data: ''
     }
   });
-
-  const onSubmit = async (fields: IFormFields) => {
-    const course = new Course({
-      id: of(uuidv4()),
-      title: fromNullable(fields.title),
-      data: fromNullable(fields.data),
-      picture: none,
-      description: fromNullable(fields.description),
-      tags: none,
-      createdAt: of(new Date()),
-      updatedAt: of(new Date()),
-    });
-    await addCourseToStorage(course);
-    navigation.navigate('Courses');
-  }
 
   return <View style={styles.container}>
     <View>

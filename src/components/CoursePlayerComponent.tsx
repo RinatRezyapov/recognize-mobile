@@ -41,7 +41,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
   const [intervalMs, setIntervalMs] = useState(1000);
   const [wordsCount, setWordsCount] = useState(2);
   const [answersCount, setAnswersCount] = useState(7);
-  const [background, setBackground] = useState<string>('#009688');
+  const [background, setBackground] = useState<string>('#4615b2');
   const [phraseVisibility, setPhraseVisibility] = useState(true);
 
 
@@ -61,7 +61,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
         .split(' ')
 
       setAnswer([]);
-      setBackground('#009688');
+      setBackground('#4615b2');
 
       const words = [...Array(wordsCount)].map(e => {
         const idx = getRandomInt(0, data.length);
