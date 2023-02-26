@@ -74,7 +74,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
         const word = data[idx];
         data.splice(idx, 1);
         return word;
-      });
+      }).filter(v => v);
       setAnswers([...words, ...answers].sort(() => Math.random() - 0.5));
       setCurrentPhrase(words);
       setPhraseVisibility(true);

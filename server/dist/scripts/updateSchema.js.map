@@ -1,0 +1,1 @@
+{"version":3,"file":"updateSchema.js","sourceRoot":"","sources":["../../src/scripts/updateSchema.ts"],"names":[],"mappings":";;AACA,yBAAyB;AACzB,6BAA6B;AAC7B,2CAAsC;AACtC,qCAAoC;AAEpC,MAAM,UAAU,GAAG,IAAI,CAAC,OAAO,CAAC,SAAgB,EAAE,8BAA8B,CAAC,CAAC;AAElF,EAAE,CAAC,aAAa,CAAC,UAAU,EAAE,qBAAW,CAAC,eAAM,CAAC,CAAC,CAAC;AAElD,OAAO,CAAC,GAAG,CAAC,QAAQ,GAAG,UAAU,CAAC,CAAC"}
