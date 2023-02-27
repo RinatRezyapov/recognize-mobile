@@ -8,7 +8,7 @@ const SERVER_PORT = 3000;
 
 const pgPool = new pg.Pool({
   user: 'postgres',
-  host: '192.168.1.172',
+  host: '172.20.6.75',
   database: 'recognize',
   password: 'newPassword',
   port: 5432,
