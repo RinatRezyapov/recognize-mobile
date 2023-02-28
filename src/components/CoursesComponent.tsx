@@ -36,7 +36,7 @@ export const CoursesComponentQuery = graphql`
 `;
 
 const preloadedQuery = loadQuery(RelayEnvironment, CoursesComponentQuery, {
-  id: "3",
+  id: "3d12c09a-58be-460f-8bd8-add628f6f0b2",
 });
 
 

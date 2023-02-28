@@ -8,7 +8,7 @@ const SERVER_PORT = 3000;
 
 const pgPool = new pg.Pool({
   user: 'postgres',
-  host: '172.20.6.75',
+  host: 'host.docker.internal',
   database: 'recognize',
   password: 'newPassword',
   port: 5432,

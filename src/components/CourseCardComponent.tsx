@@ -1,11 +1,11 @@
-import React from 'react';
+import { pipe } from 'fp-ts/lib/function';
 import { getOrElse, Option } from 'fp-ts/lib/Option';
+import React from 'react';
 import {
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
-import { pipe } from 'fp-ts/lib/function';
 
 interface IProps {
   title: Option<string>;

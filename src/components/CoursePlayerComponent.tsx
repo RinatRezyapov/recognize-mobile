@@ -1,22 +1,18 @@
+import styled from '@emotion/native';
 import { useFocusEffect } from '@react-navigation/native';
-import { getOrElse, isNone } from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/function';
+import { getOrElse } from 'fp-ts/lib/Option';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
-  Button,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View
 } from 'react-native';
 import { NavigationType } from '../../App';
 import Course from '../models/Course';
-import { getCourseFromStorage, removeCourseFromStorage } from '../utils/storage';
-import styled from '@emotion/native';
-
-
+import { getCourseFromStorage } from '../utils/storage';
 
 interface IProps extends NavigationType<'Course'> {
 

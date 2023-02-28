@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { getOrElse } from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/function';
+import { getOrElse } from 'fp-ts/lib/Option';
 import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
