@@ -20,7 +20,7 @@ export const CoursesComponentQuery = graphql`
   query CoursesComponentQuery($id: String) {
     user(id: $id) {
       id,
-      name, 
+      username, 
       email,
       courses {
         edges {
@@ -36,7 +36,7 @@ export const CoursesComponentQuery = graphql`
 `;
 
 const preloadedQuery = loadQuery(RelayEnvironment, CoursesComponentQuery, {
-  id: "3d12c09a-58be-460f-8bd8-add628f6f0b2",
+  id: 3,
 });
 
 

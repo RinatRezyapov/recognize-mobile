@@ -11,7 +11,7 @@ type Query {
 type User implements Node {
   """The ID of an object"""
   id: ID!
-  name: String
+  username: String
   email: String
   courses: CourseConnection
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b7b6fc5218c20e0b7a7f782162848fd>>
+ * @generated SignedSource<<0b1a761644ddd6804f0c7d6041fc95ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,7 @@ export type CoursesComponentQuery$data = {
     } | null;
     readonly email: string | null;
     readonly id: string;
-    readonly name: string | null;
+    readonly username: string | null;
   } | null;
 };
 export type CoursesComponentQuery = {
@@ -68,7 +68,7 @@ v2 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "name",
+        "name": "username",
         "storageKey": null
       },
       {
@@ -148,16 +148,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "667234e2a1fdb3c71a2922970a66ba44",
+    "cacheID": "498e2eefa369820b6ccf811dce57ee7d",
     "id": null,
     "metadata": {},
     "name": "CoursesComponentQuery",
     "operationKind": "query",
-    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    name\n    email\n    courses {\n      edges {\n        node {\n          id\n          title\n          body\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    username\n    email\n    courses {\n      edges {\n        node {\n          id\n          title\n          body\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b314386f42e3e118e1806d4e33e2d5c0";
+(node as any).hash = "1ff7553011e23a92de65d4d38cac0c3f";
 
 export default node;

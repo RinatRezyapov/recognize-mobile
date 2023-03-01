@@ -30,7 +30,7 @@ const App = () => {
   return (
     <RelayEnvironmentProvider environment={RelayEnvironment}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Landing">
+        <Stack.Navigator initialRouteName="Courses">
           <Stack.Screen
             name="Landing"
             component={LandingComponent}
