@@ -11,7 +11,6 @@ const {nodeInterface, nodeField} = nodeDefinitions(
     return getCourse(id, pgPool);
   },
   (obj) => {
-    console.log('hooooooooooo', obj)
     return GraphQLCourse;
     
   }
@@ -22,7 +21,7 @@ const GraphQLCourse = new GraphQLObjectType({
     id: globalIdField('Course'),
     authorid: {
       type: GraphQLString,
-      resolve: course => course.authorid,
+      resolve: course => course.author_id,
     },
     title: {
       type: GraphQLString,
@@ -34,7 +33,7 @@ const GraphQLCourse = new GraphQLObjectType({
     },
     created: {
       type: GraphQLInt,
-      resolve: course => course.created,
+      resolve: course => course.created_at,
     },
   },
   interfaces: [nodeInterface],

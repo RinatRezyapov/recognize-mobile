@@ -58,8 +58,8 @@ type CourseEdge {
 type Course implements Node {
   """The ID of an object"""
   id: ID!
-  authorid: String
+  author_id: String
   title: String
   body: String
-  created: Int
+  created_at: Int
 }

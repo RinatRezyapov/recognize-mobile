@@ -11,7 +11,7 @@ import CourseEditComponent from './src/components/CourseEditComponent';
 import CoursePlayerComponent from './src/components/CoursePlayerComponent';
 import CoursesComponent from './src/components/CoursesComponent';
 import RelayEnvironment from './src/RelayEnvironment';
-import LandingComponent from './src/components/LandingComponent';
+import LandingPage from './src/pages/LandingPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,11 +30,11 @@ const App = () => {
   return (
     <RelayEnvironmentProvider environment={RelayEnvironment}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Courses">
+        <Stack.Navigator initialRouteName="Landing">
           <Stack.Screen
             name="Landing"
-            component={LandingComponent}
-            options={{ title: 'Welcome' }}
+            component={LandingPage}
+            options={{ title: 'Profile' }}
           />
           <Stack.Screen
             name="Courses"

@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 
 interface IProps {
-  title: Option<string>;
-  description: Option<string>;
+  title: string;
+  description: string;
 }
 
 
@@ -17,10 +17,10 @@ const CourseCardComponent: React.FC<IProps> = ({ title, description }) => {
   return (
     <View style={styles.courseContainer}>
       <Text style={styles.courseTitle}>
-        {pipe(title, getOrElse(() => ''))}
+        {title}
       </Text>
       <Text style={styles.courseDescription}>
-        {pipe(description, getOrElse(() => ''))}
+        {description}
       </Text>
     </View>
   );
@@ -34,16 +34,18 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     borderWidth: 1,
-    borderColor: 'grey',
+    borderColor: 'white',
     borderRadius: 20,
   },
   courseTitle: {
     fontSize: 24,
     fontWeight: '600',
+    color: 'white',
   },
   courseDescription: {
     marginTop: 8,
     fontSize: 18,
     fontWeight: '400',
+    color: 'white',
   },
 });

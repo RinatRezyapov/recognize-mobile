@@ -1,5 +1,5 @@
 export const getCourses = (userId: string, pgPool) => {
-  return pgPool?.query(`SELECT * FROM courses WHERE authorid = '${userId}'`).then(response => {
+  return pgPool?.query(`SELECT * FROM courses WHERE author_id = '${userId}'`).then(response => {
     return response.rows.map(v => ({ ...v, id: v.id.toString() }))
   })
 }

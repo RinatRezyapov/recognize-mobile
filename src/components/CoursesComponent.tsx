@@ -7,55 +7,19 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import { pipe } from 'fp-ts/lib/function';
 import { getOrElse } from 'fp-ts/lib/Option';
-import {
-  graphql, loadQuery, usePreloadedQuery
-} from "react-relay/hooks";
 import { NavigationType } from '../../App';
 import Course from '../models/Course';
 import { getCoursesFromStorage } from '../utils/storage';
 import CourseCardComponent from './CourseCardComponent';
-import RelayEnvironment from '../RelayEnvironment';
 
-export const CoursesComponentQuery = graphql`
-  query CoursesComponentQuery($id: String) {
-    user(id: $id) {
-      id,
-      username, 
-      email,
-      courses {
-        edges {
-          node {
-            id,
-            title,
-            body
-          }
-        }
-      }
-    }
-  }
-`;
-
-const preloadedQuery = loadQuery(RelayEnvironment, CoursesComponentQuery, {
-  id: 3,
-});
-
-
-interface IProps extends NavigationType<'Courses'> {
-
+interface IProps {
+  courses: {node: {id: string, title: string, body: string} } [];
+  navigation: any;
 }
 
-const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
-  const data = usePreloadedQuery<any>(CoursesComponentQuery, preloadedQuery);
-  console.log(data);
-  const [courses, setCourses] = useState<Course[]>([]);
+const CoursesComponent: React.FC<IProps> = ({ courses, navigation }) => {
 
-  useFocusEffect(
-    useCallback(() => {
-      getCoursesFromStorage().then(data => {
-        if (data) setCourses(data);
-      }).catch(err => console.error(err));
-    }, [])
-  );
+
 
   return (
     <View>
@@ -66,12 +30,12 @@ const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
         {courses.map((v, idx) => {
           return (
             <TouchableOpacity
-              key={pipe(v.id, getOrElse(() => idx.toString()))}
-              onPress={() => navigation.navigate('Course', { id: pipe(v.id, getOrElse(() => idx.toString())) })}
+              key={v.node.id}
+              onPress={() => navigation.navigate('Course', { id: v.node.id })}
             >
               <CourseCardComponent
-                title={v.title}
-                description={v.description}
+                title={v.node.title}
+                description={v.node.title}
               />
             </TouchableOpacity>
           )

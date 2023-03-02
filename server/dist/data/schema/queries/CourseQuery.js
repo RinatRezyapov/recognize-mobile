@@ -19,7 +19,7 @@ const GraphQLCourse = new graphql_1.GraphQLObjectType({
         id: graphql_relay_1.globalIdField('Course'),
         authorid: {
             type: graphql_1.GraphQLString,
-            resolve: course => course.authorid,
+            resolve: course => course.author_id,
         },
         title: {
             type: graphql_1.GraphQLString,
@@ -31,7 +31,7 @@ const GraphQLCourse = new graphql_1.GraphQLObjectType({
         },
         created: {
             type: graphql_1.GraphQLInt,
-            resolve: course => course.created,
+            resolve: course => course.created_at,
         },
     },
     interfaces: [nodeInterface],
