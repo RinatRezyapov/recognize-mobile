@@ -1,6 +1,6 @@
 import { GraphQLString, GraphQLObjectType } from 'graphql';
 import { globalIdField, connectionDefinitions, connectionFromArray } from 'graphql-relay';
-import { GraphQLCourse, nodeInterface } from './CourseQuery';
+import { GraphQLCourse, nodeInterface } from '../nodes';
 import { getCourses, getUser } from '../../database';
 
 
