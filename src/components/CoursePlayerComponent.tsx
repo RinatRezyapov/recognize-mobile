@@ -1,8 +1,5 @@
 import styled from '@emotion/native';
-import { useFocusEffect } from '@react-navigation/native';
-import { pipe } from 'fp-ts/lib/function';
-import { getOrElse } from 'fp-ts/lib/Option';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -12,36 +9,23 @@ import {
 } from 'react-native';
 import { graphql, useLazyLoadQuery } from 'react-relay';
 import { NavigationType } from '../../App';
-import Course from '../models/Course';
-import { getCourseFromStorage } from '../utils/storage';
 
 interface IProps extends NavigationType<'Course'> {
 
 }
 
 const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
+  const { course } = useLazyLoadQuery<any>(graphql`
+    query CoursePlayerComponentQuery($id: String) {
+      course(id: $id) {
+        id,
+        title, 
+        body,
 
-  const data = useLazyLoadQuery<any>(graphql`
-  query CourseComponentQuery($id: String) {
-    user(id: $id) {
-      id,
-      username, 
-      email,
-      courses {
-        edges {
-          node {
-            id
-            title
-            body
-          }
-        }
       }
     }
-  }
-`, { id: '1' });
+  `, { id: route.params.id });
 
-
-  const course = data.user.courses.edges.find(v => v.node.id === route?.params?.id)?.node;
 
   const [pause, setPause] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState<string[]>([]);
@@ -120,8 +104,8 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
         <Text style={styles.phrase}>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</Text>
       </View>
       <View style={styles.answersContainer}>
-        {answers.map(answer => (
-          <TouchableOpacity style={styles.answerButton} onPress={onAnswerSelect(answer)}>
+        {answers.map((answer, idx) => (
+          <TouchableOpacity key={idx} style={styles.answerButton} onPress={onAnswerSelect(answer)}>
             <Text style={styles.answerButtonText}>
               {answer}
             </Text>

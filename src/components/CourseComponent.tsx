@@ -1,7 +1,4 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { pipe } from 'fp-ts/lib/function';
-import { getOrElse } from 'fp-ts/lib/Option';
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import {
   ActivityIndicator,
   Button,
@@ -9,40 +6,25 @@ import {
   Text,
   View
 } from 'react-native';
-import { graphql, useLazyLoadQuery, usePreloadedQuery } from 'react-relay';
+import { graphql, useLazyLoadQuery } from 'react-relay';
 import { NavigationType } from '../../App';
-import Course from '../models/Course';
-import { LandingPageQuery } from '../pages/LandingPage';
-import { getCourseFromStorage, removeCourseFromStorage } from '../utils/storage';
-
-
+import { removeCourseFromStorage } from '../utils/storage';
 
 interface IProps extends NavigationType<'Course'> {
 
 }
 
 const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
-  const data = useLazyLoadQuery<any>(graphql`
-  query CourseComponentQuery($id: String) {
-    user(id: $id) {
-      id,
-      username, 
-      email,
-      courses {
-        edges {
-          node {
-            id
-            title
-            body
-          }
-        }
+  const { course } = useLazyLoadQuery<any>(graphql`
+    query CourseComponentQuery($id: String) {
+      course(id: $id) {
+        id,
+        title, 
+        body,
+
       }
     }
-  }
-`, { id: '1' });
-
-
-  const course = data.user.courses.edges.find(v => v.node.id === route?.params?.id)?.node;
+  `, { id: route.params.id });
 
   const onDeleteCourseClick = (id: string) => async () => {
     await removeCourseFromStorage(id);

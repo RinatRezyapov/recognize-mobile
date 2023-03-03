@@ -1,5 +1,6 @@
 type Query {
   user(id: String): User
+  course(id: String): Course
 
   """Fetches an object given its ID"""
   node(
@@ -55,11 +56,10 @@ type CourseEdge {
   cursor: String!
 }
 
-type Course implements Node {
-  """The ID of an object"""
-  id: ID!
-  author_id: String
+type Course {
+  id: String
+  authorid: String
   title: String
   body: String
-  created_at: Int
+  created: Int
 }

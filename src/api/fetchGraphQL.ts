@@ -9,11 +9,7 @@ async function fetchGraphQL(text: string, variables: any) {
       variables,
     }),
   })
-  .then(response => {
-
-    console.log(response);
-    return response.json()
-  })
+  .then(response => response.json())
   .catch(err => console.log(err))
 }
 

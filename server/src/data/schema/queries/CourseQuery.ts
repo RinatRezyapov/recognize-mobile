@@ -7,7 +7,10 @@ import { getCourse, getCourses, getUser } from '../../database';
 export const GraphQLCourse = new GraphQLObjectType({
   name: 'Course',
   fields: {
-    id: globalIdField('Course'),
+    id: {
+      type: GraphQLString,
+      resolve: course => course.id,
+    },
     authorid: {
       type: GraphQLString,
       resolve: course => course.author_id,
