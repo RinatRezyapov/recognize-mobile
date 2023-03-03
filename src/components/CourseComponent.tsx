@@ -9,8 +9,10 @@ import {
   Text,
   View
 } from 'react-native';
+import { graphql, useLazyLoadQuery, usePreloadedQuery } from 'react-relay';
 import { NavigationType } from '../../App';
 import Course from '../models/Course';
+import { LandingPageQuery } from '../pages/LandingPage';
 import { getCourseFromStorage, removeCourseFromStorage } from '../utils/storage';
 
 
@@ -20,16 +22,27 @@ interface IProps extends NavigationType<'Course'> {
 }
 
 const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
+  const data = useLazyLoadQuery<any>(graphql`
+  query CourseComponentQuery($id: String) {
+    user(id: $id) {
+      id,
+      username, 
+      email,
+      courses {
+        edges {
+          node {
+            id
+            title
+            body
+          }
+        }
+      }
+    }
+  }
+`, { id: '1' });
 
-  const [course, setCourse] = useState<Course>();
 
-  useFocusEffect(
-    useCallback(() => {
-      getCourseFromStorage(route?.params?.id).then(data => {
-        if (data) setCourse(data);
-      }).catch(err => console.error(err));
-    }, [])
-  );
+  const course = data.user.courses.edges.find(v => v.node.id === route?.params?.id)?.node;
 
   const onDeleteCourseClick = (id: string) => async () => {
     await removeCourseFromStorage(id);
@@ -38,7 +51,7 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
 
   const onEditCourseClick = (id: string) => async () => {
     navigation.navigate('CourseEdit', { id });
-  } 
+  }
 
   const onStartCourseClick = (id: string) => async () => {
     navigation.navigate('CoursePlayer', { id });
@@ -47,9 +60,8 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   if (!course) return <ActivityIndicator size="large" />;
 
   return <View style={styles.container}>
-    <Text>Name: {pipe(course.title, getOrElse(() => ''))}</Text>
-    <Text>Description: {pipe(course.description, getOrElse(() => ''))}</Text>
-    <Text>Data: {pipe(course.data, getOrElse(() => ''))}</Text>
+    <Text>Name: {course.title}</Text>
+    <Text>Data: {course.body}</Text>
     <View style={styles.buttonsContainer}>
       <Button title='Start' onPress={onStartCourseClick(route?.params?.id)} />
       <Button title='Edit' onPress={onEditCourseClick(route?.params?.id)} />

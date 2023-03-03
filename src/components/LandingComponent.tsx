@@ -14,25 +14,8 @@ interface IProps {
 }
 
 const LandingComponent: React.FC<IProps> = ({ preloadedQuery, navigation }) => {
-  const data = useLazyLoadQuery<any>(graphql`
-  query LandingComponentQuery($id: String) {
-    user(id: $id) {
-      id,
-      username, 
-      email,
-      courses {
-        edges {
-          node {
-            id
-            title
-            body
-          }
-        }
-      }
-    }
-  }
-`, { id: '1' });
-  console.log(JSON.stringify(data.user.courses.edges));
+  const data = usePreloadedQuery<any>(LandingPageQuery, preloadedQuery);
+
   return (
     <View style={styles.container}>
       <View style={styles.personalInfo}>

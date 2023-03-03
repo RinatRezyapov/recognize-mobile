@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { graphql, useLazyLoadQuery } from 'react-relay';
 import { NavigationType } from '../../App';
 import Course from '../models/Course';
 import { getCourseFromStorage } from '../utils/storage';
@@ -20,15 +21,27 @@ interface IProps extends NavigationType<'Course'> {
 
 const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
 
-  const [course, setCourse] = useState<Course>();
+  const data = useLazyLoadQuery<any>(graphql`
+  query CourseComponentQuery($id: String) {
+    user(id: $id) {
+      id,
+      username, 
+      email,
+      courses {
+        edges {
+          node {
+            id
+            title
+            body
+          }
+        }
+      }
+    }
+  }
+`, { id: '1' });
 
-  useFocusEffect(
-    useCallback(() => {
-      getCourseFromStorage(route?.params?.id).then(data => {
-        if (data) setCourse(data);
-      }).catch(err => console.error(err));
-    }, [])
-  );
+
+  const course = data.user.courses.edges.find(v => v.node.id === route?.params?.id)?.node;
 
   const [pause, setPause] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState<string[]>([]);
@@ -50,7 +63,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
       if (!course) return;
       if (pause) return;
 
-      const data = pipe(course.data, getOrElse(() => ''))
+      const data = course.body
         .replace(/[^\w\s]|_/g, '')
         .replace(/\s+/g, ' ')
         .toLowerCase()

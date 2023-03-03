@@ -13,6 +13,15 @@ export const LandingPageQuery = graphql`
       id,
       username, 
       email,
+      courses {
+        edges {
+          node {
+            id
+            title
+            body
+          }
+        }
+      }
     }
   }
 `;
