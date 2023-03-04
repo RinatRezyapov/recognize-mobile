@@ -5,10 +5,10 @@ import {
     graphql, loadQuery, RelayEnvironmentProvider, usePreloadedQuery
 } from "react-relay/hooks";
 import RelayEnvironment from '../RelayEnvironment';
-import LandingComponent from '../components/LandingComponent';
+import ProfileComponent from '../components/ProfileComponent';
 
-export const LandingPageQuery = graphql`
-  query LandingPageQuery($id: String) {
+export const ProfilePageQuery = graphql`
+  query ProfilePageQuery($id: String) {
     user(id: $id) {
       id,
       username, 
@@ -18,6 +18,7 @@ export const LandingPageQuery = graphql`
           node {
             id
             title
+            description
             body
           }
         }
@@ -26,7 +27,7 @@ export const LandingPageQuery = graphql`
   }
 `;
 
-const preloadedQuery = loadQuery(RelayEnvironment, LandingPageQuery, {
+const preloadedQuery = loadQuery(RelayEnvironment, ProfilePageQuery, {
   id: "1",
 });
 
@@ -35,15 +36,15 @@ interface IProps extends NavigationType<'Courses'> {
 
 }
 
-const LandingPage: React.FC<IProps> = ({ navigation }) => {
+const ProfilePage: React.FC<IProps> = ({ navigation }) => {
     return (
         <RelayEnvironmentProvider environment={RelayEnvironment}>
             <React.Suspense fallback={<Text>Loading...</Text>}>
-                <LandingComponent preloadedQuery={preloadedQuery} navigation={navigation} />
+                <ProfileComponent preloadedQuery={preloadedQuery} navigation={navigation} />
             </React.Suspense>
         </RelayEnvironmentProvider>
     );
 }
 
 
-export default LandingPage;
+export default ProfilePage;

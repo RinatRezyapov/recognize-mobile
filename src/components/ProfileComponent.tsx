@@ -1,11 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { NavigationType } from '../../App';
-import {
-  graphql, loadQuery, usePreloadedQuery, useLazyLoadQuery
-} from "react-relay/hooks";
-import RelayEnvironment from '../RelayEnvironment';
-import { LandingPageQuery } from '../pages/LandingPage';
+import { usePreloadedQuery } from "react-relay/hooks";
+import { ProfilePageQuery } from '../pages/ProfilePage';
 import CoursesComponent from './CoursesComponent';
 
 interface IProps {
@@ -14,7 +10,7 @@ interface IProps {
 }
 
 const LandingComponent: React.FC<IProps> = ({ preloadedQuery, navigation }) => {
-  const data = usePreloadedQuery<any>(LandingPageQuery, preloadedQuery);
+  const data = usePreloadedQuery<any>(ProfilePageQuery, preloadedQuery);
 
   return (
     <View style={styles.container}>

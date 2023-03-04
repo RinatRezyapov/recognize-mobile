@@ -58,6 +58,7 @@ type CourseEdge {
 
 type Course {
   id: String
+  description: String
   authorid: String
   title: String
   body: String

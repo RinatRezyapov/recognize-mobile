@@ -19,7 +19,8 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
     query CourseComponentQuery($id: String) {
       course(id: $id) {
         id,
-        title, 
+        title,
+        description,
         body,
 
       }
@@ -42,8 +43,9 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   if (!course) return <ActivityIndicator size="large" />;
 
   return <View style={styles.container}>
-    <Text>Name: {course.title}</Text>
-    <Text>Data: {course.body}</Text>
+    <Text style={styles.nameText}>{course.title}</Text>
+    <Text style={styles.descriptionText}>{course.description}</Text>
+    <Text style={styles.bodyText}>{course.body}</Text>
     <View style={styles.buttonsContainer}>
       <Button title='Start' onPress={onStartCourseClick(route?.params?.id)} />
       <Button title='Edit' onPress={onEditCourseClick(route?.params?.id)} />
@@ -57,6 +59,20 @@ const styles = StyleSheet.create({
     display: 'flex',
     gap: 16,
     padding: 16,
+    height: '100%',
+    backgroundColor: '#a04bfa',
+  },
+  nameText: {
+    color: 'white',
+    fontSize: 36,
+  },
+  descriptionText: {
+    color: 'white',
+    fontSize: 18,
+  },
+  bodyText: {
+    color: 'white',
+    fontSize: 12,
   },
   buttonsContainer: {
     display: 'flex',

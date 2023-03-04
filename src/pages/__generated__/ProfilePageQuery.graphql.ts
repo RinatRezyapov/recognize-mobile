@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a44d0ea240002a828309ceb8d194a26a>>
+ * @generated SignedSource<<0488245026120243943a7135ae3d9e07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type LandingPageQuery$variables = {
+export type ProfilePageQuery$variables = {
   id?: string | null;
 };
-export type LandingPageQuery$data = {
+export type ProfilePageQuery$data = {
   readonly user: {
     readonly courses: {
       readonly edges: ReadonlyArray<{
@@ -29,9 +29,9 @@ export type LandingPageQuery$data = {
     readonly username: string | null;
   } | null;
 };
-export type LandingPageQuery = {
-  response: LandingPageQuery$data;
-  variables: LandingPageQuery$variables;
+export type ProfilePageQuery = {
+  response: ProfilePageQuery$data;
+  variables: ProfilePageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -143,7 +143,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "LandingPageQuery",
+    "name": "ProfilePageQuery",
     "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -152,20 +152,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "LandingPageQuery",
+    "name": "ProfilePageQuery",
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "c2cd48163991c99e80edd64fa4ab2eb9",
+    "cacheID": "f7d2502e6ed725f83f50107905368622",
     "id": null,
     "metadata": {},
-    "name": "LandingPageQuery",
+    "name": "ProfilePageQuery",
     "operationKind": "query",
-    "text": "query LandingPageQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    username\n    email\n    courses {\n      edges {\n        node {\n          id\n          title\n          description\n          body\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ProfilePageQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    username\n    email\n    courses {\n      edges {\n        node {\n          id\n          title\n          description\n          body\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "aec527579c804a8935caf7af2823965c";
+(node as any).hash = "c0c3e2ad929977af2ed095a77c295b49";
 
 export default node;

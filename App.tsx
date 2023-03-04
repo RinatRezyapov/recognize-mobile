@@ -11,12 +11,13 @@ import CourseEditComponent from './src/components/CourseEditComponent';
 import CoursePlayerComponent from './src/components/CoursePlayerComponent';
 import CoursesComponent from './src/components/CoursesComponent';
 import RelayEnvironment from './src/RelayEnvironment';
-import LandingPage from './src/pages/LandingPage';
+import ProfilePage from './src/pages/ProfilePage';
+import { navigationTheme } from './src/utils/theme';
 
 const Stack = createNativeStackNavigator();
 
 type RootStackParamList = {
-  Landing: undefined,
+  Profile: undefined,
   Courses: undefined;
   Course: { id: string };
   CourseCreate: undefined;
@@ -30,18 +31,18 @@ const App = () => {
   return (
     <RelayEnvironmentProvider environment={RelayEnvironment}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Landing">
+        <Stack.Navigator initialRouteName="Profile">
           <Stack.Screen
-            name="Landing"
-            component={LandingPage}
-            options={{ title: 'Profile' }}
+            name="Profile"
+            component={ProfilePage}
+            options={{ title: 'Profile', ...navigationTheme }}
           />
           <Stack.Screen
             name="Courses"
             component={CoursesComponent}
-            options={{ title: 'Courses' }}
+            options={{ title: 'Courses', ...navigationTheme }}
           />
-          <Stack.Screen name="Course" component={CourseComponent} />
+          <Stack.Screen name="Course" component={CourseComponent} options={{ title: 'Course', ...navigationTheme }} />
           <Stack.Screen name="CoursePlayer" component={CoursePlayerComponent} options={{ title: 'Course Player' }} />
           <Stack.Screen name="CourseCreate" component={CourseCreateComponent} options={{ title: 'New Course' }} />
           <Stack.Screen name="CourseEdit" component={CourseEditComponent} options={{ title: 'Edit Course' }} />

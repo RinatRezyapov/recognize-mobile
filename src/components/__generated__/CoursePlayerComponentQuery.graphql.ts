@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81d32cdab0a5a16e31d5a66284c4737d>>
+ * @generated SignedSource<<89e8d406b88071dddc5f04e20d6e05e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type CoursePlayerComponentQuery$variables = {
 export type CoursePlayerComponentQuery$data = {
   readonly course: {
     readonly body: string | null;
-    readonly id: string;
+    readonly id: string | null;
     readonly title: string | null;
   } | null;
 };

@@ -11,6 +11,10 @@ export const GraphQLCourse = new GraphQLObjectType({
       type: GraphQLString,
       resolve: course => course.id,
     },
+    description: {
+      type: GraphQLString,
+      resolve: course => course.description,
+    },
     authorid: {
       type: GraphQLString,
       resolve: course => course.author_id,

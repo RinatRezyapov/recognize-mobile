@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<310ab8ee468116589e689f558ee77a47>>
+ * @generated SignedSource<<a35031b31d31af69d318d50651565f50>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type CourseComponentQuery$variables = {
+export type CourseEditComponentQuery$variables = {
   id?: string | null;
 };
-export type CourseComponentQuery$data = {
+export type CourseEditComponentQuery$data = {
   readonly course: {
     readonly body: string | null;
     readonly description: string | null;
@@ -20,9 +20,9 @@ export type CourseComponentQuery$data = {
     readonly title: string | null;
   } | null;
 };
-export type CourseComponentQuery = {
-  response: CourseComponentQuery$data;
-  variables: CourseComponentQuery$variables;
+export type CourseEditComponentQuery = {
+  response: CourseEditComponentQuery$data;
+  variables: CourseEditComponentQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -85,7 +85,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CourseComponentQuery",
+    "name": "CourseEditComponentQuery",
     "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -94,20 +94,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CourseComponentQuery",
+    "name": "CourseEditComponentQuery",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "721937ffe2e89166331b7d888de64012",
+    "cacheID": "21439f2ef446787f4345f1ddf85b6922",
     "id": null,
     "metadata": {},
-    "name": "CourseComponentQuery",
+    "name": "CourseEditComponentQuery",
     "operationKind": "query",
-    "text": "query CourseComponentQuery(\n  $id: String\n) {\n  course(id: $id) {\n    id\n    title\n    description\n    body\n  }\n}\n"
+    "text": "query CourseEditComponentQuery(\n  $id: String\n) {\n  course(id: $id) {\n    id\n    title\n    description\n    body\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a069e50514f573e40af0000405d338ce";
+(node as any).hash = "4dc71eac622ca6921ccfbf114aba6128";
 
 export default node;

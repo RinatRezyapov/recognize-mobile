@@ -3,6 +3,7 @@ import { pipe } from 'fp-ts/lib/function';
 import { fromNullable, getOrElse, none, of } from "fp-ts/lib/Option";
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
+import { graphql, useLazyLoadQuery } from "react-relay";
 import { v4 as uuidv4 } from 'uuid';
 import { NavigationType } from '../../App';
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
@@ -15,15 +16,16 @@ interface IProps extends NavigationType<'Course'> {
 
 const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
 
-  const [course, setCourse] = useState<Course>();
-
-  useFocusEffect(
-    useCallback(() => {
-      getCourseFromStorage(route?.params?.id).then(data => {
-        if (data) setCourse(data);
-      }).catch(err => console.error(err));
-    }, [])
-  );
+  const { course } = useLazyLoadQuery<any>(graphql`
+    query CourseEditComponentQuery($id: String) {
+      course(id: $id) {
+        id,
+        title,
+        description,
+        body,
+      }
+    }
+  `, { id: route.params.id });
 
   const onSubmit = async (fields: NewCourseFormFields) => {
     const course = new Course({
@@ -42,9 +44,9 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
 
   if (!course) return <ActivityIndicator size="large" />;
 
-  const title = pipe(course.title, getOrElse(() => ''));
-  const description = pipe(course.description, getOrElse(() => ''));
-  const data = pipe(course.data, getOrElse(() => ''));
+  const title = course.title;
+  const description = course.description;
+  const data = course.body;
 
   return <NewCourseForm defaultValues={{ title, description, data }} onSubmit={onSubmit} />;
 }
