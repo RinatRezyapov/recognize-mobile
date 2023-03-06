@@ -26,10 +26,10 @@ const GraphQLUser = new GraphQLObjectType({
     },
     courses: {
       type: CoursesConnection,
-      resolve: async (user, {after, before, first, last}, { pgPool }) => {
+      resolve: async (user, { after, before, first, last }, { pgPool }) => {
         try {
           const courses = await getCourses(user.id, pgPool);
-          return connectionFromArray(courses, {after, before, first, last});
+          return connectionFromArray(courses, { after, before, first, last });
         } catch (err) {
           console.error(err);
         }
@@ -51,4 +51,4 @@ const UserQuery = {
 }
 
 
-export {UserQuery}
+export { UserQuery, GraphQLUser }
