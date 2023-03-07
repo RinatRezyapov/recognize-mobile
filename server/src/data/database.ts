@@ -10,7 +10,6 @@ export const getCourse = (courseId: string, pgPool) => {
 
 export const addCourse = (pgPool, data) => {
   return pgPool?.query(`INSERT INTO courses (
-    uuid,
     author_id,
     title,
     description,
@@ -18,7 +17,6 @@ export const addCourse = (pgPool, data) => {
     created_at, 
     updated_at
     ) VALUES (
-      '2f2b78e1-0248-4393-a8d7-76358b42a139',
       '${data.authorId}', 
       '${data.title}', 
       '${data.description}', 

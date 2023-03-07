@@ -3,7 +3,7 @@ import {
     mutationWithClientMutationId,
 } from 'graphql-relay';
 
-import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql';
 import { GraphQLCourse, } from '../nodes';
 
 import { GraphQLUser } from '../queries/UserQuery';
@@ -12,10 +12,12 @@ import { addCourse, getCourse, getCourses, getUser } from '../../database';
 const AddCourseMutation = mutationWithClientMutationId({
     name: 'AddCourse',
     inputFields: {
-        authorId: { type: new GraphQLNonNull(GraphQLID) },
+        authorId: { type: new GraphQLNonNull(GraphQLInt) },
         title: { type: new GraphQLNonNull(GraphQLString) },
         description: { type: new GraphQLNonNull(GraphQLString) },
         body: { type: new GraphQLNonNull(GraphQLString) },
+        createdAt: { type: new GraphQLNonNull(GraphQLString) },
+        updatedAt: { type: new GraphQLNonNull(GraphQLString) },
     },
     outputFields: {
         courseEdge: {
@@ -36,11 +38,10 @@ const AddCourseMutation = mutationWithClientMutationId({
             resolve: async ({ userId }, { pgPool }) => await getUser(userId, pgPool),
         },
     },
-    mutateAndGetPayload: async ({ text, authorId }, { pgPool }) => {
+    mutateAndGetPayload: async (data, { pgPool }) => {
+        const addedCourse = await addCourse(pgPool, data);
 
-        const addedCourse = await addCourse(pgPool, { authorId: 1, title: 'Test', description: 'Desc', body: 'Hey ho', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
-
-        return { addedCourse, authorId };
+        return { addedCourse, authorId: data.authorId };
     },
 });
 

@@ -1,27 +1,48 @@
+import { useIsFocused } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { usePreloadedQuery } from "react-relay/hooks";
+import { graphql, useLazyLoadQuery, usePreloadedQuery } from "react-relay/hooks";
 import { ProfilePageQuery } from '../pages/ProfilePage';
 import CoursesComponent from './CoursesComponent';
 
 interface IProps {
   navigation: any;
-  preloadedQuery: any;
+  route: any;
 }
 
-const LandingComponent: React.FC<IProps> = ({ preloadedQuery, navigation }) => {
-  const data = usePreloadedQuery<any>(ProfilePageQuery, preloadedQuery);
 
+const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
+  //const data = usePreloadedQuery<any>(ProfilePageQuery, preloadedQuery);
+  const isFocused = useIsFocused();
+  const { user } = useLazyLoadQuery(graphql`
+  query ProfileComponentQuery($id: String) {
+    user(id: $id) {
+      id,
+      username, 
+      email,
+      courses {
+        edges {
+          node {
+            id
+            title
+            description
+            body
+          }
+        }
+      }
+    }
+  }
+`, { id: "1" }, { fetchPolicy: 'network-only', fetchKey: isFocused + route.key });
   return (
     <View style={styles.container}>
       <View style={styles.personalInfo}>
         <Image source={{ uri: "https://pbs.twimg.com/profile_images/1617475263163518976/Vapz9HQa_400x400.jpg" }} style={styles.profileImg} />
         <View>
-          <Text style={styles.username}>{data.user.username}</Text>
-          <Text style={styles.email}>{data.user.email}</Text>
+          <Text style={styles.username}>{user.username}</Text>
+          <Text style={styles.email}>{user.email}</Text>
         </View>
       </View>
-      <CoursesComponent courses={data.user.courses.edges} navigation={navigation} />
+      <CoursesComponent courses={user.courses.edges} navigation={navigation} />
     </View>
   );
 }
@@ -54,4 +75,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LandingComponent;
+export default ProfileComponent;

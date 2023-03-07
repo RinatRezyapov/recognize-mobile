@@ -1,11 +1,28 @@
-import { fromNullable, none, of } from "fp-ts/lib/Option";
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { graphql, useLazyLoadQuery, useMutation } from "react-relay";
 import { NavigationType } from '../../App';
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
-import Course from '../models/Course';
-import { addCourseToStorage } from "../utils/storage";
 
+export const CourseCreateComponentQuery = graphql`
+  query CourseCreateComponentQuery($id: String) {
+    user(id: $id) {
+      id,
+      userId,
+      username, 
+      email,
+      courses {
+        edges {
+          node {
+            id
+            title
+            description
+            body
+          }
+        }
+      }
+    }
+  }
+`;
 
 interface IProps extends NavigationType<'Course'> {
 
@@ -13,19 +30,35 @@ interface IProps extends NavigationType<'Course'> {
 
 const CourseCreateComponent: React.FC<IProps> = ({ navigation, route }) => {
 
+  const { user } = useLazyLoadQuery<any>(CourseCreateComponentQuery, { id: "1" });
+  const mutation = graphql`
+  mutation CourseCreateComponentMutation($input: AddCourseInput!) {
+    addCourse(input: $input) {
+      courseEdge {
+        title,
+        authorid
+      }
+      user {
+        username
+      }
+    }
+  }
+`;
+  const [mutate] = useMutation(mutation);
   const onSubmit = async (fields: NewCourseFormFields) => {
-    const course = new Course({
-      id: of(uuidv4()),
-      title: fromNullable(fields.title),
-      data: fromNullable(fields.data),
-      picture: none,
-      description: fromNullable(fields.description),
-      tags: none,
-      createdAt: of(new Date()),
-      updatedAt: of(new Date()),
-    });
-    await addCourseToStorage(course);
-    navigation.navigate('Courses');
+    mutate({
+      variables: {
+        input: {
+          authorId: user.userId,
+          title: fields.title,
+          description: fields.description,
+          body: fields.data,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      }
+    })
+    navigation.navigate('Profile');
   }
 
   return <NewCourseForm onSubmit={onSubmit} />;

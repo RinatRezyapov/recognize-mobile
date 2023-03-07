@@ -18,7 +18,7 @@ const CoursesComponent: React.FC<IProps> = ({ courses, navigation }) => {
         <Button title='New course' onPress={() => navigation.navigate('CourseCreate')} />
       </View>
       <ScrollView>
-        {courses.map(v => {
+        {courses?.map(v => {
           return (
             <TouchableOpacity
               key={v.node.id}

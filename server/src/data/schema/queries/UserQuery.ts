@@ -1,4 +1,4 @@
-import { GraphQLString, GraphQLObjectType } from 'graphql';
+import { GraphQLString, GraphQLObjectType, GraphQLInt } from 'graphql';
 import { globalIdField, connectionDefinitions, connectionFromArray } from 'graphql-relay';
 import { GraphQLCourse, nodeInterface } from '../nodes';
 import { getCourses, getUser } from '../../database';
@@ -16,6 +16,10 @@ const GraphQLUser = new GraphQLObjectType({
   name: 'User',
   fields: {
     id: globalIdField('User'),
+    userId: {
+      type: GraphQLInt,
+      resolve: user => user.id
+    },
     username: {
       type: GraphQLString,
       resolve: user => user.username

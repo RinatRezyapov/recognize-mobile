@@ -2,10 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationType } from '../../App';
 import {
-    graphql, loadQuery, RelayEnvironmentProvider, usePreloadedQuery
+  graphql, loadQuery, RelayEnvironmentProvider, usePreloadedQuery
 } from "react-relay/hooks";
 import RelayEnvironment from '../RelayEnvironment';
 import ProfileComponent from '../components/ProfileComponent';
+import { useIsFocused } from '@react-navigation/native';
 
 export const ProfilePageQuery = graphql`
   query ProfilePageQuery($id: String) {
@@ -36,14 +37,16 @@ interface IProps extends NavigationType<'Courses'> {
 
 }
 
-const ProfilePage: React.FC<IProps> = ({ navigation }) => {
-    return (
-        <RelayEnvironmentProvider environment={RelayEnvironment}>
-            <React.Suspense fallback={<Text>Loading...</Text>}>
-                <ProfileComponent preloadedQuery={preloadedQuery} navigation={navigation} />
-            </React.Suspense>
-        </RelayEnvironmentProvider>
-    );
+const ProfilePage: React.FC<IProps> = ({ navigation, route }) => {
+  const isFocused = useIsFocused();
+
+  return (
+    <RelayEnvironmentProvider environment={RelayEnvironment}>
+
+      <ProfileComponent navigation={navigation} route={route} />
+
+    </RelayEnvironmentProvider>
+  );
 }
 
 

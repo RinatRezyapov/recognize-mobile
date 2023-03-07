@@ -12,6 +12,7 @@ type Query {
 type User implements Node {
   """The ID of an object"""
   id: ID!
+  userId: Int
   username: String
   email: String
   courses: CourseConnection
@@ -63,4 +64,24 @@ type Course {
   title: String
   body: String
   created: Int
+}
+
+type Mutation {
+  addCourse(input: AddCourseInput!): AddCoursePayload
+}
+
+type AddCoursePayload {
+  courseEdge: Course!
+  user: User!
+  clientMutationId: String
+}
+
+input AddCourseInput {
+  authorId: ID!
+  title: String!
+  description: String!
+  body: String!
+  createdAt: String!
+  updatedAt: String!
+  clientMutationId: String
 }
