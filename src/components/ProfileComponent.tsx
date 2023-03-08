@@ -1,18 +1,15 @@
 import { useIsFocused } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { graphql, useLazyLoadQuery, usePreloadedQuery } from "react-relay/hooks";
-import { ProfilePageQuery } from '../pages/ProfilePage';
+import { graphql, useLazyLoadQuery } from "react-relay/hooks";
+import { NavigationType } from '../../App';
 import CoursesComponent from './CoursesComponent';
 
-interface IProps {
-  navigation: any;
-  route: any;
+interface IProps extends NavigationType<'Profile'> {
+
 }
 
-
 const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
-  //const data = usePreloadedQuery<any>(ProfilePageQuery, preloadedQuery);
   const isFocused = useIsFocused();
   const { user } = useLazyLoadQuery(graphql`
   query ProfileComponentQuery($id: String) {

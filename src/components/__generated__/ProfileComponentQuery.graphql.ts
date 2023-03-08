@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14c9e9ddcbcf725a67cf8edcdee44307>>
+ * @generated SignedSource<<8f480e728d0ee82f23d722ca9a126a76>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type ProfileComponentQuery$data = {
         readonly node: {
           readonly body: string | null;
           readonly description: string | null;
-          readonly id: string | null;
+          readonly id: number | null;
           readonly title: string | null;
         } | null;
       } | null> | null;

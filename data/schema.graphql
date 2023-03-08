@@ -58,7 +58,7 @@ type CourseEdge {
 }
 
 type Course {
-  id: String
+  id: Int
   description: String
   authorid: String
   title: String
@@ -68,6 +68,7 @@ type Course {
 
 type Mutation {
   addCourse(input: AddCourseInput!): AddCoursePayload
+  removeCourse(input: RemoveCourseInput!): RemoveCoursePayload
 }
 
 type AddCoursePayload {
@@ -77,11 +78,20 @@ type AddCoursePayload {
 }
 
 input AddCourseInput {
-  authorId: ID!
+  authorId: Int!
   title: String!
   description: String!
   body: String!
   createdAt: String!
   updatedAt: String!
+  clientMutationId: String
+}
+
+type RemoveCoursePayload {
+  clientMutationId: String
+}
+
+input RemoveCourseInput {
+  courseId: Int!
   clientMutationId: String
 }

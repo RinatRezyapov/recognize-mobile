@@ -11,8 +11,8 @@ import CourseEditComponent from './src/components/CourseEditComponent';
 import CoursePlayerComponent from './src/components/CoursePlayerComponent';
 import CoursesComponent from './src/components/CoursesComponent';
 import RelayEnvironment from './src/RelayEnvironment';
-import ProfilePage from './src/pages/ProfilePage';
 import { navigationTheme } from './src/utils/theme';
+import ProfileComponent from './src/components/ProfileComponent';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,7 +34,7 @@ const App = () => {
         <Stack.Navigator initialRouteName="Profile">
           <Stack.Screen
             name="Profile"
-            component={ProfilePage}
+            component={ProfileComponent}
             options={{ title: 'Profile', ...navigationTheme }}
           />
           <Stack.Screen

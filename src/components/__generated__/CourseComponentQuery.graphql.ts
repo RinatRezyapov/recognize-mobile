@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<310ab8ee468116589e689f558ee77a47>>
+ * @generated SignedSource<<d85e3c59600ae2dc36eb73543f6e91c7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type CourseComponentQuery$data = {
   readonly course: {
     readonly body: string | null;
     readonly description: string | null;
-    readonly id: string | null;
+    readonly id: number | null;
     readonly title: string | null;
   } | null;
 };

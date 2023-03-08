@@ -1,5 +1,6 @@
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
 import { AddCourseMutation } from './mutations/AddCourseMutation';
+import { RemoveCourseMutation } from './mutations/RemoveCourseMutation';
 import { nodeField } from './nodes';
 import { CourseQuery } from './queries/CourseQuery';
 import {UserQuery} from './queries/UserQuery';
@@ -17,6 +18,7 @@ const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
     addCourse: AddCourseMutation,
+    removeCourse: RemoveCourseMutation,
   },
 });
 

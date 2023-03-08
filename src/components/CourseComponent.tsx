@@ -6,7 +6,7 @@ import {
   Text,
   View
 } from 'react-native';
-import { graphql, useLazyLoadQuery } from 'react-relay';
+import { graphql, useLazyLoadQuery, useMutation } from 'react-relay';
 import { NavigationType } from '../../App';
 import { removeCourseFromStorage } from '../utils/storage';
 
@@ -26,10 +26,24 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
       }
     }
   `, { id: route.params.id });
+  const mutation = graphql`
+  mutation CourseComponentMutation($input: RemoveCourseInput!) {
+    removeCourse(input: $input) {
+      clientMutationId
+    }
+  }
+`;
+  const [mutate] = useMutation(mutation);
 
-  const onDeleteCourseClick = (id: string) => async () => {
-    await removeCourseFromStorage(id);
-    navigation.navigate('Courses');
+  const onDeleteCourseClick = (id: string) => () => {
+    mutate({
+      variables: {
+        input: {
+          courseId: parseInt(id),
+        }
+      }
+    })
+    navigation.navigate('Profile');
   };
 
   const onEditCourseClick = (id: string) => async () => {
