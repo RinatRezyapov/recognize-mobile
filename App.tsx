@@ -35,14 +35,14 @@ const App = () => {
           <Stack.Screen
             name="Profile"
             component={ProfileComponent}
-            options={{ title: 'Profile', ...navigationTheme }}
+            options={{ title: 'Profile' }}
           />
           <Stack.Screen
             name="Courses"
             component={CoursesComponent}
-            options={{ title: 'Courses', ...navigationTheme }}
+            options={{ title: 'Courses'  }}
           />
-          <Stack.Screen name="Course" component={CourseComponent} options={{ title: 'Course', ...navigationTheme }} />
+          <Stack.Screen name="Course" component={CourseComponent} options={{ title: 'Course' }} />
           <Stack.Screen name="CoursePlayer" component={CoursePlayerComponent} options={{ title: 'Course Player' }} />
           <Stack.Screen name="CourseCreate" component={CourseCreateComponent} options={{ title: 'New Course' }} />
           <Stack.Screen name="CourseEdit" component={CourseEditComponent} options={{ title: 'Edit Course' }} />

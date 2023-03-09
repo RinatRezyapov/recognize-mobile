@@ -34,18 +34,15 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     borderWidth: 1,
-    borderColor: 'white',
     borderRadius: 20,
   },
   courseTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: 'white',
   },
   courseDescription: {
     marginTop: 8,
     fontSize: 18,
     fontWeight: '400',
-    color: 'white',
   },
 });

@@ -29,7 +29,7 @@ const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
       }
     }
   }
-`, { id: "1" }, { fetchPolicy: 'network-only', fetchKey: isFocused + route.key });
+`, { id: "1" }, { fetchKey: isFocused + route.key });
   return (
     <View style={styles.container}>
       <View style={styles.personalInfo}>
@@ -47,7 +47,6 @@ const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#a04bfa',
     height: '100%'
   },
   personalInfo: {
@@ -60,15 +59,15 @@ const styles = StyleSheet.create({
     width: 150,
     borderRadius: 100,
     borderWidth: 4,
-    borderColor: 'white'
+
   },
   username: {
     fontSize: 24,
-    color: 'white'
+
   },
   email: {
     fontSize: 12,
-    color: 'white'
+
   }
 });
 

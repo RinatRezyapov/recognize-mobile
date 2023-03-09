@@ -36,7 +36,8 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
   const [answersCount, setAnswersCount] = useState(7);
   const [background, setBackground] = useState<string>('#4615b2');
   const [phraseVisibility, setPhraseVisibility] = useState(true);
-
+  const [timeStart, setTimeStart] = useState<number>();
+  const [reactionTime, setReactionTime] = useState<number>();
 
   const getRandomInt = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -73,6 +74,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
       setPhraseVisibility(true);
       setTimeout(() => setPhraseVisibility(false), intervalMs);
       setPause(true);
+      setTimeStart(Date.now())
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -81,6 +83,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
   const onUserInputSubmit = (userInput: string) => {
     if (userInput === currentPhrase.join(' ')) {
       setBackground('#03a9f4');
+      setReactionTime(Date.now() - timeStart);
       setPause(false);
     } else {
       setBackground('#ff4569');
@@ -102,6 +105,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
     <Container backgroundColor={background}>
       <View style={styles.viewer}>
         <Text style={styles.phrase}>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</Text>
+        <Text style={styles.reactionTime}>{reactionTime ? (reactionTime / 1000) : ''}</Text>
       </View>
       <View style={styles.answersContainer}>
         {answers.map((answer, idx) => (
@@ -177,6 +181,10 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: '700',
     textAlign: 'center',
+  },
+  reactionTime: {
+    color: 'white',
+    fontWeight: '700',
   }
 });
 

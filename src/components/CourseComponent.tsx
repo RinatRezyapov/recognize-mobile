@@ -74,18 +74,14 @@ const styles = StyleSheet.create({
     gap: 16,
     padding: 16,
     height: '100%',
-    backgroundColor: '#a04bfa',
   },
   nameText: {
-    color: 'white',
     fontSize: 36,
   },
   descriptionText: {
-    color: 'white',
     fontSize: 18,
   },
   bodyText: {
-    color: 'white',
     fontSize: 12,
   },
   buttonsContainer: {
