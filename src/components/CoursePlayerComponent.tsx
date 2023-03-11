@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { graphql, useLazyLoadQuery } from 'react-relay';
 import { NavigationType } from '../../App';
+import { CanvasContext } from '../utils/context/CanvasProvider';
 
 interface IProps extends NavigationType<'Course'> {
 
@@ -16,7 +17,7 @@ interface IProps extends NavigationType<'Course'> {
 
 const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
   const { course } = useLazyLoadQuery<any>(graphql`
-    query CoursePlayerComponentQuery($id: String) {
+    query CoursePlayerComponentQuery($id: Int) {
       course(id: $id) {
         id,
         title, 
@@ -25,8 +26,9 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
       }
     }
   `, { id: route.params.id });
-
-
+  
+  const resultRef = useRef(null);
+  const { animateSparks, renderCanvas } = useContext(CanvasContext)
   const [pause, setPause] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState<string[]>([]);
   const [answer, setAnswer] = useState<string[]>([]);
@@ -85,6 +87,11 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
       setBackground('#03a9f4');
       setReactionTime(Date.now() - timeStart);
       setPause(false);
+
+      resultRef?.current?.measure((width, height, px, py, fx, fy) => {
+        animateSparks(fx + 50, fy)
+      });
+
     } else {
       setBackground('#ff4569');
       setPause(false);
@@ -104,8 +111,9 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
   return (
     <Container backgroundColor={background}>
       <View style={styles.viewer}>
-        <Text style={styles.phrase}>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</Text>
+        <Text ref={resultRef} style={styles.phrase}>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</Text>
         <Text style={styles.reactionTime}>{reactionTime ? (reactionTime / 1000) : ''}</Text>
+        {renderCanvas()}
       </View>
       <View style={styles.answersContainer}>
         {answers.map((answer, idx) => (

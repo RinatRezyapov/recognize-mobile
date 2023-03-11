@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<68dedc98e1e4636890600ffe5cdf83af>>
+ * @generated SignedSource<<fbb0abcc3c8f05b4ad59c2397798e723>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,12 +10,12 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type CoursePlayerComponentQuery$variables = {
-  id?: string | null;
+  id?: number | null;
 };
 export type CoursePlayerComponentQuery$data = {
   readonly course: {
     readonly body: string | null;
-    readonly id: number | null;
+    readonly id: string;
     readonly title: string | null;
   } | null;
 };
@@ -90,16 +90,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "affb4e7ca19aac56c2fc98d0c23b671e",
+    "cacheID": "1b51abbcebaeb896dc44213f254349c5",
     "id": null,
     "metadata": {},
     "name": "CoursePlayerComponentQuery",
     "operationKind": "query",
-    "text": "query CoursePlayerComponentQuery(\n  $id: String\n) {\n  course(id: $id) {\n    id\n    title\n    body\n  }\n}\n"
+    "text": "query CoursePlayerComponentQuery(\n  $id: Int\n) {\n  course(id: $id) {\n    id\n    title\n    body\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "feba0fc73f8c18d6acdd6828a9225d7a";
+(node as any).hash = "b95c20aee1f50bc8c480a38cf4ed7573";
 
 export default node;

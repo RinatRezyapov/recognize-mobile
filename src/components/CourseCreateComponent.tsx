@@ -36,7 +36,7 @@ const CourseCreateComponent: React.FC<IProps> = ({ navigation, route }) => {
     addCourse(input: $input) {
       courseEdge {
         title,
-        authorid
+        authorId
       }
       user {
         username

@@ -7,7 +7,7 @@ import {
 import CourseCardComponent from './CourseCardComponent';
 
 interface IProps {
-  courses: { node: { id: string, title: string, body: string, description: string } }[];
+  courses: { node: { _id: number, title: string, body: string, description: string } }[];
   navigation: any;
 }
 
@@ -21,8 +21,8 @@ const CoursesComponent: React.FC<IProps> = ({ courses, navigation }) => {
         {courses?.map(v => {
           return (
             <TouchableOpacity
-              key={v.node.id}
-              onPress={() => navigation.navigate('Course', { id: v.node.id })}
+              key={v.node._id}
+              onPress={(e) => navigation.navigate('Course', { id: v.node._id })}
             >
               <CourseCardComponent
                 title={v.node.title}

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<46c8f0f5a79d957f7b80bb750f71503b>>
+ * @generated SignedSource<<f429ff9aa6843379ba5ece017588e1de>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,7 @@ export type CourseCreateComponentMutation$variables = {
 export type CourseCreateComponentMutation$data = {
   readonly addCourse: {
     readonly courseEdge: {
-      readonly authorid: string | null;
+      readonly authorId: string | null;
       readonly title: string | null;
     };
     readonly user: {
@@ -55,33 +55,29 @@ v1 = [
 v2 = {
   "alias": null,
   "args": null,
-  "concreteType": "Course",
-  "kind": "LinkedField",
-  "name": "courseEdge",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "authorid",
-      "storageKey": null
-    }
-  ],
+  "kind": "ScalarField",
+  "name": "title",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "authorId",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "username",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -99,7 +95,19 @@ return {
         "name": "addCourse",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Course",
+            "kind": "LinkedField",
+            "name": "courseEdge",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -108,7 +116,7 @@ return {
             "name": "user",
             "plural": false,
             "selections": [
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -133,7 +141,20 @@ return {
         "name": "addCourse",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Course",
+            "kind": "LinkedField",
+            "name": "courseEdge",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v5/*: any*/)
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -142,14 +163,8 @@ return {
             "name": "user",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              }
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -159,16 +174,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4ae5755a65be32f2e90338bdc1a34138",
+    "cacheID": "078d5e971708bae7f0af1147c4de6ecd",
     "id": null,
     "metadata": {},
     "name": "CourseCreateComponentMutation",
     "operationKind": "mutation",
-    "text": "mutation CourseCreateComponentMutation(\n  $input: AddCourseInput!\n) {\n  addCourse(input: $input) {\n    courseEdge {\n      title\n      authorid\n    }\n    user {\n      username\n      id\n    }\n  }\n}\n"
+    "text": "mutation CourseCreateComponentMutation(\n  $input: AddCourseInput!\n) {\n  addCourse(input: $input) {\n    courseEdge {\n      title\n      authorId\n      id\n    }\n    user {\n      username\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a72068f098a859899ac38ddd4e24c7d6";
+(node as any).hash = "03dbe57670feb873cb3abff251187059";
 
 export default node;

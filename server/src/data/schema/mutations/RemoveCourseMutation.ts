@@ -7,12 +7,6 @@ const RemoveCourseMutation = mutationWithClientMutationId({
     inputFields: {
         courseId: { type: new GraphQLNonNull(GraphQLInt) },
     },
-    outputFields: {
-        clientMutationId: {
-            type: new GraphQLNonNull(GraphQLString),
-            resolve: async ({ userId }, { pgPool }) => {},
-        },
-    },
     mutateAndGetPayload: async ({ courseId }, { pgPool }) => {
         await removeCourse(pgPool, courseId);
 

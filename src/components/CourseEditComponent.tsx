@@ -1,14 +1,8 @@
-import { useFocusEffect } from "@react-navigation/native";
-import { pipe } from 'fp-ts/lib/function';
-import { fromNullable, getOrElse, none, of } from "fp-ts/lib/Option";
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { ActivityIndicator } from 'react-native';
-import { graphql, useLazyLoadQuery } from "react-relay";
-import { v4 as uuidv4 } from 'uuid';
+import { graphql, useLazyLoadQuery, useMutation } from "react-relay";
 import { NavigationType } from '../../App';
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
-import Course from '../models/Course';
-import { getCourseFromStorage, updateCourseToStorage } from "../utils/storage";
 
 interface IProps extends NavigationType<'Course'> {
 
@@ -17,9 +11,9 @@ interface IProps extends NavigationType<'Course'> {
 const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
 
   const { course } = useLazyLoadQuery<any>(graphql`
-    query CourseEditComponentQuery($id: String) {
+    query CourseEditComponentQuery($id: Int) {
       course(id: $id) {
-        id,
+        _id,
         title,
         description,
         body,
@@ -27,19 +21,29 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
     }
   `, { id: route.params.id });
 
+  const mutation = graphql`
+  mutation CourseEditComponentMutation($input: UpdateCourseInput!) {
+    updateCourse(input: $input) {
+      courseEdge {
+        title,
+      }
+    }
+  }
+  `;
+  const [mutate] = useMutation(mutation);
   const onSubmit = async (fields: NewCourseFormFields) => {
-    const course = new Course({
-      id: of(uuidv4()),
-      title: fromNullable(fields.title),
-      data: fromNullable(fields.data),
-      picture: none,
-      description: fromNullable(fields.description),
-      tags: none,
-      createdAt: of(new Date()),
-      updatedAt: of(new Date()),
-    });
-    await updateCourseToStorage(route.params.id, course);
-    navigation.navigate('Courses');
+    console.log('happy', course, fields)
+    mutate({
+      variables: {
+        input: {
+          id: course._id,
+          title: fields.title,
+          description: fields.description,
+          body: fields.data,
+        }
+      }
+    })
+    navigation.navigate('Profile');
   }
 
   if (!course) return <ActivityIndicator size="large" />;

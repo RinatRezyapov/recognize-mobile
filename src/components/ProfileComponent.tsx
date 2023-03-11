@@ -1,9 +1,8 @@
 import { useIsFocused } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { graphql, useLazyLoadQuery } from "react-relay/hooks";
 import { NavigationType } from '../../App';
-import CanvasComponent from './CanvasComponent';
 import CoursesComponent from './CoursesComponent';
 
 interface IProps extends NavigationType<'Profile'> {
@@ -12,6 +11,7 @@ interface IProps extends NavigationType<'Profile'> {
 
 const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
   const isFocused = useIsFocused();
+
   const { user } = useLazyLoadQuery(graphql`
   query ProfileComponentQuery($id: String) {
     user(id: $id) {
@@ -21,7 +21,7 @@ const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
       courses {
         edges {
           node {
-            id
+            _id,
             title
             description
             body
@@ -31,8 +31,6 @@ const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
     }
   }
 `, { id: "1" }, { fetchKey: isFocused + route.key });
-
-  const [draw, setDraw] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -44,10 +42,6 @@ const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
         </View>
       </View>
       <CoursesComponent courses={user.courses.edges} navigation={navigation} />
-
-      <CanvasComponent>
-        <Button title='Draw' />
-      </CanvasComponent>
     </View>
   );
 }

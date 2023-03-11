@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { graphql, useLazyLoadQuery, useMutation } from 'react-relay';
 import { NavigationType } from '../../App';
-import { removeCourseFromStorage } from '../utils/storage';
 
 interface IProps extends NavigationType<'Course'> {
 
@@ -16,7 +15,7 @@ interface IProps extends NavigationType<'Course'> {
 
 const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   const { course } = useLazyLoadQuery<any>(graphql`
-    query CourseComponentQuery($id: String) {
+    query CourseComponentQuery($id: Int) {
       course(id: $id) {
         id,
         title,
@@ -26,6 +25,7 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
       }
     }
   `, { id: route.params.id });
+
   const mutation = graphql`
   mutation CourseComponentMutation($input: RemoveCourseInput!) {
     removeCourse(input: $input) {

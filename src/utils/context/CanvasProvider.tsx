@@ -1,18 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createContext } from 'react';
 
-import { Dimensions, TouchableOpacity, View } from 'react-native';
+import { Dimensions } from 'react-native';
 
 import {
   rect,
-  Skia,
-  SkiaView,
-  useDrawCallback
+  SkCanvas,
+  Skia, SkiaView, useDrawCallback
 } from '@shopify/react-native-skia';
-import { useFocusEffect } from '@react-navigation/native';
 
-const paint = Skia.Paint();
-paint.setAntiAlias(false);
-paint.setColor(Skia.Color('yellow'));
 
 const { width, height } = Dimensions.get('screen');
 
@@ -20,15 +15,17 @@ interface IProps {
   children: any;
 }
 
-const CanvasComponent: React.FC<IProps> = ({ children }) => {
+
+export const CanvasContext = createContext('hey');
+const CanvasProvider = ({ children }) => {
   const particles = [];
   var colors = ['#029DAF', '#E5D599', '#FFC219', '#F07C19', '#E32551'];
-  var gravity = 0.04;
+  var gravity = 0.09;
 
   function initParticles(x, y) {
-    for (var i = 0; i < 100; i++) {
-      createParticle(i, x, y)
-      //setTimeout(createParticle, 20 * i, i);
+    for (var i = 0; i < 20; i++) {
+
+      setTimeout(() => createParticle(i, x, y), i);
     }
   }
 
@@ -65,12 +62,16 @@ const CanvasComponent: React.FC<IProps> = ({ children }) => {
       y += vy;
     }
 
-    this.draw = function (canvas) {
-      canvas.drawRect(rect(x, y, size, size), paint);
+    this.draw = function (canvas: SkCanvas) {
+      const paint = Skia.Paint();
+      paint.setAntiAlias(false);
+      paint.setColor(Skia.Color('yellow'));
+      canvas.drawCircle(x, y, 1, paint);
+      // canvas.drawRect(rect(x, y, size, size), paint);
     }
   }
 
-  function render(canvas) {
+  function render(canvas: SkCanvas) {
     for (var i = 0; i < particles.length; i++) {
       if (particles[i].finished === true) {
         particles.splice(i, 1);
@@ -85,23 +86,16 @@ const CanvasComponent: React.FC<IProps> = ({ children }) => {
     render(canvas);
   });
 
-  const onClick = (x, y) => {
-    console.log(x, y)
+  const animateSparks = (x, y) => {
     initParticles(x, y);
-    //initParticles(e.nativeEvent.locationX, e.nativeEvent.locationY);
-    //console.log(e.nativeEvent.locationX, e.nativeEvent.locationY);
-
-    //render(canvas.current)
   }
 
-  return (
-    // <TouchableOpacity onPress={onClick}  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-    <View>
-      {React.cloneElement(children, { animate: onClick } )}
-      <SkiaView style={{ position: 'absolute', borderColor: 'red', zIndex: -1, borderWidth: 1, top: 0, left: 0, width: '100%', height: '100%' }} onDraw={onDraw} mode="continuous" />
-    </View>
-    // </TouchableOpacity >
-  );
+  const renderCanvas = () => {
+    return <SkiaView style={{ position: 'absolute', zIndex: -1, top: 0, left: 0, width: '100%', height: '100%' }} onDraw={onDraw} mode="continuous" />
+  }
+  return <CanvasContext.Provider value={{ animateSparks, renderCanvas }}>
+    {children}
+  </CanvasContext.Provider>
 }
 
-export default CanvasComponent;
+export default CanvasProvider;

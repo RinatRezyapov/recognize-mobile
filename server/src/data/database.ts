@@ -1,10 +1,10 @@
-export const getCourses = (userId: string, pgPool) => {
+export const getCourses = (userId: number, pgPool) => {
   return pgPool?.query(`SELECT * FROM courses WHERE author_id = '${userId}'`).then(response => {
-    return response.rows.map(v => ({ ...v, id: v.id.toString() }))
+    return response.rows.map(v => ({ ...v, id: v.id }))
   })
 }
 
-export const getCourse = (courseId: string, pgPool) => {
+export const getCourse = (courseId: number, pgPool) => {
   return pgPool?.query(`SELECT * FROM courses WHERE id = '${courseId}'`).then(response => response.rows?.[0]);
 }
 
@@ -26,10 +26,14 @@ export const addCourse = (pgPool, data) => {
     ) returning *;`).then(response => response.rows?.[0]);
 }
 
+export const updateCourse = (pgPool, data) => {
+  return pgPool?.query(`UPDATE courses SET title='${data.title}', description='${data.description}', body='${data.body}' WHERE id = ${data.id} RETURNING *;`).then(response => response.rows?.[0]);
+}
+
 export const removeCourse = (pgPool, courseId) => {
   return pgPool?.query(`DELETE FROM courses WHERE id = ${courseId}`).then(response => response.rows?.[0]);
 }
 
-export const getUser = (userId: string, pgPool) => {
-  return  pgPool?.query(`SELECT * FROM users WHERE id = ${userId}`).then(response => response.rows?.[0]);
+export const getUser = (userId: number, pgPool) => {
+  return  pgPool?.query(`SELECT * FROM users WHERE id = '${userId}'`).then(response => response.rows?.[0]);
 }

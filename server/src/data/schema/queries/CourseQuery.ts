@@ -1,21 +1,20 @@
-import { GraphQLString, GraphQLObjectType, GraphQLInt } from 'graphql';
+import { GraphQLInt, GraphQLObjectType, GraphQLString } from 'graphql';
+import { getCourse } from '../../database';
 import { globalIdField, connectionDefinitions, connectionFromArray } from 'graphql-relay';
-import { nodeInterface } from '../nodes';
-import { getCourse, getCourses, getUser } from '../../database';
-
 
 export const GraphQLCourse = new GraphQLObjectType({
   name: 'Course',
   fields: {
-    id: {
-      type: GraphQLString,
+    id: globalIdField('Course'),
+    _id: {
+      type: GraphQLInt,
       resolve: course => course.id,
     },
     description: {
       type: GraphQLString,
       resolve: course => course.description,
     },
-    authorid: {
+    authorId: {
       type: GraphQLString,
       resolve: course => course.author_id,
     },
@@ -27,9 +26,13 @@ export const GraphQLCourse = new GraphQLObjectType({
       type: GraphQLString,
       resolve: course => course.body,
     },
-    created: {
+    createdAt: {
       type: GraphQLInt,
       resolve: course => course.created_at,
+    },
+    updatedAt: {
+      type: GraphQLInt,
+      resolve: course => course.updated_at,
     },
   },
 });
@@ -37,7 +40,7 @@ export const GraphQLCourse = new GraphQLObjectType({
 const CourseQuery = {
   type: GraphQLCourse,
   args: {
-    id: { type: GraphQLString },
+    id: { type: GraphQLInt },
   },
   resolve: (root, { id }, { pgPool }) => {
     return getCourse(id, pgPool);
@@ -45,4 +48,4 @@ const CourseQuery = {
 }
 
 
-export {CourseQuery}
+export { CourseQuery };

@@ -6,7 +6,7 @@ import { GraphQLCourse } from './queries/CourseQuery';
 
 
 const {nodeInterface, nodeField} = nodeDefinitions(
-  (globalId: string, { pgPool }) => {
+  (globalId, { pgPool }) => {
     const {type, id} = fromGlobalId(globalId);
 
     return getCourse(id, pgPool);

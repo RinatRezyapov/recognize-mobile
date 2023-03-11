@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -13,6 +13,7 @@ import CoursesComponent from './src/components/CoursesComponent';
 import RelayEnvironment from './src/RelayEnvironment';
 import { navigationTheme } from './src/utils/theme';
 import ProfileComponent from './src/components/ProfileComponent';
+import CanvasProvider from './src/utils/context/CanvasProvider';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,26 +30,28 @@ export type NavigationType<T> = NativeStackScreenProps<RootStackParamList, T>;
 
 const App = () => {
   return (
-    <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Profile">
-          <Stack.Screen
-            name="Profile"
-            component={ProfileComponent}
-            options={{ title: 'Profile' }}
-          />
-          <Stack.Screen
-            name="Courses"
-            component={CoursesComponent}
-            options={{ title: 'Courses'  }}
-          />
-          <Stack.Screen name="Course" component={CourseComponent} options={{ title: 'Course' }} />
-          <Stack.Screen name="CoursePlayer" component={CoursePlayerComponent} options={{ title: 'Course Player' }} />
-          <Stack.Screen name="CourseCreate" component={CourseCreateComponent} options={{ title: 'New Course' }} />
-          <Stack.Screen name="CourseEdit" component={CourseEditComponent} options={{ title: 'Edit Course' }} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </RelayEnvironmentProvider>
+    <CanvasProvider>
+      <RelayEnvironmentProvider environment={RelayEnvironment}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Profile">
+            <Stack.Screen
+              name="Profile"
+              component={ProfileComponent}
+              options={{ title: 'Profile' }}
+            />
+            <Stack.Screen
+              name="Courses"
+              component={CoursesComponent}
+              options={{ title: 'Courses' }}
+            />
+            <Stack.Screen name="Course" component={CourseComponent} options={{ title: 'Course' }} />
+            <Stack.Screen name="CoursePlayer" component={CoursePlayerComponent} options={{ title: 'Course Player' }} />
+            <Stack.Screen name="CourseCreate" component={CourseCreateComponent} options={{ title: 'New Course' }} />
+            <Stack.Screen name="CourseEdit" component={CourseEditComponent} options={{ title: 'Edit Course' }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </RelayEnvironmentProvider>
+    </CanvasProvider>
   );
 }
 

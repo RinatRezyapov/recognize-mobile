@@ -5,23 +5,21 @@ import {
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql';
 import { GraphQLCourse } from '../nodes';
 
-import { addCourse, getCourse, getUser } from '../../database';
+import { getCourse, getUser, updateCourse } from '../../database';
 import { GraphQLUser } from '../queries/UserQuery';
 
-const AddCourseMutation = mutationWithClientMutationId({
-    name: 'AddCourse',
+const UpdateCourseMutation = mutationWithClientMutationId({
+    name: 'UpdateCourse',
     inputFields: {
-        authorId: { type: new GraphQLNonNull(GraphQLInt) },
+        id: { type: new GraphQLNonNull(GraphQLInt) },
         title: { type: new GraphQLNonNull(GraphQLString) },
         description: { type: new GraphQLNonNull(GraphQLString) },
         body: { type: new GraphQLNonNull(GraphQLString) },
-        createdAt: { type: new GraphQLNonNull(GraphQLString) },
-        updatedAt: { type: new GraphQLNonNull(GraphQLString) },
     },
     outputFields: {
         courseEdge: {
             type: new GraphQLNonNull(GraphQLCourse),
-            resolve: async ({ addedCourse }, { }, { pgPool }) => {
+            resolve: ({ addedCourse }, { }, { pgPool }) => {
                 return getCourse(addedCourse.id, pgPool)
             },
         },
@@ -31,10 +29,10 @@ const AddCourseMutation = mutationWithClientMutationId({
         },
     },
     mutateAndGetPayload: async (data, { pgPool }) => {
-        const addedCourse = await addCourse(pgPool, data);
+        const addedCourse = await updateCourse(pgPool, data);
 
-        return { addedCourse, authorId: data.authorId };
+        return { addedCourse };
     },
 });
 
-export { AddCourseMutation };
+export { UpdateCourseMutation };
