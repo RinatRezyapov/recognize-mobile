@@ -31,7 +31,7 @@ export const updateCourse = (pgPool, data) => {
 }
 
 export const removeCourse = (pgPool, courseId) => {
-  return pgPool?.query(`DELETE FROM courses WHERE id = ${courseId}`).then(response => response.rows?.[0]);
+  return pgPool?.query(`DELETE FROM courses WHERE id = '${courseId}'`).then(response => response.rows?.[0]);
 }
 
 export const getUser = (userId: number, pgPool) => {

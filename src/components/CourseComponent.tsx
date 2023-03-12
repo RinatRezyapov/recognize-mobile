@@ -35,11 +35,11 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
 `;
   const [mutate] = useMutation(mutation);
 
-  const onDeleteCourseClick = (id: string) => () => {
+  const onDeleteCourseClick = (id: number) => () => {
     mutate({
       variables: {
         input: {
-          courseId: parseInt(id),
+          id,
         }
       }
     })

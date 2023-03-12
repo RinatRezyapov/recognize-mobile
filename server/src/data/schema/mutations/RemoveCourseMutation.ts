@@ -5,12 +5,12 @@ import { removeCourse } from '../../database';
 const RemoveCourseMutation = mutationWithClientMutationId({
     name: 'RemoveCourse',
     inputFields: {
-        courseId: { type: new GraphQLNonNull(GraphQLInt) },
+        id: { type: new GraphQLNonNull(GraphQLInt) },
     },
-    mutateAndGetPayload: async ({ courseId }, { pgPool }) => {
-        await removeCourse(pgPool, courseId);
+    mutateAndGetPayload: async ({ id }, { pgPool }) => {
+        await removeCourse(pgPool, id);
 
-        return { courseId };
+        return { id };
     },
 });
 

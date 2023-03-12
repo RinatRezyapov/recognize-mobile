@@ -32,7 +32,6 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
   `;
   const [mutate] = useMutation(mutation);
   const onSubmit = async (fields: NewCourseFormFields) => {
-    console.log('happy', course, fields)
     mutate({
       variables: {
         input: {

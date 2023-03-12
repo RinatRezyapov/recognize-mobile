@@ -12,36 +12,36 @@ interface IProps extends NavigationType<'Profile'> {
 const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
   const isFocused = useIsFocused();
 
-  const { user } = useLazyLoadQuery(graphql`
-  query ProfileComponentQuery($id: String) {
-    user(id: $id) {
-      id,
-      username, 
-      email,
-      courses {
-        edges {
-          node {
-            _id,
-            title
-            description
-            body
+  const data = useLazyLoadQuery(graphql`
+    query ProfileComponentQuery($id: String) {
+      user(id: $id) {
+        id,
+        username, 
+        email,
+        courses {
+          edges {
+            node {
+              _id,
+              title
+              description
+              body
+            }
           }
         }
       }
     }
-  }
-`, { id: "1" }, { fetchKey: isFocused + route.key });
+  `, { id: "1" }, { fetchKey: isFocused + route.key, fetchPolicy: 'network-only' });
 
   return (
     <View style={styles.container}>
       <View style={styles.personalInfo}>
-        <Image source={{ uri: "https://pbs.twimg.com/profile_images/1617475263163518976/Vapz9HQa_400x400.jpg" }} style={styles.profileImg} />
+        <Image source={require("./profile-pic.png")} style={styles.profileImg} />
         <View>
-          <Text style={styles.username}>{user.username}</Text>
-          <Text style={styles.email}>{user.email}</Text>
+          <Text style={styles.username}>{data.user.username}</Text>
+          <Text style={styles.email}>{data.user.email}</Text>
         </View>
       </View>
-      <CoursesComponent courses={user.courses.edges} navigation={navigation} />
+      <CoursesComponent courses={data.user.courses.edges} navigation={navigation} />
     </View>
   );
 }
