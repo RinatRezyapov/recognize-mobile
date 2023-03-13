@@ -14,7 +14,9 @@ import RelayEnvironment from './src/RelayEnvironment';
 import { navigationTheme } from './src/utils/theme';
 import ProfileComponent from './src/components/ProfileComponent';
 import CanvasProvider from './src/utils/context/CanvasProvider';
-
+const {installRelayDevTools} = require('relay-devtools');
+installRelayDevTools();
+console.log(installRelayDevTools)
 const Stack = createNativeStackNavigator();
 
 type RootStackParamList = {

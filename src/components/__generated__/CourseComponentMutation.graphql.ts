@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73044d76cb59d14e44462c402da00a51>>
+ * @generated SignedSource<<b3261ee9e61c6ca37bbca8c3d3cd0688>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RemoveCourseInput = {
   clientMutationId?: string | null;
-  courseId: number;
+  id: number;
 };
 export type CourseComponentMutation$variables = {
   input: RemoveCourseInput;

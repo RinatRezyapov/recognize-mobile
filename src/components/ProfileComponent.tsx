@@ -1,47 +1,53 @@
 import { useIsFocused } from '@react-navigation/native';
-import React from 'react';
+import React, { Suspense, useContext } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { graphql, useLazyLoadQuery } from "react-relay/hooks";
+import { graphql, loadQuery, RelayEnvironmentProvider, useQueryLoader } from "react-relay/hooks";
+
 import { NavigationType } from '../../App';
+import RelayEnvironment from '../RelayEnvironment';
 import CoursesComponent from './CoursesComponent';
+import ProfileInfo from './ProfileInfo';
 
 interface IProps extends NavigationType<'Profile'> {
 
 }
 
-const ProfileComponent: React.FC<IProps> = ({ navigation, route }) => {
-  const isFocused = useIsFocused();
-
-  const data = useLazyLoadQuery(graphql`
-    query ProfileComponentQuery($id: String) {
-      user(id: $id) {
-        id,
-        username, 
-        email,
-        courses {
-          edges {
-            node {
-              _id,
-              title
-              description
-              body
-            }
+export const ProfileComponentQuery = graphql`
+  query ProfileComponentQuery($id: String) {
+    user(id: $id) {
+      id,
+      username, 
+      email,
+      courses {
+        edges {
+          node {
+            _id,
+            title
+            description
+            body
           }
         }
       }
     }
-  `, { id: "1" }, { fetchKey: isFocused + route.key, fetchPolicy: 'network-only' });
+  }
+`
+
+const initialQueryRef = loadQuery(
+  RelayEnvironment,
+  ProfileComponentQuery,
+  { id: '1' },
+  { fetchPolicy: 'network-only', networkCacheConfig: { force: true } }
+);
+
+
+const ProfileComponent: React.FC<IProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.personalInfo}>
-        <Image source={require("./profile-pic.png")} style={styles.profileImg} />
-        <View>
-          <Text style={styles.username}>{data.user.username}</Text>
-          <Text style={styles.email}>{data.user.email}</Text>
-        </View>
-      </View>
-      <CoursesComponent courses={data.user.courses.edges} navigation={navigation} />
+      <Suspense fallback={<Text>{"Loading..."}</Text>}>
+        <ProfileInfo initialQueryRef={initialQueryRef} />
+        <CoursesComponent initialQueryRef={initialQueryRef} navigation={navigation} />
+      </Suspense>
     </View>
   );
 }

@@ -27,11 +27,11 @@ export const addCourse = (pgPool, data) => {
 }
 
 export const updateCourse = (pgPool, data) => {
-  return pgPool?.query(`UPDATE courses SET title='${data.title}', description='${data.description}', body='${data.body}' WHERE id = ${data.id} RETURNING *;`).then(response => response.rows?.[0]);
+  return pgPool?.query(`UPDATE courses SET title='${data.title}', description='${data.description}', body='${data.body}' WHERE id=${data.id} RETURNING *;`).then(response => response.rows?.[0]);
 }
 
 export const removeCourse = (pgPool, courseId) => {
-  return pgPool?.query(`DELETE FROM courses WHERE id = '${courseId}'`).then(response => response.rows?.[0]);
+  return pgPool?.query(`DELETE FROM courses WHERE id = ${courseId}`).then(response => response.rows?.[0]);
 }
 
 export const getUser = (userId: number, pgPool) => {

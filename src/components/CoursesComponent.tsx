@@ -3,30 +3,35 @@ import React from 'react';
 import {
   Button, ScrollView, StyleSheet, TouchableOpacity, View
 } from 'react-native';
+import { usePreloadedQuery } from 'react-relay';
 
 import CourseCardComponent from './CourseCardComponent';
+import { ProfileComponentQuery } from './ProfileComponent';
+import { ProfileComponentQuery as ProfileComponentQueryType } from './__generated__/ProfileComponentQuery.graphql';
 
 interface IProps {
-  courses: { node: { _id: number, title: string, body: string, description: string } }[];
+  initialQueryRef: any;
   navigation: any;
 }
 
-const CoursesComponent: React.FC<IProps> = ({ courses, navigation }) => {
+const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
+  const data = usePreloadedQuery<ProfileComponentQueryType>(ProfileComponentQuery, initialQueryRef);
+
   return (
     <View>
       <View style={styles.newCourseButton}>
         <Button title='New course' onPress={() => navigation.navigate('CourseCreate')} />
       </View>
       <ScrollView>
-        {courses?.map(v => {
+        {data?.user?.courses?.edges?.map(v => {
           return (
             <TouchableOpacity
-              key={v.node._id}
-              onPress={(e) => navigation.navigate('Course', { id: v.node._id })}
+              key={v?.node?._id}
+              onPress={() => navigation.navigate('Course', { id: v?.node?._id })}
             >
               <CourseCardComponent
-                title={v.node.title}
-                description={v.node.description}
+                title={v?.node?.title}
+                description={v?.node?.description}
               />
             </TouchableOpacity>
           )

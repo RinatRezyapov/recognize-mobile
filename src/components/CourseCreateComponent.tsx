@@ -1,5 +1,5 @@
 import React from 'react';
-import { graphql, useLazyLoadQuery, useMutation } from "react-relay";
+import { ConnectionHandler, graphql, useLazyLoadQuery, useMutation } from "react-relay";
 import { NavigationType } from '../../App';
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
 
@@ -56,7 +56,11 @@ const CourseCreateComponent: React.FC<IProps> = ({ navigation, route }) => {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         }
-      }
+      },
+      updater: (store) => {
+        const payload = store.get('courses');
+        console.log(payload)
+      },
     })
     navigation.navigate('Profile');
   }
