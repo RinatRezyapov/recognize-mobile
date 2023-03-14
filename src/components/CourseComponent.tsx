@@ -6,7 +6,7 @@ import {
   Text,
   View
 } from 'react-native';
-import { graphql, useLazyLoadQuery, useMutation } from 'react-relay';
+import { graphql, useFragment, useMutation } from 'react-relay';
 import { NavigationType } from '../../App';
 
 interface IProps extends NavigationType<'Course'> {
@@ -14,17 +14,16 @@ interface IProps extends NavigationType<'Course'> {
 }
 
 const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
-  const { course } = useLazyLoadQuery<any>(graphql`
-    query CourseComponentQuery($id: Int) {
-      course(id: $id) {
-        id,
-        title,
-        description,
-        body,
-
+  const course = useFragment(
+    graphql`
+      fragment CourseComponent_course on Course {
+        title
+        description
+        body
       }
-    }
-  `, { id: route.params.id });
+    `,
+    route.params.courseRef,
+  );
 
   const mutation = graphql`
   mutation CourseComponentMutation($input: RemoveCourseInput!) {
@@ -47,11 +46,11 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   };
 
   const onEditCourseClick = (id: string) => async () => {
-    navigation.navigate('CourseEdit', { id });
+    navigation.navigate('CourseEdit', { id, courseRef: route.params.courseRef });
   }
 
   const onStartCourseClick = (id: string) => async () => {
-    navigation.navigate('CoursePlayer', { id });
+    navigation.navigate('CoursePlayer', { id, courseRef: route.params.courseRef });
   };
 
   if (!course) return <ActivityIndicator size="large" />;

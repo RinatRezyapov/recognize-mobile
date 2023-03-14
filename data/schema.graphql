@@ -1,6 +1,5 @@
 type Query {
   user(id: String): User
-  course(id: Int): Course
 
   """Fetches an object given its ID"""
   node(
@@ -12,10 +11,10 @@ type Query {
 type User implements Node {
   """The ID of an object"""
   id: ID!
-  userId: Int
+  _id: Int
   username: String
   email: String
-  courses: CourseConnection
+  courses(status: String = "any", after: String, first: Int, before: String, last: Int): CourseConnection
 }
 
 """An object with an ID"""
@@ -57,7 +56,7 @@ type CourseEdge {
   cursor: String!
 }
 
-type Course {
+type Course implements Node {
   """The ID of an object"""
   id: ID!
   _id: Int
@@ -76,7 +75,7 @@ type Mutation {
 }
 
 type AddCoursePayload {
-  courseEdge: Course!
+  courseEdge: CourseEdge!
   user: User!
   clientMutationId: String
 }

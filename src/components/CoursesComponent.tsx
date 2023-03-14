@@ -15,6 +15,7 @@ interface IProps {
 }
 
 const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
+
   const data = usePreloadedQuery<ProfileComponentQueryType>(ProfileComponentQuery, initialQueryRef);
 
   return (
@@ -23,15 +24,15 @@ const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
         <Button title='New course' onPress={() => navigation.navigate('CourseCreate')} />
       </View>
       <ScrollView>
-        {data?.user?.courses?.edges?.map(v => {
+        {data?.user?.courses?.edges?.map(({ node }) => {
           return (
             <TouchableOpacity
-              key={v?.node?._id}
-              onPress={() => navigation.navigate('Course', { id: v?.node?._id })}
+              key={node?._id}
+              onPress={() => navigation.navigate('Course', { id: node?._id, courseRef: node })}
             >
               <CourseCardComponent
-                title={v?.node?.title}
-                description={v?.node?.description}
+                title={node?.title}
+                description={node?.description}
               />
             </TouchableOpacity>
           )

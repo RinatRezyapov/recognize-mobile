@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a4c13ad4c70b8690c2aa7dc563de949>>
+ * @generated SignedSource<<815f91920066fbba0a621a61be49d6b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,16 +9,14 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type CoursesComponentQuery$variables = {
+export type queriesQuery$variables = {
   id?: string | null;
 };
-export type CoursesComponentQuery$data = {
+export type queriesQuery$data = {
   readonly user: {
-    readonly _id: number | null;
     readonly courses: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly _id: number | null;
           readonly body: string | null;
           readonly description: string | null;
           readonly id: string;
@@ -28,12 +26,13 @@ export type CoursesComponentQuery$data = {
     } | null;
     readonly email: string | null;
     readonly id: string;
+    readonly userId: number | null;
     readonly username: string | null;
   } | null;
 };
-export type CoursesComponentQuery = {
-  response: CoursesComponentQuery$data;
-  variables: CoursesComponentQuery$variables;
+export type queriesQuery = {
+  response: queriesQuery$data;
+  variables: queriesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -62,7 +61,7 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "_id",
+  "name": "userId",
   "storageKey": null
 },
 v4 = {
@@ -97,7 +96,6 @@ v6 = [
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -177,7 +175,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CoursesComponentQuery",
+    "name": "queriesQuery",
     "selections": [
       {
         "alias": null,
@@ -212,7 +210,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CoursesComponentQuery",
+    "name": "queriesQuery",
     "selections": [
       {
         "alias": null,
@@ -251,7 +249,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5cb994ccedd3c6bcd3aca20eb5445664",
+    "cacheID": "aaaf78ae80749ffd8fc0dce69a38d5f3",
     "id": null,
     "metadata": {
       "connection": [
@@ -266,13 +264,13 @@ return {
         }
       ]
     },
-    "name": "CoursesComponentQuery",
+    "name": "queriesQuery",
     "operationKind": "query",
-    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
+    "text": "query queriesQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    userId\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          title\n          description\n          body\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a0d96d2ea402f920be258a9fed166bd3";
+(node as any).hash = "3a1c169418447352710e1109aa5a0b2d";
 
 export default node;

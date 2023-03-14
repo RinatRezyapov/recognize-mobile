@@ -3,10 +3,9 @@ import {
 } from 'graphql-relay';
 
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql';
-import { GraphQLCourse } from '../nodes';
+import { GraphQLCourse, GraphQLUser } from '../nodes';
 
 import { getCourse, getUser, updateCourse } from '../../database';
-import { GraphQLUser } from '../queries/UserQuery';
 
 const UpdateCourseMutation = mutationWithClientMutationId({
     name: 'UpdateCourse',

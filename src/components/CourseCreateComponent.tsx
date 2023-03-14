@@ -1,19 +1,21 @@
 import React from 'react';
-import { ConnectionHandler, graphql, useLazyLoadQuery, useMutation } from "react-relay";
-import { NavigationType } from '../../App';
+import { ConnectionHandler, graphql, useMutation, usePreloadedQuery } from "react-relay";
+
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
 
-export const CourseCreateComponentQuery = graphql`
+export const UserQuery = graphql`
   query CourseCreateComponentQuery($id: String) {
     user(id: $id) {
       id,
-      userId,
+      _id,
       username, 
       email,
-      courses {
+      courses(
+          first: 2147483647 # max GraphQLInt
+        ) @connection(key: "Courses_courses") {
         edges {
           node {
-            id
+            __id
             title
             description
             body
@@ -22,34 +24,42 @@ export const CourseCreateComponentQuery = graphql`
       }
     }
   }
-`;
+`
 
-interface IProps extends NavigationType<'Course'> {
-
-}
-
-const CourseCreateComponent: React.FC<IProps> = ({ navigation, route }) => {
-
-  const { user } = useLazyLoadQuery<any>(CourseCreateComponentQuery, { id: "1" });
-  const mutation = graphql`
+const mutation = graphql`
   mutation CourseCreateComponentMutation($input: AddCourseInput!) {
     addCourse(input: $input) {
       courseEdge {
-        title,
-        authorId
-      }
-      user {
-        username
+        node {
+          title
+          body
+          description
+          authorId
+          createdAt
+          updatedAt
+        }
       }
     }
   }
 `;
+
+
+interface IProps  {
+  initialQueryRef: any;
+  navigation: any;
+}
+
+const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
+
+  const { user } = usePreloadedQuery(UserQuery, initialQueryRef);
+
+
   const [mutate] = useMutation(mutation);
   const onSubmit = async (fields: NewCourseFormFields) => {
     mutate({
       variables: {
         input: {
-          authorId: user.userId,
+          authorId: user._id,
           title: fields.title,
           description: fields.description,
           body: fields.data,
@@ -58,8 +68,18 @@ const CourseCreateComponent: React.FC<IProps> = ({ navigation, route }) => {
         }
       },
       updater: (store) => {
-        const payload = store.get('courses');
-        console.log(payload)
+        const payload = store.get(user.id);
+        if (payload == null) {
+          return;
+        }
+        const newEdge = store.getRootField('addCourse')?.getLinkedRecord('courseEdge');
+        if (!newEdge) return;
+        const connection = ConnectionHandler.getConnection(
+          payload,
+          'Courses_courses',
+        );
+        if (!connection) return;
+        ConnectionHandler.insertEdgeAfter(connection, newEdge, null);
       },
     })
     navigation.navigate('Profile');

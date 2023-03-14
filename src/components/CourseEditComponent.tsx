@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
-import { graphql, useLazyLoadQuery, useMutation } from "react-relay";
+import { graphql, useFragment, useLazyLoadQuery, useMutation } from "react-relay";
 import { NavigationType } from '../../App';
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
 
@@ -9,17 +9,16 @@ interface IProps extends NavigationType<'Course'> {
 }
 
 const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
-
-  const { course } = useLazyLoadQuery<any>(graphql`
-    query CourseEditComponentQuery($id: Int) {
-      course(id: $id) {
-        _id,
-        title,
-        description,
-        body,
+  const course = useFragment(
+    graphql`
+      fragment CourseEditComponent_course on Course {
+        title
+        description
+        body
       }
-    }
-  `, { id: route.params.id });
+    `,
+    route.params.courseRef,
+  );
 
   const mutation = graphql`
   mutation CourseEditComponentMutation($input: UpdateCourseInput!) {

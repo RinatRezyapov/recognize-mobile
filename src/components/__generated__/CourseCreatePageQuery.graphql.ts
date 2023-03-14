@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a4c13ad4c70b8690c2aa7dc563de949>>
+ * @generated SignedSource<<f99c61f2aa50c63482ab733d9a2ee491>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,16 +9,15 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type CoursesComponentQuery$variables = {
+export type CourseCreatePageQuery$variables = {
   id?: string | null;
 };
-export type CoursesComponentQuery$data = {
+export type CourseCreatePageQuery$data = {
   readonly user: {
     readonly _id: number | null;
     readonly courses: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly _id: number | null;
           readonly body: string | null;
           readonly description: string | null;
           readonly id: string;
@@ -31,9 +30,9 @@ export type CoursesComponentQuery$data = {
     readonly username: string | null;
   } | null;
 };
-export type CoursesComponentQuery = {
-  response: CoursesComponentQuery$data;
-  variables: CoursesComponentQuery$variables;
+export type CourseCreatePageQuery = {
+  response: CourseCreatePageQuery$data;
+  variables: CourseCreatePageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -97,7 +96,6 @@ v6 = [
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -177,7 +175,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CoursesComponentQuery",
+    "name": "CourseCreatePageQuery",
     "selections": [
       {
         "alias": null,
@@ -212,7 +210,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CoursesComponentQuery",
+    "name": "CourseCreatePageQuery",
     "selections": [
       {
         "alias": null,
@@ -251,7 +249,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5cb994ccedd3c6bcd3aca20eb5445664",
+    "cacheID": "0618711cc638566301be0bf9899fb4d7",
     "id": null,
     "metadata": {
       "connection": [
@@ -266,13 +264,13 @@ return {
         }
       ]
     },
-    "name": "CoursesComponentQuery",
+    "name": "CourseCreatePageQuery",
     "operationKind": "query",
-    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
+    "text": "query CourseCreatePageQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          title\n          description\n          body\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a0d96d2ea402f920be258a9fed166bd3";
+(node as any).hash = "35613bb57c7097da893dc32440ad86b1";
 
 export default node;

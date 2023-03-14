@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { graphql, useLazyLoadQuery } from 'react-relay';
+import { graphql, useFragment, useLazyLoadQuery } from 'react-relay';
 import { NavigationType } from '../../App';
 import { CanvasContext } from '../utils/context/CanvasProvider';
 
@@ -16,17 +16,17 @@ interface IProps extends NavigationType<'Course'> {
 }
 
 const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
-  const { course } = useLazyLoadQuery<any>(graphql`
-    query CoursePlayerComponentQuery($id: Int) {
-      course(id: $id) {
-        id,
-        title, 
-        body,
-
+  const course = useFragment(
+    graphql`
+      fragment CoursePlayerComponent_course on Course {
+        title
+        description
+        body
       }
-    }
-  `, { id: route.params.id });
-  
+    `,
+    route.params.courseRef,
+  );
+
   const resultRef = useRef(null);
   const { animateSparks, renderCanvas } = useContext(CanvasContext)
   const [pause, setPause] = useState(false);

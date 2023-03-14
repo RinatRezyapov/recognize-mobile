@@ -1,7 +1,7 @@
-import { useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { Suspense, useContext } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { graphql, loadQuery, RelayEnvironmentProvider, useQueryLoader } from "react-relay/hooks";
+import { graphql, loadQuery, RelayEnvironmentProvider, useQueryLoader, useRelayEnvironment } from "react-relay/hooks";
 
 import { NavigationType } from '../../App';
 import RelayEnvironment from '../RelayEnvironment';
@@ -16,15 +16,22 @@ export const ProfileComponentQuery = graphql`
   query ProfileComponentQuery($id: String) {
     user(id: $id) {
       id,
+      _id,
       username, 
       email,
-      courses {
+      courses(
+          first: 2147483647 # max GraphQLInt
+        ) @connection(key: "Courses_courses") {
         edges {
           node {
-            _id,
+            id
+            _id
             title
             description
             body
+            ...CourseComponent_course
+            ...CoursePlayerComponent_course
+            ...CourseEditComponent_course
           }
         }
       }
@@ -36,7 +43,6 @@ const initialQueryRef = loadQuery(
   RelayEnvironment,
   ProfileComponentQuery,
   { id: '1' },
-  { fetchPolicy: 'network-only', networkCacheConfig: { force: true } }
 );
 
 
