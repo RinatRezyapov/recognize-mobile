@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { v4 as uuidv4 } from 'uuid';
-import { NavigationType } from "../../App";
+import { NavigationType } from "../components/App";
 import Course from "../models/Course";
 import { addCourseToStorage, getCourseFromStorage } from "../utils/storage";
 

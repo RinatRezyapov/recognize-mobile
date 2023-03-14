@@ -7,7 +7,7 @@ import {
   View
 } from 'react-native';
 import { graphql, useFragment, useMutation } from 'react-relay';
-import { NavigationType } from '../../App';
+import { NavigationType } from './App';
 
 interface IProps extends NavigationType<'Course'> {
 

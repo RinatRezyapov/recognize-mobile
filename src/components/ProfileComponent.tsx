@@ -1,10 +1,9 @@
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import React, { Suspense, useContext } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { graphql, loadQuery, RelayEnvironmentProvider, useQueryLoader, useRelayEnvironment } from "react-relay/hooks";
-
-import { NavigationType } from '../../App';
+import React, { Suspense } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { graphql, loadQuery } from 'react-relay';
 import RelayEnvironment from '../RelayEnvironment';
+
+import { NavigationType } from './App';
 import CoursesComponent from './CoursesComponent';
 import ProfileInfo from './ProfileInfo';
 
@@ -19,9 +18,7 @@ export const ProfileComponentQuery = graphql`
       _id,
       username, 
       email,
-      courses(
-          first: 2147483647 # max GraphQLInt
-        ) @connection(key: "Courses_courses") {
+      courses(first: 2147483647) @connection(key: "Courses_courses") {
         edges {
           node {
             id
@@ -46,8 +43,8 @@ const initialQueryRef = loadQuery(
 );
 
 
-const ProfileComponent: React.FC<IProps> = ({ navigation }) => {
 
+const ProfileComponent: React.FC<IProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Suspense fallback={<Text>{"Loading..."}</Text>}>

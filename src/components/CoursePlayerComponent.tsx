@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native';
 import { graphql, useFragment, useLazyLoadQuery } from 'react-relay';
-import { NavigationType } from '../../App';
+import { NavigationType } from './App';
 import { CanvasContext } from '../utils/context/CanvasProvider';
 
 interface IProps extends NavigationType<'Course'> {
