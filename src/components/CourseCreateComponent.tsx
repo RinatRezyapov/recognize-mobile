@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConnectionHandler, graphql, useMutation, usePreloadedQuery } from "react-relay";
+import { ConnectionHandler, graphql, useLazyLoadQuery, useMutation, usePreloadedQuery } from "react-relay";
 
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
 
@@ -51,7 +51,7 @@ interface IProps  {
 
 const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
 
-  const { user } = usePreloadedQuery(UserQuery, initialQueryRef);
+  const { user } = useLazyLoadQuery(UserQuery, { id: '1' });
 
 
   const [mutate] = useMutation(mutation);
@@ -82,7 +82,7 @@ const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }
         ConnectionHandler.insertEdgeAfter(connection, newEdge, null);
       },
     })
-    navigation.navigate('Profile');
+    navigation.navigate('Courses');
   }
 
   return <NewCourseForm onSubmit={onSubmit} />;

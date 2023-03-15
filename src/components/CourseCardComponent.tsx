@@ -34,7 +34,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     borderWidth: 1,
+    borderColor: 'lightgrey',
     borderRadius: 20,
+    backgroundColor: 'white',
   },
   courseTitle: {
     fontSize: 24,

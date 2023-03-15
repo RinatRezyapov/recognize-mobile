@@ -14,6 +14,7 @@ interface IProps extends NavigationType<'Course'> {
 }
 
 const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
+
   const course = useFragment(
     graphql`
       fragment CourseComponent_course on Course {

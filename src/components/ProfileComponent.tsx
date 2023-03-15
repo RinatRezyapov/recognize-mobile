@@ -2,9 +2,7 @@ import React, { Suspense } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { graphql, loadQuery } from 'react-relay';
 import RelayEnvironment from '../RelayEnvironment';
-
 import { NavigationType } from './App';
-import CoursesComponent from './CoursesComponent';
 import ProfileInfo from './ProfileInfo';
 
 interface IProps extends NavigationType<'Profile'> {
@@ -42,14 +40,11 @@ const initialQueryRef = loadQuery(
   { id: '1' },
 );
 
-
-
 const ProfileComponent: React.FC<IProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Suspense fallback={<Text>{"Loading..."}</Text>}>
         <ProfileInfo initialQueryRef={initialQueryRef} />
-        <CoursesComponent initialQueryRef={initialQueryRef} navigation={navigation} />
       </Suspense>
     </View>
   );

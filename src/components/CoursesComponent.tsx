@@ -1,22 +1,50 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import {
   Button, ScrollView, StyleSheet, TouchableOpacity, View
 } from 'react-native';
-import { usePreloadedQuery } from 'react-relay';
+import { graphql, useLazyLoadQuery } from 'react-relay';
 
 import CourseCardComponent from './CourseCardComponent';
-import { ProfileComponentQuery } from './ProfileComponent';
-import { ProfileComponentQuery as ProfileComponentQueryType } from './__generated__/ProfileComponentQuery.graphql';
+import CourseComponent from './CourseComponent';
+import CourseCreateComponent from './CourseCreateComponent';
+import CourseEditComponent from './CourseEditComponent';
+import CoursePlayerComponent from './CoursePlayerComponent';
 
 interface IProps {
   initialQueryRef: any;
   navigation: any;
 }
 
+const CoursesComponentQuery = graphql`
+  query CoursesComponentQuery($id: String) {
+    user(id: $id) {
+      id,
+      _id,
+      username, 
+      email,
+      courses(first: 2147483647) @connection(key: "Courses_courses") {
+        edges {
+          node {
+            id
+            _id
+            title
+            description
+            body
+            ...CourseComponent_course
+            ...CoursePlayerComponent_course
+            ...CourseEditComponent_course
+          }
+        }
+      }
+    }
+  }
+`
+
 const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
 
-  const data = usePreloadedQuery<ProfileComponentQueryType>(ProfileComponentQuery, initialQueryRef);
+  const data = useLazyLoadQuery(CoursesComponentQuery, { id: '1' });
 
   return (
     <View>
@@ -48,7 +76,8 @@ const styles = StyleSheet.create({
   },
   newCourseButton: {
     margin: 16,
-  }
+    borderRadius: 50,
+  },
 });
 
 export default CoursesComponent;
