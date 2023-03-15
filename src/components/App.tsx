@@ -32,7 +32,7 @@ const App = () => {
       <RelayEnvironmentProvider environment={RelayEnvironment}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={HomeComponent} options={{ title: 'Home' }} />
+            <Stack.Screen name="Home" component={HomeComponent} options={{ title: 'Home', headerShown: false }} />
             <Stack.Screen name="Course" component={CourseComponent} options={{ title: 'Course' }} />
             <Stack.Screen name="CoursePlayer" component={CoursePlayerComponent} options={{ title: 'Course Player' }} />
             <Stack.Screen name="CourseCreate" component={CourseCreateComponent} options={{ title: 'New Course' }} />
