@@ -1,16 +1,9 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-
-import {
-  Button, ScrollView, StyleSheet, TouchableOpacity, View
-} from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { graphql, useLazyLoadQuery } from 'react-relay';
+import { Button } from "@react-native-material/core";
 
 import CourseCardComponent from './CourseCardComponent';
-import CourseComponent from './CourseComponent';
-import CourseCreateComponent from './CourseCreateComponent';
-import CourseEditComponent from './CourseEditComponent';
-import CoursePlayerComponent from './CoursePlayerComponent';
 
 interface IProps {
   initialQueryRef: any;
