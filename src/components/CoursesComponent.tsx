@@ -13,10 +13,11 @@ interface IProps {
 const CoursesComponentQuery = graphql`
   query CoursesComponentQuery($id: String) {
     user(id: $id) {
-      id,
-      _id,
-      username, 
-      email,
+      id
+      _id
+      username,
+      email
+      ...CourseComponent_user
       courses(first: 2147483647) @connection(key: "Courses_courses") {
         edges {
           node {
@@ -42,14 +43,14 @@ const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
   return (
     <View>
       <View style={styles.newCourseButton}>
-        <Button title='New course' onPress={() => navigation.navigate('CourseCreate')} />
+        <Button variant='outlined' color='primary' title='New course' onPress={() => navigation.navigate('CourseCreate')} />
       </View>
       <ScrollView>
         {data?.user?.courses?.edges?.map(({ node }) => {
           return (
             <TouchableOpacity
               key={node?._id}
-              onPress={() => navigation.navigate('Course', { id: node?._id, courseRef: node })}
+              onPress={() => navigation.navigate('Course', { id: node?._id, userRef: data.user, courseRef: node })}
             >
               <CourseCardComponent
                 title={node?.title}

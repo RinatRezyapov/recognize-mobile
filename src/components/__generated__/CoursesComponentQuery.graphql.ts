@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<027940a07f4f52cc0f82a8418f693cd4>>
+ * @generated SignedSource<<0c5f08a6456b02e54cc9324363d74b7c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,7 @@ export type CoursesComponentQuery$data = {
     readonly email: string | null;
     readonly id: string;
     readonly username: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_user">;
   } | null;
 };
 export type CoursesComponentQuery = {
@@ -168,6 +169,11 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CourseComponent_user"
+          },
+          {
             "alias": "courses",
             "args": null,
             "concreteType": "CourseConnection",
@@ -304,7 +310,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "49d58122312f383790eab52d2a161566",
+    "cacheID": "42ef3bb61a23bd40002767f60e24defb",
     "id": null,
     "metadata": {
       "connection": [
@@ -321,11 +327,11 @@ return {
     },
     "name": "CoursesComponentQuery",
     "operationKind": "query",
-    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  title\n  description\n  body\n}\n\nfragment CourseEditComponent_course on Course {\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_course on Course {\n  title\n  description\n  body\n}\n"
+    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CourseComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CourseEditComponent_course on Course {\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_course on Course {\n  title\n  description\n  body\n}\n"
   }
 };
 })();
 
-(node as any).hash = "85c9ca8d8a8d8eee3ce7222419bed13f";
+(node as any).hash = "09a88dfaaa82123e4da42e84bb3fdb1d";
 
 export default node;

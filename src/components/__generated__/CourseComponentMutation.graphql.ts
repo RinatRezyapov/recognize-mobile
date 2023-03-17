@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3261ee9e61c6ca37bbca8c3d3cd0688>>
+ * @generated SignedSource<<cab9cd05c0a0c75c4016c58fb5339a5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type CourseComponentMutation$variables = {
 };
 export type CourseComponentMutation$data = {
   readonly removeCourse: {
+    readonly _id: number;
     readonly clientMutationId: string | null;
   } | null;
 };
@@ -55,6 +56,13 @@ v1 = [
         "kind": "ScalarField",
         "name": "clientMutationId",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "_id",
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -78,16 +86,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "63b8f4f20c3e8f85999c1ecab9c480dd",
+    "cacheID": "b2f1b58d3e48945a97fbda00d6b9e1a6",
     "id": null,
     "metadata": {},
     "name": "CourseComponentMutation",
     "operationKind": "mutation",
-    "text": "mutation CourseComponentMutation(\n  $input: RemoveCourseInput!\n) {\n  removeCourse(input: $input) {\n    clientMutationId\n  }\n}\n"
+    "text": "mutation CourseComponentMutation(\n  $input: RemoveCourseInput!\n) {\n  removeCourse(input: $input) {\n    clientMutationId\n    _id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3e4784b30d022c4ab167f2828f34f59d";
+(node as any).hash = "85fefd3c489c852d212f53c16834092d";
 
 export default node;

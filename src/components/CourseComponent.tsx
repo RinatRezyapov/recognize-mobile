@@ -6,7 +6,7 @@ import {
   Text,
   View
 } from 'react-native';
-import { graphql, useFragment, useMutation } from 'react-relay';
+import { ConnectionHandler, graphql, useFragment, useMutation } from 'react-relay';
 import { NavigationType } from './App';
 
 interface IProps extends NavigationType<'Course'> {
@@ -18,6 +18,7 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   const course = useFragment(
     graphql`
       fragment CourseComponent_course on Course {
+        id
         title
         description
         body
@@ -26,10 +27,22 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
     route.params.courseRef,
   );
 
+  const user = useFragment(
+    graphql`
+      fragment CourseComponent_user on User {
+        id
+        _id
+        username
+      }
+    `,
+    route.params.userRef,
+  );
+
   const mutation = graphql`
   mutation CourseComponentMutation($input: RemoveCourseInput!) {
     removeCourse(input: $input) {
       clientMutationId
+      _id
     }
   }
 `;
@@ -41,9 +54,28 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
         input: {
           id,
         }
-      }
+      },
+      updater: (store) => {
+        const payload = store.get(user.id);
+        console.log('payload', payload)
+
+        if (payload == null) return;
+        console.log('removeCourse', store.getRootField('removeCourse'))
+        const removedEdgeID = store.getRootField('removeCourse')?.getValue('_id');
+        console.log('removedEdgeID', removedEdgeID)
+
+        if (!removedEdgeID) return;
+
+        const connection = ConnectionHandler.getConnection(
+          payload,
+          'Courses_courses',
+        );
+        if (!connection) return;
+
+        ConnectionHandler.deleteNode(connection, removedEdgeID.toString());
+      },
     })
-    navigation.navigate('Profile');
+    navigation.navigate('Courses');
   };
 
   const onEditCourseClick = (id: string) => async () => {
