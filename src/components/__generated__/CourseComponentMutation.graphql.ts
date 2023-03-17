@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cab9cd05c0a0c75c4016c58fb5339a5a>>
+ * @generated SignedSource<<87413a62a47db415471159688c007cdd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,14 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RemoveCourseInput = {
   clientMutationId?: string | null;
-  id: number;
+  id: string;
 };
 export type CourseComponentMutation$variables = {
   input: RemoveCourseInput;
 };
 export type CourseComponentMutation$data = {
   readonly removeCourse: {
-    readonly _id: number;
-    readonly clientMutationId: string | null;
+    readonly deletedCourseId: number;
   } | null;
 };
 export type CourseComponentMutation = {
@@ -54,14 +53,7 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "clientMutationId",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "_id",
+        "name": "deletedCourseId",
         "storageKey": null
       }
     ],
@@ -86,16 +78,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "b2f1b58d3e48945a97fbda00d6b9e1a6",
+    "cacheID": "7f58b5a2aac109c1addccfaf247cd430",
     "id": null,
     "metadata": {},
     "name": "CourseComponentMutation",
     "operationKind": "mutation",
-    "text": "mutation CourseComponentMutation(\n  $input: RemoveCourseInput!\n) {\n  removeCourse(input: $input) {\n    clientMutationId\n    _id\n  }\n}\n"
+    "text": "mutation CourseComponentMutation(\n  $input: RemoveCourseInput!\n) {\n  removeCourse(input: $input) {\n    deletedCourseId\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "85fefd3c489c852d212f53c16834092d";
+(node as any).hash = "57069cd3003e3e7ce0af6d1cd698f7e6";
 
 export default node;

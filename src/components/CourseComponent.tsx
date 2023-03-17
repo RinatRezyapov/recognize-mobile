@@ -41,14 +41,13 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   const mutation = graphql`
   mutation CourseComponentMutation($input: RemoveCourseInput!) {
     removeCourse(input: $input) {
-      clientMutationId
-      _id
+      deletedCourseId
     }
   }
 `;
   const [mutate] = useMutation(mutation);
 
-  const onDeleteCourseClick = (id: number) => () => {
+  const onDeleteCourseClick = (id: string) => () => {
     mutate({
       variables: {
         input: {
@@ -57,12 +56,10 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
       },
       updater: (store) => {
         const payload = store.get(user.id);
-        console.log('payload', payload)
 
         if (payload == null) return;
-        console.log('removeCourse', store.getRootField('removeCourse'))
-        const removedEdgeID = store.getRootField('removeCourse')?.getValue('_id');
-        console.log('removedEdgeID', removedEdgeID)
+
+        const removedEdgeID = store.getRootField('removeCourse')?.getValue('deletedCourseId');
 
         if (!removedEdgeID) return;
 
@@ -70,9 +67,10 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
           payload,
           'Courses_courses',
         );
+
         if (!connection) return;
 
-        ConnectionHandler.deleteNode(connection, removedEdgeID.toString());
+        ConnectionHandler.deleteNode(connection, removedEdgeID?.toString());
       },
     })
     navigation.navigate('Courses');
@@ -95,7 +93,7 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
     <View style={styles.buttonsContainer}>
       <Button title='Start' onPress={onStartCourseClick(route?.params?.id)} />
       <Button title='Edit' onPress={onEditCourseClick(route?.params?.id)} />
-      <Button title='Remove' onPress={onDeleteCourseClick(route?.params?.id)} />
+      <Button title='Remove' onPress={onDeleteCourseClick(course?.id)} />
     </View>
   </View>;
 }

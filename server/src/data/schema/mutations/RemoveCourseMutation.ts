@@ -1,29 +1,26 @@
-import { GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql';
-import { mutationWithClientMutationId } from 'graphql-relay';
-import { getUser, removeCourse } from '../../database';
-import { GraphQLUser } from '../nodes';
+import { GraphQLID, GraphQLNonNull } from 'graphql';
+import { fromGlobalId, mutationWithClientMutationId } from 'graphql-relay';
+import { removeCourse } from '../../database';
 
 const RemoveCourseMutation = mutationWithClientMutationId({
-    name: 'RemoveCourse',
-    inputFields: {
-      id: {type: new GraphQLNonNull(GraphQLInt)},
-      userId: {type: new GraphQLNonNull(GraphQLString)},
+  name: 'RemoveCourse',
+  inputFields: {
+    id: { type: new GraphQLNonNull(GraphQLID) },
+  },
+  outputFields: {
+    deletedCourseId: {
+      type: new GraphQLNonNull(GraphQLID),
+      resolve: ({ id }, { }, { pgPool }): string => id,
     },
-    outputFields: {
-      deletedCourseId: {
-        type: new GraphQLNonNull(GraphQLInt),
-        resolve: ({id}, {}, { pgPool }): string => id,
-      },
-      user: {
-        type: new GraphQLNonNull(GraphQLUser),
-        resolve: ({userId}, {}, { pgPool }) => getUser(userId, pgPool)
-      },
-    },
-    mutateAndGetPayload: async ({ id, userId }, { pgPool }) => {
-        await removeCourse(pgPool, id);
+  },
+  mutateAndGetPayload: async ({ id }, { pgPool }) => {
+    const localId = fromGlobalId(id).id;
 
-        return { id, userId };
-    },
+    await removeCourse(pgPool, localId);
+
+    return { id };
+  },
 });
 
 export { RemoveCourseMutation };
+

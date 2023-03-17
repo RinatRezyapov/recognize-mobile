@@ -106,12 +106,10 @@ input UpdateCourseInput {
 
 type RemoveCoursePayload {
   deletedCourseId: Int!
-  user: User!
   clientMutationId: String
 }
 
 input RemoveCourseInput {
-  id: Int!
-  userId: String!
+  id: ID!
   clientMutationId: String
 }
