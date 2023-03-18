@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87413a62a47db415471159688c007cdd>>
+ * @generated SignedSource<<73416c67e7ba42a56f6a24d41a864280>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type CourseComponentMutation$variables = {
 };
 export type CourseComponentMutation$data = {
   readonly removeCourse: {
-    readonly deletedCourseId: number;
+    readonly deletedCourseId: string;
   } | null;
 };
 export type CourseComponentMutation = {

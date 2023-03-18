@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2b7cdb65d91e810416078ba1633eab90>>
+ * @generated SignedSource<<b57f931b805cd646cabefc4cc6033cd4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type CourseCreateComponentQuery$data = {
           readonly __id: string;
           readonly body: string | null;
           readonly description: string | null;
+          readonly id: string;
           readonly title: string | null;
         } | null;
       } | null> | null;
@@ -78,79 +79,104 @@ v5 = {
   "name": "email",
   "storageKey": null
 },
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "description",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "body",
-  "storageKey": null
-},
-v9 = {
-  "kind": "ClientExtension",
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "__id",
-      "storageKey": null
-    }
-  ]
-},
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v11 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "cursor",
-  "storageKey": null
-},
-v12 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "PageInfo",
-  "kind": "LinkedField",
-  "name": "pageInfo",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "endCursor",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "hasNextPage",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-},
-v13 = [
+v6 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "CourseEdge",
+    "kind": "LinkedField",
+    "name": "edges",
+    "plural": true,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Course",
+        "kind": "LinkedField",
+        "name": "node",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "description",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "body",
+            "storageKey": null
+          },
+          {
+            "kind": "ClientExtension",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "__id",
+                "storageKey": null
+              }
+            ]
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "__typename",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "cursor",
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "PageInfo",
+    "kind": "LinkedField",
+    "name": "pageInfo",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "endCursor",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "hasNextPage",
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  }
+],
+v7 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -183,37 +209,7 @@ return {
             "kind": "LinkedField",
             "name": "__Courses_courses_connection",
             "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CourseEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Course",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v6/*: any*/),
-                      (v7/*: any*/),
-                      (v8/*: any*/),
-                      (v9/*: any*/),
-                      (v10/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  (v11/*: any*/)
-                ],
-                "storageKey": null
-              },
-              (v12/*: any*/)
-            ],
+            "selections": (v6/*: any*/),
             "storageKey": null
           }
         ],
@@ -243,48 +239,17 @@ return {
           (v5/*: any*/),
           {
             "alias": null,
-            "args": (v13/*: any*/),
+            "args": (v7/*: any*/),
             "concreteType": "CourseConnection",
             "kind": "LinkedField",
             "name": "courses",
             "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CourseEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Course",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v6/*: any*/),
-                      (v7/*: any*/),
-                      (v8/*: any*/),
-                      (v2/*: any*/),
-                      (v9/*: any*/),
-                      (v10/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  (v11/*: any*/)
-                ],
-                "storageKey": null
-              },
-              (v12/*: any*/)
-            ],
+            "selections": (v6/*: any*/),
             "storageKey": "courses(first:2147483647)"
           },
           {
             "alias": null,
-            "args": (v13/*: any*/),
+            "args": (v7/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "Courses_courses",
@@ -297,7 +262,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "28281a4cca9389b46cb7fc00818e1628",
+    "cacheID": "47394c2aa0c143b1be228a16f5b41720",
     "id": null,
     "metadata": {
       "connection": [
@@ -314,11 +279,11 @@ return {
     },
     "name": "CourseCreateComponentQuery",
     "operationKind": "query",
-    "text": "query CourseCreateComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          title\n          description\n          body\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
+    "text": "query CourseCreateComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          title\n          description\n          body\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "85e665c7cc17fbc5d6e6b42ad7dc2f0a";
+(node as any).hash = "62127b28f871ef5709d296603f7c46c7";
 
 export default node;

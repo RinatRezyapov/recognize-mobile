@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConnectionHandler, graphql, useLazyLoadQuery, useMutation, usePreloadedQuery } from "react-relay";
+import { ConnectionHandler, graphql, useLazyLoadQuery, useMutation } from "react-relay";
 
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
 
@@ -16,6 +16,7 @@ export const UserQuery = graphql`
         edges {
           node {
             __id
+            id
             title
             description
             body
@@ -31,6 +32,8 @@ const mutation = graphql`
     addCourse(input: $input) {
       courseEdge {
         node {
+          id
+          _id
           title
           body
           description
@@ -59,7 +62,7 @@ const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }
     mutate({
       variables: {
         input: {
-          authorId: user._id,
+          authorId: user.id,
           title: fields.title,
           description: fields.description,
           body: fields.data,

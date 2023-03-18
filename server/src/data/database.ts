@@ -8,7 +8,7 @@ export const getCourse = (courseId: number, pgPool) => {
   return pgPool?.query(`SELECT * FROM courses WHERE id = '${courseId}'`).then(response => response.rows?.[0]);
 }
 
-export const addCourse = (pgPool, data) => {
+export const addCourse = (pgPool, authorId, data) => {
   return pgPool?.query(`INSERT INTO courses (
     author_id,
     title,
@@ -17,7 +17,7 @@ export const addCourse = (pgPool, data) => {
     created_at, 
     updated_at
     ) VALUES (
-      '${data.authorId}', 
+      '${authorId}', 
       '${data.title}', 
       '${data.description}', 
       '${data.body}', 

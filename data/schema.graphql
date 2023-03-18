@@ -81,7 +81,7 @@ type AddCoursePayload {
 }
 
 input AddCourseInput {
-  authorId: Int!
+  authorId: ID!
   title: String!
   description: String!
   body: String!
@@ -105,7 +105,7 @@ input UpdateCourseInput {
 }
 
 type RemoveCoursePayload {
-  deletedCourseId: Int!
+  deletedCourseId: ID!
   clientMutationId: String
 }
 
