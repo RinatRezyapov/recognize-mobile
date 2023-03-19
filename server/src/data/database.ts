@@ -26,8 +26,8 @@ export const addCourse = (pgPool, authorId, data) => {
     ) returning *;`).then(response => response.rows?.[0]);
 }
 
-export const updateCourse = (pgPool, data) => {
-  return pgPool?.query(`UPDATE courses SET title='${data.title}', description='${data.description}', body='${data.body}' WHERE id=${data.id} RETURNING *;`).then(response => response.rows?.[0]);
+export const updateCourse = (pgPool, id, data) => {
+  return pgPool?.query(`UPDATE courses SET title='${data.title}', description='${data.description}', body='${data.body}' WHERE id=${id} RETURNING *;`).then(response => response.rows?.[0]);
 }
 
 export const removeCourse = (pgPool, courseId) => {

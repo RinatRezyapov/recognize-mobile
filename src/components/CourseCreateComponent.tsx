@@ -10,9 +10,7 @@ export const UserQuery = graphql`
       _id,
       username, 
       email,
-      courses(
-          first: 2147483647 # max GraphQLInt
-        ) @connection(key: "Courses_courses") {
+      courses(first: 2147483647) @connection(key: "Courses_courses") {
         edges {
           node {
             __id

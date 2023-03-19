@@ -1,37 +1,41 @@
 import {
-    mutationWithClientMutationId
+  cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId
 } from 'graphql-relay';
 
-import { GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql';
-import { GraphQLCourse, GraphQLUser } from '../nodes';
+import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
+import { getCourse, getCourses, updateCourse } from '../../database';
+import { GraphQLCourseEdge } from '../nodes';
 
-import { getCourse, getUser, updateCourse } from '../../database';
 
 const UpdateCourseMutation = mutationWithClientMutationId({
-    name: 'UpdateCourse',
-    inputFields: {
-        id: { type: new GraphQLNonNull(GraphQLInt) },
-        title: { type: new GraphQLNonNull(GraphQLString) },
-        description: { type: new GraphQLNonNull(GraphQLString) },
-        body: { type: new GraphQLNonNull(GraphQLString) },
+  name: 'UpdateCourse',
+  inputFields: {
+    id: { type: new GraphQLNonNull(GraphQLID) },
+    title: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: new GraphQLNonNull(GraphQLString) },
+    body: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  outputFields: {
+    courseEdge: {
+      type: new GraphQLNonNull(GraphQLCourseEdge),
+      resolve: async ({ id }, { }, { pgPool }) => {
+        const course = await getCourse(id, pgPool);
+        const courses = await getCourses(1, pgPool);
+        return {
+          cursor: cursorForObjectInConnection([...courses], course),
+          node: course,
+        };
+      },
     },
-    outputFields: {
-        courseEdge: {
-            type: new GraphQLNonNull(GraphQLCourse),
-            resolve: ({ addedCourse }, { }, { pgPool }) => {
-                return getCourse(addedCourse.id, pgPool)
-            },
-        },
-        user: {
-            type: new GraphQLNonNull(GraphQLUser),
-            resolve: async ({ userId }, { pgPool }) => await getUser(userId, pgPool),
-        },
-    },
-    mutateAndGetPayload: async (data, { pgPool }) => {
-        const addedCourse = await updateCourse(pgPool, data);
+  },
+  mutateAndGetPayload: async ({ id, ...data }, { pgPool }) => {
+    const localId = fromGlobalId(id).id;
+    console.log(id, localId)
+    await updateCourse(pgPool, localId, data);
 
-        return { addedCourse };
-    },
+    return { id: localId };
+  },
 });
 
 export { UpdateCourseMutation };
+

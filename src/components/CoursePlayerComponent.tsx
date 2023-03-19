@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { graphql, useFragment, useLazyLoadQuery } from 'react-relay';
-import { NavigationType } from './App';
+import { graphql, useFragment } from 'react-relay';
 import { CanvasContext } from '../utils/context/CanvasProvider';
+import { NavigationType } from './App';
 
 interface IProps extends NavigationType<'Course'> {
 

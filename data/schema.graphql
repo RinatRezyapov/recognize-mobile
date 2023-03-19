@@ -91,13 +91,12 @@ input AddCourseInput {
 }
 
 type UpdateCoursePayload {
-  courseEdge: Course!
-  user: User!
+  courseEdge: CourseEdge!
   clientMutationId: String
 }
 
 input UpdateCourseInput {
-  id: Int!
+  id: ID!
   title: String!
   description: String!
   body: String!

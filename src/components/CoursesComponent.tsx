@@ -49,7 +49,7 @@ const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
         {data?.user?.courses?.edges?.map(({ node }) => {
           return (
             <TouchableOpacity
-              key={node?._id}
+              key={node?.id}
               onPress={() => navigation.navigate('Course', { id: node?._id, userRef: data.user, courseRef: node })}
             >
               <CourseCardComponent
