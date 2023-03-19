@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c5f08a6456b02e54cc9324363d74b7c>>
+ * @generated SignedSource<<19c08ef125d70eed5d576fecc3b5d56d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,7 @@ export type CoursesComponentQuery$data = {
     readonly email: string | null;
     readonly id: string;
     readonly username: string | null;
-    readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_user">;
+    readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_user" | "CourseEditComponent_user">;
   } | null;
 };
 export type CoursesComponentQuery = {
@@ -174,6 +174,11 @@ return {
             "name": "CourseComponent_user"
           },
           {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CourseEditComponent_user"
+          },
+          {
             "alias": "courses",
             "args": null,
             "concreteType": "CourseConnection",
@@ -310,7 +315,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "42ef3bb61a23bd40002767f60e24defb",
+    "cacheID": "987a5d88e35f67ae43d7677f87bad939",
     "id": null,
     "metadata": {
       "connection": [
@@ -327,11 +332,11 @@ return {
     },
     "name": "CoursesComponentQuery",
     "operationKind": "query",
-    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CourseComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CourseEditComponent_course on Course {\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_course on Course {\n  title\n  description\n  body\n}\n"
+    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CourseComponent_user\n    ...CourseEditComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CourseEditComponent_course on Course {\n  title\n  description\n  body\n}\n\nfragment CourseEditComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CoursePlayerComponent_course on Course {\n  title\n  description\n  body\n}\n"
   }
 };
 })();
 
-(node as any).hash = "09a88dfaaa82123e4da42e84bb3fdb1d";
+(node as any).hash = "5136c520056d0df79dba286ff5096fb4";
 
 export default node;

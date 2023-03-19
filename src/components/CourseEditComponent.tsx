@@ -5,34 +5,22 @@ import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewC
 import { FormMode } from '../types/forms';
 import { NavigationType } from './App';
 
-export const UserQuery = graphql`
-  query CourseCreateComponentQuery($id: String) {
-    user(id: $id) {
-      id,
-      _id,
-      username, 
-      email,
-      courses(first: 2147483647) @connection(key: "Courses_courses") {
-        edges {
-          node {
-            __id
-            id
-            title
-            description
-            body
-          }
-        }
-      }
-    }
-  }
-`
-
 interface IProps extends NavigationType<'Course'> {
 
 }
 
 const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
-  const { user } = useLazyLoadQuery(UserQuery, { id: '1' });
+  const user = useFragment(
+    graphql`
+      fragment CourseEditComponent_user on User {
+        id
+        _id
+        username
+      }
+    `,
+    route.params.userRef,
+  );
+
   const course = useFragment(
     graphql`
       fragment CourseEditComponent_course on Course {
@@ -48,7 +36,13 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
   mutation CourseEditComponentMutation($input: UpdateCourseInput!) {
     updateCourse(input: $input) {
       courseEdge {
-        title,
+        node {
+          id
+        _id
+        title
+        description
+        body
+        }
       }
     }
   }
@@ -64,20 +58,23 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
           body: fields.data,
         }
       },
-      // updater: (store) => {
-      //   const payload = store.get(user.id);
-      //   if (payload == null) {
-      //     return;
-      //   }
-      //   const newEdge = store.getRootField('updateCourse')?.getLinkedRecord('courseEdge');
-      //   if (!newEdge) return;
-      //   const connection = ConnectionHandler.getConnection(
-      //     payload,
-      //     'Courses_courses',
-      //   );
-      //   if (!connection) return;
-      //   ConnectionHandler.update(store, );
-      // },
+      updater: (store) => {
+        const payload = store.get(user.id);
+        if (payload == null) {
+          return;
+        }
+        console.log('updater', payload, store.getRootField('updateCourse'))
+        const updatedEdge = store.getRootField('updateCourse')?.getLinkedRecord('courseEdge');
+        if (!updatedEdge) return;
+
+        const connection = ConnectionHandler.getConnection(
+          payload,
+          'Courses_courses',
+        );
+
+        // if (!connection) return;
+        // ConnectionHandler.update(store, );
+      },
     })
     navigation.navigate('Courses');
   }

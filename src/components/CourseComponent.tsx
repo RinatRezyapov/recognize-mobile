@@ -78,7 +78,7 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   };
 
   const onEditCourseClick = (id: string) => async () => {
-    navigation.navigate('CourseEdit', { id, courseRef: route.params.courseRef });
+    navigation.navigate('CourseEdit', { id, courseRef: route.params.courseRef, userRef: route.params.userRef  });
   }
 
   const onStartCourseClick = (id: string) => async () => {

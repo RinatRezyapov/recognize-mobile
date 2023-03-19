@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52bf009f1cdc534bd612d75582b7e5bb>>
+ * @generated SignedSource<<abc09f848e6df8cd1ff5c20a3b7abae5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,10 +25,12 @@ export type CourseCreateComponentMutation$data = {
   readonly addCourse: {
     readonly courseEdge: {
       readonly node: {
+        readonly _id: number | null;
         readonly authorId: string | null;
         readonly body: string | null;
         readonly createdAt: number | null;
         readonly description: string | null;
+        readonly id: string;
         readonly title: string | null;
         readonly updatedAt: number | null;
       } | null;
@@ -50,91 +52,89 @@ var v0 = [
 ],
 v1 = [
   {
-    "kind": "Variable",
-    "name": "input",
-    "variableName": "input"
-  }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "body",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "description",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "authorId",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "createdAt",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "updatedAt",
-  "storageKey": null
-};
-return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "CourseCreateComponentMutation",
+    "alias": null,
+    "args": [
+      {
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "input"
+      }
+    ],
+    "concreteType": "AddCoursePayload",
+    "kind": "LinkedField",
+    "name": "addCourse",
+    "plural": false,
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "AddCoursePayload",
+        "args": null,
+        "concreteType": "CourseEdge",
         "kind": "LinkedField",
-        "name": "addCourse",
+        "name": "courseEdge",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "CourseEdge",
+            "concreteType": "Course",
             "kind": "LinkedField",
-            "name": "courseEdge",
+            "name": "node",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Course",
-                "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v6/*: any*/),
-                  (v7/*: any*/)
-                ],
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "_id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "body",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "authorId",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "createdAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "updatedAt",
                 "storageKey": null
               }
             ],
@@ -144,6 +144,16 @@ return {
         "storageKey": null
       }
     ],
+    "storageKey": null
+  }
+];
+return {
+  "fragment": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "CourseCreateComponentMutation",
+    "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -152,66 +162,19 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CourseCreateComponentMutation",
-    "selections": [
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "AddCoursePayload",
-        "kind": "LinkedField",
-        "name": "addCourse",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "CourseEdge",
-            "kind": "LinkedField",
-            "name": "courseEdge",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Course",
-                "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v6/*: any*/),
-                  (v7/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ]
+    "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "63a0ac17785ff94388b15096d1880713",
+    "cacheID": "1638fae75154eb4d0213705577ed95cd",
     "id": null,
     "metadata": {},
     "name": "CourseCreateComponentMutation",
     "operationKind": "mutation",
-    "text": "mutation CourseCreateComponentMutation(\n  $input: AddCourseInput!\n) {\n  addCourse(input: $input) {\n    courseEdge {\n      node {\n        title\n        body\n        description\n        authorId\n        createdAt\n        updatedAt\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation CourseCreateComponentMutation(\n  $input: AddCourseInput!\n) {\n  addCourse(input: $input) {\n    courseEdge {\n      node {\n        id\n        _id\n        title\n        body\n        description\n        authorId\n        createdAt\n        updatedAt\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fe5822ff75fc8d61e930227f24a6f3ef";
+(node as any).hash = "3b471a69842be340c509baca7b298523";
 
 export default node;

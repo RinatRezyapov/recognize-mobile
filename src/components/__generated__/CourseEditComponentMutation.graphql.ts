@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c878c59fca5c28deb5e5c0553f04510>>
+ * @generated SignedSource<<472f6061284ab05e520dbd2d5731b2a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ export type UpdateCourseInput = {
   body: string;
   clientMutationId?: string | null;
   description: string;
-  id: number;
+  id: string;
   title: string;
 };
 export type CourseEditComponentMutation$variables = {
@@ -22,7 +22,13 @@ export type CourseEditComponentMutation$variables = {
 export type CourseEditComponentMutation$data = {
   readonly updateCourse: {
     readonly courseEdge: {
-      readonly title: string | null;
+      readonly node: {
+        readonly _id: number | null;
+        readonly body: string | null;
+        readonly description: string | null;
+        readonly id: string;
+        readonly title: string | null;
+      } | null;
     };
   } | null;
 };
@@ -41,64 +47,25 @@ var v0 = [
 ],
 v1 = [
   {
-    "kind": "Variable",
-    "name": "input",
-    "variableName": "input"
-  }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-};
-return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "CourseEditComponentMutation",
-    "selections": [
+    "alias": null,
+    "args": [
       {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "UpdateCoursePayload",
-        "kind": "LinkedField",
-        "name": "updateCourse",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Course",
-            "kind": "LinkedField",
-            "name": "courseEdge",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "input"
       }
     ],
-    "type": "Mutation",
-    "abstractKey": null
-  },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Operation",
-    "name": "CourseEditComponentMutation",
+    "concreteType": "UpdateCoursePayload",
+    "kind": "LinkedField",
+    "name": "updateCourse",
+    "plural": false,
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "UpdateCoursePayload",
+        "args": null,
+        "concreteType": "CourseEdge",
         "kind": "LinkedField",
-        "name": "updateCourse",
+        "name": "courseEdge",
         "plural": false,
         "selections": [
           {
@@ -106,15 +73,42 @@ return {
             "args": null,
             "concreteType": "Course",
             "kind": "LinkedField",
-            "name": "courseEdge",
+            "name": "node",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "_id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "body",
                 "storageKey": null
               }
             ],
@@ -123,19 +117,38 @@ return {
         ],
         "storageKey": null
       }
-    ]
+    ],
+    "storageKey": null
+  }
+];
+return {
+  "fragment": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "CourseEditComponentMutation",
+    "selections": (v1/*: any*/),
+    "type": "Mutation",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Operation",
+    "name": "CourseEditComponentMutation",
+    "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "a737d0c4400fbc36e76d3f0d8840fbd9",
+    "cacheID": "a61a4089a9641940a1f326ca16705602",
     "id": null,
     "metadata": {},
     "name": "CourseEditComponentMutation",
     "operationKind": "mutation",
-    "text": "mutation CourseEditComponentMutation(\n  $input: UpdateCourseInput!\n) {\n  updateCourse(input: $input) {\n    courseEdge {\n      title\n      id\n    }\n  }\n}\n"
+    "text": "mutation CourseEditComponentMutation(\n  $input: UpdateCourseInput!\n) {\n  updateCourse(input: $input) {\n    courseEdge {\n      node {\n        id\n        _id\n        title\n        description\n        body\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d37bd7712f2876432a94044ef5b38738";
+(node as any).hash = "f7f85e3e00842fb14ed5fbe332c99c1e";
 
 export default node;
