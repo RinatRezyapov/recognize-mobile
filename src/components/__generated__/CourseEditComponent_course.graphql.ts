@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ad556d1df8f4547aea87f98463c41fe8>>
+ * @generated SignedSource<<7efdd3e5182bd3c909c8be64a750e300>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,10 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CourseEditComponent_course$data = {
+  readonly _id: number | null;
   readonly body: string | null;
   readonly description: string | null;
+  readonly id: string;
   readonly title: string | null;
   readonly " $fragmentType": "CourseEditComponent_course";
 };
@@ -27,6 +29,20 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "CourseEditComponent_course",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "_id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -53,6 +69,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a0b4e62f1c7a5b429656bfc164e6e824";
+(node as any).hash = "6260caf71eb576f71c1d59c95c51f1d3";
 
 export default node;

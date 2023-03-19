@@ -24,6 +24,8 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
   const course = useFragment(
     graphql`
       fragment CourseEditComponent_course on Course {
+        id
+        _id
         title
         description
         body
@@ -49,6 +51,7 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
   `;
   const [mutate] = useMutation(mutation);
   const onSubmit = async (fields: NewCourseFormFields) => {
+
     mutate({
       variables: {
         input: {
@@ -57,24 +60,7 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
           description: fields.description,
           body: fields.data,
         }
-      },
-      updater: (store) => {
-        const payload = store.get(user.id);
-        if (payload == null) {
-          return;
-        }
-        console.log('updater', payload, store.getRootField('updateCourse'))
-        const updatedEdge = store.getRootField('updateCourse')?.getLinkedRecord('courseEdge');
-        if (!updatedEdge) return;
-
-        const connection = ConnectionHandler.getConnection(
-          payload,
-          'Courses_courses',
-        );
-
-        // if (!connection) return;
-        // ConnectionHandler.update(store, );
-      },
+      }
     })
     navigation.navigate('Courses');
   }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee32b8e23010ea4deb6c0709e90fc11a>>
+ * @generated SignedSource<<fb611562bbee3329cff3eed647688b62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -304,7 +304,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9e1fa7bf666fcf44ee974ed59a7556ac",
+    "cacheID": "eef8f658be16cd41ace2c4a61d6bbf83",
     "id": null,
     "metadata": {
       "connection": [
@@ -321,7 +321,7 @@ return {
     },
     "name": "ProfileComponentQuery",
     "operationKind": "query",
-    "text": "query ProfileComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CourseEditComponent_course on Course {\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_course on Course {\n  title\n  description\n  body\n}\n"
+    "text": "query ProfileComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CourseEditComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_course on Course {\n  title\n  description\n  body\n}\n"
   }
 };
 })();
