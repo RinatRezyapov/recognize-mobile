@@ -1,5 +1,3 @@
-import { pipe } from 'fp-ts/lib/function';
-import { getOrElse, Option } from 'fp-ts/lib/Option';
 import React from 'react';
 import {
   StyleSheet,

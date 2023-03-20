@@ -1,8 +1,9 @@
-import React from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { graphql, useLazyLoadQuery } from 'react-relay';
 import { Button } from "@react-native-material/core";
+import React from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { graphql, useLazyLoadQuery } from 'react-relay';
 
+import styled from '@emotion/native';
 import CourseCardComponent from './CourseCardComponent';
 
 interface IProps {
@@ -43,9 +44,8 @@ const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
 
   return (
     <View>
-      <View style={styles.newCourseButton}>
-        <Button variant='outlined' color='primary' title='New course' onPress={() => navigation.navigate('CourseCreate')} />
-      </View>
+
+      <StyledButton variant='outlined' color='primary' title='New course' onPress={() => navigation.navigate('CourseCreate')} />
       <ScrollView>
         {data?.user?.courses?.edges?.map(({ node }) => {
           return (
@@ -65,14 +65,8 @@ const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
   );
 }
 
-const styles = StyleSheet.create({
-  highlight: {
-    fontWeight: '700',
-  },
-  newCourseButton: {
-    margin: 16,
-    borderRadius: 50,
-  },
-});
-
 export default CoursesComponent;
+
+const StyledButton = styled(Button)`
+  margin: 16px;
+`;

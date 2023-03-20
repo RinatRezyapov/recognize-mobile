@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
-import { Dimensions, TouchableOpacity, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 
 import {
   rect,
@@ -8,7 +8,6 @@ import {
   SkiaView,
   useDrawCallback
 } from '@shopify/react-native-skia';
-import { useFocusEffect } from '@react-navigation/native';
 
 const paint = Skia.Paint();
 paint.setAntiAlias(false);

@@ -6,9 +6,9 @@ import {
   Text,
   View
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { ConnectionHandler, graphql, useFragment, useMutation } from 'react-relay';
 import { NavigationType } from './App';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface IProps extends NavigationType<'Course'> {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
-import { ConnectionHandler, graphql, useFragment, useLazyLoadQuery, useMutation } from "react-relay";
+import { graphql, useFragment, useMutation } from "react-relay";
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
 import { FormMode } from '../types/forms';
 import { NavigationType } from './App';
