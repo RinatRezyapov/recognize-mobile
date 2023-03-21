@@ -1,5 +1,5 @@
 
-import { getCourse, getCourses, getUser } from '../database';
+import { getAllCourses, getCourse, getCourses, getUser } from '../database';
 import { GraphQLInt, GraphQLObjectType, GraphQLString } from 'graphql';
 import { globalIdField, nodeDefinitions, fromGlobalId, connectionDefinitions, connectionFromArray, connectionArgs } from 'graphql-relay';
 
@@ -103,5 +103,23 @@ const GraphQLUser = new GraphQLObjectType({
   interfaces: [nodeInterface],
 })
 
+const GraphQLCourses = new GraphQLObjectType({
+  name: 'Courses',
+  fields: {
+    courses: {
+      type: CoursesConnection,
+      args: todosArgs,
+      resolve: async (user, { after, before, first, last }, { pgPool }) => {
+        try {
+          const courses = await getAllCourses(pgPool);
+          return connectionFromArray(courses, { after, before, first, last });
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    },
+  },
+})
 
-export { GraphQLUser, GraphQLCourse, GraphQLCourseEdge, nodeField }
+
+export { GraphQLUser, GraphQLCourse, GraphQLCourses, GraphQLCourseEdge, nodeField }

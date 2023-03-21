@@ -1,5 +1,6 @@
 type Query {
   user(id: String): User
+  courses: Courses
 
   """Fetches an object given its ID"""
   node(
@@ -66,6 +67,10 @@ type Course implements Node {
   body: String
   createdAt: Int
   updatedAt: Int
+}
+
+type Courses {
+  courses(status: String = "any", after: String, first: Int, before: String, last: Int): CourseConnection
 }
 
 type Mutation {

@@ -37,3 +37,9 @@ export const removeCourse = (pgPool, courseId) => {
 export const getUser = (userId: number, pgPool) => {
   return  pgPool?.query(`SELECT * FROM users WHERE id=${userId}`).then(response => response.rows?.[0]);
 }
+
+export const getAllCourses = (pgPool) => {
+  return pgPool?.query(`SELECT * FROM courses;`).then(response => {
+    return response.rows.map(v => ({ ...v, id: v.id }))
+  })
+}

@@ -30,7 +30,6 @@ const UpdateCourseMutation = mutationWithClientMutationId({
   },
   mutateAndGetPayload: async ({ id, ...data }, { pgPool }) => {
     const localId = fromGlobalId(id).id;
-    console.log(id, localId)
     await updateCourse(pgPool, localId, data);
 
     return { id: localId };
