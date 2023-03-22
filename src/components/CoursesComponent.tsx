@@ -12,15 +12,9 @@ interface IProps {
 }
 
 const CoursesComponentQuery = graphql`
-  query CoursesComponentQuery($id: String) {
-    user(id: $id) {
-      id
-      _id
-      username,
-      email
-      ...CourseComponent_user
-      ...CourseEditComponent_user
-      courses(first: 2147483647) @connection(key: "Courses_courses") {
+  query CoursesComponentQuery {
+    courses {
+      courses {
         edges {
           node {
             id
@@ -28,9 +22,6 @@ const CoursesComponentQuery = graphql`
             title
             description
             body
-            ...CourseComponent_course
-            ...CoursePlayerComponent_course
-            ...CourseEditComponent_course
           }
         }
       }
@@ -40,18 +31,19 @@ const CoursesComponentQuery = graphql`
 
 const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
 
-  const data = useLazyLoadQuery(CoursesComponentQuery, { id: '1' });
-
+  const data = useLazyLoadQuery(CoursesComponentQuery, {});
+  console.log(data)
   return (
     <View>
 
       <StyledButton variant='outlined' color='primary' title='New course' onPress={() => navigation.navigate('CourseCreate')} />
       <ScrollView>
-        {data?.user?.courses?.edges?.map(({ node }) => {
+        {data?.courses?.courses?.edges?.map(({ node }) => {
+          console.log('node', node)
           return (
             <TouchableOpacity
               key={node?.id}
-              onPress={() => navigation.navigate('Course', { id: node?._id, userRef: data.user, courseRef: node })}
+              onPress={() => navigation.navigate('Course', { id: node?._id, courseRef: node })}
             >
               <CourseCardComponent
                 title={node?.title}
