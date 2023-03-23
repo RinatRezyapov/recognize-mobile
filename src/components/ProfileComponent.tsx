@@ -44,7 +44,7 @@ const ProfileComponent: React.FC<IProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Suspense fallback={<Text>{"Loading..."}</Text>}>
-        <ProfileInfo initialQueryRef={initialQueryRef} />
+        <ProfileInfo navigation={navigation} initialQueryRef={initialQueryRef} />
       </Suspense>
     </View>
   );

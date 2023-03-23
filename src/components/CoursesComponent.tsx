@@ -32,14 +32,11 @@ const CoursesComponentQuery = graphql`
 const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
 
   const data = useLazyLoadQuery(CoursesComponentQuery, {});
-  console.log(data)
+
   return (
     <View>
-
-      <StyledButton variant='outlined' color='primary' title='New course' onPress={() => navigation.navigate('CourseCreate')} />
       <ScrollView>
         {data?.courses?.courses?.edges?.map(({ node }) => {
-          console.log('node', node)
           return (
             <TouchableOpacity
               key={node?.id}
@@ -58,7 +55,3 @@ const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
 }
 
 export default CoursesComponent;
-
-const StyledButton = styled(Button)`
-  margin: 16px;
-`;

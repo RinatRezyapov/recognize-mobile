@@ -83,7 +83,7 @@ const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }
         ConnectionHandler.insertEdgeAfter(connection, newEdge, null);
       },
     })
-    navigation.navigate('Courses');
+    navigation.navigate('Profile');
   }
 
   return <NewCourseForm onSubmit={onSubmit} />;

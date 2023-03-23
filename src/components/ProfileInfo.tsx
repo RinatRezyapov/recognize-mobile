@@ -1,26 +1,61 @@
+import styled from '@emotion/native';
+import { Button } from '@react-native-material/core';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { usePreloadedQuery } from 'react-relay';
+import CourseCardComponent from './CourseCardComponent';
 import { ProfileComponentQuery } from './ProfileComponent';
 import { ProfileComponentQuery as ProfileComponentQueryType } from './__generated__/ProfileComponentQuery.graphql';
 
 interface IProps {
   initialQueryRef: any;
+  navigation: any;
 }
 
-const ProfileComponent: React.FC<IProps> = ({ initialQueryRef }) => {
+const ProfileComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
   const data = usePreloadedQuery<ProfileComponentQueryType>(ProfileComponentQuery, initialQueryRef);
 
   return (
     <View style={styles.personalInfo}>
-      <Image source={require("./profile-pic.png")} style={styles.profileImg} />
+      <PersonalInfo>
+        <Image source={require("./profile-pic.png")} style={styles.profileImg} />
+        <View>
+          <Text style={styles.username}>{data?.user?.username}</Text>
+          <Text style={styles.email}>{data?.user?.email}</Text>
+        </View>
+      </PersonalInfo>
       <View>
-        <Text style={styles.username}>{data?.user?.username}</Text>
-        <Text style={styles.email}>{data?.user?.email}</Text>
+        <Text style={styles.myCoursesTitle}>My courses</Text>
+        <StyledButton variant='outlined' color='primary' title='New course' onPress={() => navigation.navigate('CourseCreate')} />
+        <ScrollView>
+          {data?.user?.courses?.edges?.map(({ node }) => {
+            return (
+              <TouchableOpacity
+                key={node?.id}
+                onPress={() => navigation.navigate('Course', { id: node?._id, courseRef: node })}
+              >
+                <CourseCardComponent
+                  title={node?.title}
+                  description={node?.description}
+                />
+              </TouchableOpacity>
+            )
+          })}
+        </ScrollView>
       </View>
     </View>
   );
 }
+
+const StyledButton = styled(Button)`
+  margin: 16px;
+`;
+
+const PersonalInfo = styled(View)`
+  display: flex;
+  flex-direction: rows;
+  gap: 16px;
+`;
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +64,7 @@ const styles = StyleSheet.create({
   },
   personalInfo: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     gap: 16,
   },
   profileImg: {
@@ -46,6 +81,9 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 12,
 
+  },
+  myCoursesTitle: {
+    fontSize: 24,
   }
 });
 
