@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { graphql, useFragment } from 'react-relay';
 import { CanvasContext } from '../utils/context/CanvasProvider';
-import { NavigationType } from './App';
+import { NavigationType } from '../App';
 
 interface IProps extends NavigationType<'Course'> {
 

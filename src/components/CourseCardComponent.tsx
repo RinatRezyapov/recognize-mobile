@@ -28,7 +28,6 @@ export default CourseCardComponent;
 
 const styles = StyleSheet.create({
   courseContainer: {
-    marginHorizontal: 16,
     marginBottom: 16,
     padding: 16,
     borderWidth: 1,

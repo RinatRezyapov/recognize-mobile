@@ -5,13 +5,13 @@ import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navig
 import {
   RelayEnvironmentProvider
 } from "react-relay/hooks";
-import RelayEnvironment from '../RelayEnvironment';
-import CanvasProvider from '../utils/context/CanvasProvider';
-import CourseComponent from './CourseComponent';
-import CourseCreateComponent from './CourseCreateComponent';
-import CourseEditComponent from './CourseEditComponent';
-import CoursePlayerComponent from './CoursePlayerComponent';
-import HomeComponent from './HomeComponent';
+import RelayEnvironment from './RelayEnvironment';
+import CanvasProvider from './utils/context/CanvasProvider';
+import CourseComponent from './components/CourseComponent';
+import CourseCreateComponent from './components/CourseCreateComponent';
+import CourseEditComponent from './components/CourseEditComponent';
+import CoursePlayerComponent from './components/CoursePlayerComponent';
+import HomePage from './pages/HomePage';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,7 +32,7 @@ const App = () => {
       <RelayEnvironmentProvider environment={RelayEnvironment}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={HomeComponent} options={{ title: 'Home', headerShown: false }} />
+            <Stack.Screen name="Home" component={HomePage} options={{ title: 'Home', headerShown: false }} />
             <Stack.Screen name="Course" component={CourseComponent} options={{ title: 'Course' }} />
             <Stack.Screen name="CoursePlayer" component={CoursePlayerComponent} options={{ title: 'Course Player' }} />
             <Stack.Screen name="CourseCreate" component={CourseCreateComponent} options={{ title: 'New Course' }} />

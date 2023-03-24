@@ -1,10 +1,9 @@
-import { Button } from "@react-native-material/core";
 import React from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { graphql, useLazyLoadQuery } from 'react-relay';
 
-import styled from '@emotion/native';
 import CourseCardComponent from './CourseCardComponent';
+import { CoursesComponentQuery as CoursesComponentQueryType } from './__generated__/CoursesComponentQuery.graphql';
 
 interface IProps {
   initialQueryRef: any;
@@ -31,7 +30,7 @@ const CoursesComponentQuery = graphql`
 
 const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
 
-  const data = useLazyLoadQuery(CoursesComponentQuery, {});
+  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, {});
 
   return (
     <View>

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ConnectionHandler, graphql, useFragment, useMutation } from 'react-relay';
-import { NavigationType } from './App';
+import { NavigationType } from '../App';
 
 interface IProps extends NavigationType<'Course'> {
 
@@ -28,16 +28,16 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
     route.params.courseRef,
   );
 
-  // const user = useFragment(
-  //   graphql`
-  //     fragment CourseComponent_user on User {
-  //       id
-  //       _id
-  //       username
-  //     }
-  //   `,
-  //   route.params.userRef,
-  // );
+  const user = useFragment(
+    graphql`
+      fragment CourseComponent_user on User {
+        id
+        _id
+        username
+      }
+    `,
+    route.params.userRef,
+  );
 
   const mutation = graphql`
   mutation CourseComponentMutation($input: RemoveCourseInput!) {
@@ -55,26 +55,26 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
           id,
         }
       },
-      // updater: (store) => {
-      //   const payload = store.get(user.id);
+      updater: (store) => {
+        const payload = store.get(user.id);
 
-      //   if (payload == null) return;
+        if (payload == null) return;
 
-      //   const removedEdgeID = store.getRootField('removeCourse')?.getValue('deletedCourseId');
+        const removedEdgeID = store.getRootField('removeCourse')?.getValue('deletedCourseId');
 
-      //   if (!removedEdgeID) return;
+        if (!removedEdgeID) return;
 
-      //   const connection = ConnectionHandler.getConnection(
-      //     payload,
-      //     'Courses_courses',
-      //   );
+        const connection = ConnectionHandler.getConnection(
+          payload,
+          'Courses_courses',
+        );
 
-      //   if (!connection) return;
+        if (!connection) return;
 
-      //   ConnectionHandler.deleteNode(connection, removedEdgeID?.toString());
-      // },
+        ConnectionHandler.deleteNode(connection, removedEdgeID?.toString());
+      },
     })
-    navigation.navigate('Courses');
+    navigation.navigate('Profile');
   };
 
   const onEditCourseClick = (id: string) => async () => {

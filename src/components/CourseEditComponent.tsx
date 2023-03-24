@@ -3,7 +3,7 @@ import { ActivityIndicator } from 'react-native';
 import { graphql, useFragment, useMutation } from "react-relay";
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
 import { FormMode } from '../types/forms';
-import { NavigationType } from './App';
+import { NavigationType } from '../App';
 
 interface IProps extends NavigationType<'Course'> {
 
