@@ -16,6 +16,8 @@ interface IProps extends NavigationType<'Course'> {
 
 const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
 
+  const isUserOwned = !!route.params.userRef;
+
   const course = useFragment(
     graphql`
       fragment CourseComponent_course on Course {
@@ -113,8 +115,8 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
     </View>
     <View style={styles.buttonsContainer}>
       <Button title='Start' onPress={onStartCourseClick(route?.params?.id)} />
-      <Button title='Edit' onPress={onEditCourseClick(route?.params?.id)} />
-      <Button title='Remove' onPress={onDeleteCourseClick(course?.id)} />
+      {isUserOwned && <Button title='Edit' onPress={onEditCourseClick(route?.params?.id)} />}
+      {isUserOwned && <Button title='Remove' onPress={onDeleteCourseClick(course?.id)} />}
     </View>
   </View>;
 }

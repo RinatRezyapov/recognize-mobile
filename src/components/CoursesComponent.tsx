@@ -1,3 +1,4 @@
+import styled from '@emotion/native';
 import React from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { graphql, useLazyLoadQuery } from 'react-relay';
@@ -21,6 +22,7 @@ const CoursesComponentQuery = graphql`
             title
             description
             body
+            ...CourseComponent_course
           }
         }
       }
@@ -33,7 +35,7 @@ const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
   const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, {});
 
   return (
-    <View>
+    <Wrapper>
       <ScrollView>
         {data?.courses?.courses?.edges?.map(({ node }) => {
           return (
@@ -49,8 +51,12 @@ const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
           )
         })}
       </ScrollView>
-    </View>
+    </Wrapper>
   );
 }
 
 export default CoursesComponent;
+
+const Wrapper = styled.View`
+  padding: 32px 16px;
+`;
