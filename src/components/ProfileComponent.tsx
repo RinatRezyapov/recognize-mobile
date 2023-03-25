@@ -3,7 +3,7 @@ import { Button } from '@react-native-material/core';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { usePreloadedQuery } from 'react-relay';
-import CourseCardComponent from './CourseCardComponent';
+import MyCourseCardComponent from './MyCourseCardComponent';
 import { ProfilePageQuery } from '../pages/ProfilePage';
 import { ProfileComponentQuery as ProfileComponentQueryType } from './__generated__/ProfileComponentQuery.graphql';
 
@@ -34,7 +34,7 @@ const ProfileComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
                 key={node?.id}
                 onPress={() => navigation.navigate('Course', { id: node?._id, courseRef: node, userRef: data?.user })}
               >
-                <CourseCardComponent
+                <MyCourseCardComponent
                   title={node?.title}
                   description={node?.description}
                 />

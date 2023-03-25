@@ -77,6 +77,7 @@ type Mutation {
   addCourse(input: AddCourseInput!): AddCoursePayload
   updateCourse(input: UpdateCourseInput!): UpdateCoursePayload
   removeCourse(input: RemoveCourseInput!): RemoveCoursePayload
+  likeCourse(input: LikeCourseInput!): LikeCoursePayload
 }
 
 type AddCoursePayload {
@@ -115,5 +116,16 @@ type RemoveCoursePayload {
 
 input RemoveCourseInput {
   id: ID!
+  clientMutationId: String
+}
+
+type LikeCoursePayload {
+  likedCourseId: ID!
+  clientMutationId: String
+}
+
+input LikeCourseInput {
+  user_id: ID!
+  course_id: ID!
   clientMutationId: String
 }

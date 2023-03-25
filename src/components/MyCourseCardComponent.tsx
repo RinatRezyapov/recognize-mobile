@@ -1,0 +1,47 @@
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+
+interface IProps {
+  title: string;
+  description: string;
+}
+
+
+const MyCourseCardComponent: React.FC<IProps> = ({ title, description }) => {
+  return (
+    <View style={styles.courseContainer}>
+      <Text style={styles.courseTitle}>
+        {title}
+      </Text>
+      <Text style={styles.courseDescription}>
+        {description}
+      </Text>
+    </View>
+  );
+}
+
+export default MyCourseCardComponent;
+
+const styles = StyleSheet.create({
+  courseContainer: {
+    marginBottom: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    borderRadius: 20,
+    backgroundColor: 'white',
+  },
+  courseTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  courseDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+});

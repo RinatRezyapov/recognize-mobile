@@ -5,7 +5,7 @@ import CoursesComponent from '../components/CoursesComponent';
 import ProfilePage from './ProfilePage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-interface IProps extends NavigationType<'Profile'> {
+interface IProps extends NavigationType<'Home'> {
 
 }
 

@@ -42,12 +42,12 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   );
 
   const mutation = graphql`
-  mutation CourseComponentMutation($input: RemoveCourseInput!) {
-    removeCourse(input: $input) {
-      deletedCourseId
+    mutation CourseComponentMutation($input: RemoveCourseInput!) {
+      removeCourse(input: $input) {
+        deletedCourseId
+      }
     }
-  }
-`;
+  `;
   const [mutate] = useMutation(mutation);
 
   const onDeleteCourseClick = (id: string) => () => {
