@@ -52,7 +52,7 @@ interface IProps  {
 
 const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
 
-  const { user } = useLazyLoadQuery(UserQuery, { id: '1' });
+  const { user } = useLazyLoadQuery(UserQuery, { id: '2' });
 
 
   const [mutate] = useMutation(mutation);

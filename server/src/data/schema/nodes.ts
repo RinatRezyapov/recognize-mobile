@@ -1,5 +1,5 @@
 
-import { getAllCourses, getCourse, getCourses, getUser } from '../database';
+import { getAllCourses, getCourse, getCourses, getCoursesLikes, getUser } from '../database';
 import { GraphQLInt, GraphQLObjectType, GraphQLString } from 'graphql';
 import { globalIdField, nodeDefinitions, fromGlobalId, connectionDefinitions, connectionFromArray, connectionArgs } from 'graphql-relay';
 
@@ -112,6 +112,7 @@ const GraphQLCourses = new GraphQLObjectType({
       resolve: async (user, { after, before, first, last }, { pgPool }) => {
         try {
           const courses = await getAllCourses(pgPool);
+
           return connectionFromArray(courses, { after, before, first, last });
         } catch (err) {
           console.error(err);

@@ -22,6 +22,7 @@ const CoursesComponentQuery = graphql`
             title
             description
             body
+            authorId
             ...CourseComponent_course
           }
         }
@@ -30,7 +31,7 @@ const CoursesComponentQuery = graphql`
   }
 `
 
-const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
+const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
 
   const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, {});
 
@@ -45,8 +46,8 @@ const CoursesComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
             >
               <CourseCardComponent
                 id={node.id}
-                title={node?.title}
-                description={node?.description}
+                userId="2"
+                course={node}
               />
             </TouchableOpacity>
           )
