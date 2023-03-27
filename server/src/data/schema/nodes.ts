@@ -1,6 +1,6 @@
 
-import { getAllCourses, getCourse, getCourses, getCoursesLikes, getUser } from '../database';
-import { GraphQLInt, GraphQLObjectType, GraphQLString } from 'graphql';
+import { getAllCourses, getCourse, getCourseLikes, getCourses, getUser } from '../database';
+import { GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString } from 'graphql';
 import { globalIdField, nodeDefinitions, fromGlobalId, connectionDefinitions, connectionFromArray, connectionArgs } from 'graphql-relay';
 
 
@@ -59,6 +59,15 @@ const GraphQLCourse = new GraphQLObjectType({
       type: GraphQLInt,
       resolve: course => course.updated_at,
     },
+    likes: {
+      type: GraphQLList(GraphQLInt),
+      resolve: async (course, {}, { pgPool }) => {
+
+        const likes = await getCourseLikes(course.id, pgPool);
+
+        return likes.map(v => v.user_id)
+      }
+    }
   },
   interfaces: [nodeInterface],
 });

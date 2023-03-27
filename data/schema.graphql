@@ -67,6 +67,7 @@ type Course implements Node {
   body: String
   createdAt: Int
   updatedAt: Int
+  likes: [Int]
 }
 
 type Courses {

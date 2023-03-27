@@ -11,12 +11,12 @@ import { graphql, useMutation } from 'react-relay';
 
 interface IProps {
   id: string;
-  userId: string;
+  user: any;
   course: any;
 }
 
 
-const CourseCardComponent: React.FC<IProps> = ({ id, userId, course }) => {
+const CourseCardComponent: React.FC<IProps> = ({ id, user, course }) => {
 
   const mutation = graphql`
     mutation CourseCardComponentMutation($input: LikeCourseInput!) {
@@ -31,12 +31,15 @@ const [mutate] = useMutation(mutation);
     mutate({
       variables: {
         input: {
-          user_id: userId,
+          user_id: user.id,
           course_id: id,
         }
       },
     })
   }
+ // TODO parseInt(course.authorId) change type to number
+
+ const likedByUser = course.likes.includes(user._id );
 
   return (
     <View style={styles.courseContainer}>
@@ -48,10 +51,10 @@ const [mutate] = useMutation(mutation);
       </Text>
       <CardFooter>
         <Text>By: User</Text>
-        {course.authorId !== userId && <TouchableOpacity
+        {parseInt(course.authorId) !== user._id && <TouchableOpacity
           onPress={() => onLikePress()}
         >
-          <Icon name="heart" size={30} color='red' />
+          <Icon name={likedByUser ? "heart" : "hearto"} size={30} color='red' />
         </TouchableOpacity>}
       </CardFooter>
     </View>

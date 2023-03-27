@@ -48,8 +48,8 @@ export const likeCourse = (pgPool, userId, courseId) => {
   return pgPool?.query(`INSERT INTO likes (user_id, course_id) VALUES (${userId}, ${courseId})`).then(response => response.rows?.[0]);
 }
 
-export const getCoursesLikes = (pgPool) => {
-  return pgPool?.query(`SELECT * FROM likes;`).then(response => {
-    return response.rows.map(v => ({ ...v, id: v.id }))
+export const getCourseLikes = (id, pgPool) => {
+  return pgPool?.query(`SELECT * FROM likes where course_id = ${id};`).then(response => {
+    return response.rows;
   })
 }

@@ -12,7 +12,11 @@ interface IProps {
 }
 
 const CoursesComponentQuery = graphql`
-  query CoursesComponentQuery {
+  query CoursesComponentQuery($id: String) {
+    user(id: $id) {
+      id
+      _id
+    }
     courses {
       courses {
         edges {
@@ -23,6 +27,7 @@ const CoursesComponentQuery = graphql`
             description
             body
             authorId
+            likes
             ...CourseComponent_course
           }
         }
@@ -33,7 +38,7 @@ const CoursesComponentQuery = graphql`
 
 const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
 
-  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, {});
+  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, { id: "1" });
 
   return (
     <Wrapper>
@@ -46,7 +51,7 @@ const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
             >
               <CourseCardComponent
                 id={node.id}
-                userId="2"
+                user={data.user}
                 course={node}
               />
             </TouchableOpacity>

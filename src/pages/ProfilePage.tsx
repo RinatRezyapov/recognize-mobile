@@ -39,7 +39,7 @@ export const ProfilePageQuery = graphql`
 const initialQueryRef = loadQuery(
   RelayEnvironment,
   ProfilePageQuery,
-  { id: '2' },
+  { id: "1" },
 );
 
 const ProfilePage: React.FC<IProps> = ({ navigation }) => {
