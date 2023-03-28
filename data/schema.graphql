@@ -12,7 +12,7 @@ type Query {
 type User implements Node {
   """The ID of an object"""
   id: ID!
-  _id: Int
+  _id: String
   username: String
   email: String
   courses(status: String = "any", after: String, first: Int, before: String, last: Int): CourseConnection
@@ -60,14 +60,14 @@ type CourseEdge {
 type Course implements Node {
   """The ID of an object"""
   id: ID!
-  _id: Int
+  _id: String
   description: String
   authorId: String
   title: String
   body: String
   createdAt: Int
   updatedAt: Int
-  likes: [Int]
+  likes: [String]
 }
 
 type Courses {

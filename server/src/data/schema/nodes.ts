@@ -32,7 +32,7 @@ const GraphQLCourse = new GraphQLObjectType({
   fields: {
     id: globalIdField('Course'),
     _id: {
-      type: GraphQLInt,
+      type: GraphQLString,
       resolve: course => course.id,
     },
     description: {
@@ -60,11 +60,9 @@ const GraphQLCourse = new GraphQLObjectType({
       resolve: course => course.updated_at,
     },
     likes: {
-      type: GraphQLList(GraphQLInt),
+      type: GraphQLList(GraphQLString),
       resolve: async (course, {}, { pgPool }) => {
-
         const likes = await getCourseLikes(course.id, pgPool);
-
         return likes.map(v => v.user_id)
       }
     }
@@ -85,7 +83,7 @@ const GraphQLUser = new GraphQLObjectType({
   fields: {
     id: globalIdField('User'),
     _id: {
-      type: GraphQLInt,
+      type: GraphQLString,
       resolve: user => user.id
     },
     username: {

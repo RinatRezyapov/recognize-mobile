@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b57f931b805cd646cabefc4cc6033cd4>>
+ * @generated SignedSource<<ed7f0524164f8cdb651e07e250ae17a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,11 +14,11 @@ export type CourseCreateComponentQuery$variables = {
 };
 export type CourseCreateComponentQuery$data = {
   readonly user: {
-    readonly _id: number | null;
+    readonly _id: string | null;
     readonly courses: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly __id: string;
+          readonly _id: string | null;
           readonly body: string | null;
           readonly description: string | null;
           readonly id: string;
@@ -96,6 +96,7 @@ v6 = [
         "name": "node",
         "plural": false,
         "selections": [
+          (v3/*: any*/),
           (v2/*: any*/),
           {
             "alias": null,
@@ -117,18 +118,6 @@ v6 = [
             "kind": "ScalarField",
             "name": "body",
             "storageKey": null
-          },
-          {
-            "kind": "ClientExtension",
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "__id",
-                "storageKey": null
-              }
-            ]
           },
           {
             "alias": null,
@@ -262,7 +251,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "47394c2aa0c143b1be228a16f5b41720",
+    "cacheID": "ff9bdcd560338a10dba93e24ec177bfb",
     "id": null,
     "metadata": {
       "connection": [
@@ -279,11 +268,11 @@ return {
     },
     "name": "CourseCreateComponentQuery",
     "operationKind": "query",
-    "text": "query CourseCreateComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          title\n          description\n          body\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
+    "text": "query CourseCreateComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    courses(first: 2147483647) {\n      edges {\n        node {\n          _id\n          id\n          title\n          description\n          body\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "62127b28f871ef5709d296603f7c46c7";
+(node as any).hash = "eb72032f01c0f3b4f709dc2483f7a75c";
 
 export default node;

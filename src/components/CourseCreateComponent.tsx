@@ -13,7 +13,7 @@ export const UserQuery = graphql`
       courses(first: 2147483647) @connection(key: "Courses_courses") {
         edges {
           node {
-            __id
+            _id
             id
             title
             description
@@ -52,7 +52,7 @@ interface IProps  {
 
 const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
 
-  const { user } = useLazyLoadQuery(UserQuery, { id: "1" });
+  const { user } = useLazyLoadQuery(UserQuery, { id: "ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce" });
 
 
   const [mutate] = useMutation(mutation);

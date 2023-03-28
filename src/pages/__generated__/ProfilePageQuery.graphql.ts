@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e515c6960dc2cd35484d33291dfb80e8>>
+ * @generated SignedSource<<5d34a2c7615125e830c51202909d4447>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,11 @@ export type ProfilePageQuery$variables = {
 };
 export type ProfilePageQuery$data = {
   readonly user: {
-    readonly _id: number | null;
+    readonly _id: string | null;
     readonly courses: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly _id: number | null;
+          readonly _id: string | null;
           readonly body: string | null;
           readonly description: string | null;
           readonly id: string;

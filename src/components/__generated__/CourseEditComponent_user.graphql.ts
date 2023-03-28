@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2e8bde57831b6b4b6ac1d799fea23d5>>
+ * @generated SignedSource<<f17a1bb8300df59cba9be613fca58b84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CourseEditComponent_user$data = {
-  readonly _id: number | null;
+  readonly _id: string | null;
   readonly id: string;
   readonly username: string | null;
   readonly " $fragmentType": "CourseEditComponent_user";

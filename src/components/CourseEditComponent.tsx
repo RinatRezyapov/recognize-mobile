@@ -40,7 +40,7 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
       courseEdge {
         node {
           id
-        _id
+          _id
         title
         description
         body

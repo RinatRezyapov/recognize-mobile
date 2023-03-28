@@ -38,7 +38,7 @@ const CoursesComponentQuery = graphql`
 
 const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
 
-  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, { id: "1" });
+  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, { id: "ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce" });
 
   return (
     <Wrapper>

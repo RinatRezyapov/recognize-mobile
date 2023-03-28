@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<472f6061284ab05e520dbd2d5731b2a2>>
+ * @generated SignedSource<<f8c347f91963e15011865b35d39b189b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,7 +23,7 @@ export type CourseEditComponentMutation$data = {
   readonly updateCourse: {
     readonly courseEdge: {
       readonly node: {
-        readonly _id: number | null;
+        readonly _id: string | null;
         readonly body: string | null;
         readonly description: string | null;
         readonly id: string;

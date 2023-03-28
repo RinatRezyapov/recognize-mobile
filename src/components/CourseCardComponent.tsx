@@ -25,7 +25,7 @@ const CourseCardComponent: React.FC<IProps> = ({ id, user, course }) => {
       }
     }
   `;
-const [mutate] = useMutation(mutation);
+  const [mutate] = useMutation(mutation);
   const onLikePress = () => {
 
     mutate({
@@ -37,9 +37,9 @@ const [mutate] = useMutation(mutation);
       },
     })
   }
- // TODO parseInt(course.authorId) change type to number
-
- const likedByUser = course.likes.includes(user._id );
+  // TODO parseInt(course.authorId) change type to number
+  console.log(course.likes, user._id)
+  const likedByUser = course.likes?.includes(user._id);
 
   return (
     <View style={styles.courseContainer}>
@@ -51,7 +51,7 @@ const [mutate] = useMutation(mutation);
       </Text>
       <CardFooter>
         <Text>By: User</Text>
-        {parseInt(course.authorId) !== user._id && <TouchableOpacity
+        {parseInt(course.authorId) !== user.id && <TouchableOpacity
           onPress={() => onLikePress()}
         >
           <Icon name={likedByUser ? "heart" : "hearto"} size={30} color='red' />

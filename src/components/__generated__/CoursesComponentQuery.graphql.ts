@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6456d6b7a07b05ca6fee9bf042da774c>>
+ * @generated SignedSource<<ec2447f21e0ddd90f5b3304c234c0291>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,12 +18,12 @@ export type CoursesComponentQuery$data = {
     readonly courses: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly _id: number | null;
+          readonly _id: string | null;
           readonly authorId: string | null;
           readonly body: string | null;
           readonly description: string | null;
           readonly id: string;
-          readonly likes: ReadonlyArray<number | null> | null;
+          readonly likes: ReadonlyArray<string | null> | null;
           readonly title: string | null;
           readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_course">;
         } | null;
@@ -31,7 +31,7 @@ export type CoursesComponentQuery$data = {
     } | null;
   } | null;
   readonly user: {
-    readonly _id: number | null;
+    readonly _id: string | null;
     readonly id: string;
   } | null;
 };
