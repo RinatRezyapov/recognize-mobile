@@ -26,7 +26,7 @@ const ProfileComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
       </PersonalInfo>
       <View>
         <Text style={styles.myCoursesTitle}>My courses</Text>
-        <StyledButton variant='outlined' color='primary' title='New course' onPress={() => navigation.navigate('CourseCreate')} />
+        <StyledButton variant='outlined' color="white" title='New course' onPress={() => navigation.navigate('CourseCreate')} />
         <ScrollView>
           {data?.user?.courses?.edges?.map(({ node }) => {
             return (
@@ -50,6 +50,8 @@ const ProfileComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => 
 export default ProfileComponent;
 
 const StyledButton = styled(Button)`
+  backgroundColor: #2196f3;
+  color: white;
   margin: 16px 0;
 `;
 
@@ -85,6 +87,6 @@ const styles = StyleSheet.create({
 
   },
   myCoursesTitle: {
-    fontSize: 24,
+    fontSize: 18,
   }
 });

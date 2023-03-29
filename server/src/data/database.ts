@@ -1,4 +1,4 @@
-export const getCourses = (userId: number, pgPool) => {
+export const getCourses = (userId: string, pgPool) => {
   return pgPool?.query(`SELECT * FROM courses WHERE author_id = '${userId}'`).then(response => {
     return response.rows.map(v => ({ ...v, id: v.id }))
   })
@@ -9,7 +9,6 @@ export const getCourse = (courseId: number, pgPool) => {
 }
 
 export const addCourse = (pgPool, authorId, data) => {
-  console.log(authorId, data)
   return pgPool?.query(`INSERT INTO courses (
     author_id,
     title,
@@ -45,8 +44,12 @@ export const getAllCourses = (pgPool) => {
   })
 }
 
-export const likeCourse = (pgPool, userId, courseId) => {
+export const likeCourse = (userId, courseId, pgPool) => {
   return pgPool?.query(`INSERT INTO likes (user_id, course_id) VALUES ('${userId}', '${courseId}')`).then(response => response.rows?.[0]);
+}
+
+export const unlikeCourse = (userId, courseId, pgPool) => {
+  return pgPool?.query(`DELETE FROM likes WHERE course_id='${courseId}' AND user_id='${userId}'`).then(response => response.rows?.[0]);
 }
 
 export const getCourseLikes = (id, pgPool) => {

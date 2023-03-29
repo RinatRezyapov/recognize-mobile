@@ -30,18 +30,17 @@ const styles = StyleSheet.create({
   courseContainer: {
     marginBottom: 16,
     padding: 16,
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    borderRadius: 20,
-    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: 'grey',
   },
   courseTitle: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '600',
   },
   courseDescription: {
     marginTop: 8,
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '400',
   },
 });

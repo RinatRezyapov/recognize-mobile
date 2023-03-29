@@ -17,6 +17,7 @@ export const ProfilePageQuery = graphql`
       username,
       email
       ...CourseComponent_user
+      ...CourseEditComponent_user
       courses(first: 2147483647) @connection(key: "Courses_courses") {
         edges {
           node {
@@ -57,7 +58,8 @@ export default ProfilePage;
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    height: '100%'
+    height: '100%',
+    backgroundColor: 'white',
   },
   personalInfo: {
     display: 'flex',

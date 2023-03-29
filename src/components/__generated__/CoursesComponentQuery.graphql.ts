@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ec2447f21e0ddd90f5b3304c234c0291>>
+ * @generated SignedSource<<306e9f6a51e043d1d760791d6e8f1348>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,7 @@ export type CoursesComponentQuery$data = {
   readonly user: {
     readonly _id: string | null;
     readonly id: string;
+    readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_user" | "CourseEditComponent_user">;
   } | null;
 };
 export type CoursesComponentQuery = {
@@ -48,37 +49,25 @@ var v0 = [
     "name": "id"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "_id",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": [
-    {
-      "kind": "Variable",
-      "name": "id",
-      "variableName": "id"
-    }
-  ],
-  "concreteType": "User",
-  "kind": "LinkedField",
-  "name": "user",
-  "plural": false,
-  "selections": [
-    (v1/*: any*/),
-    (v2/*: any*/)
-  ],
   "storageKey": null
 },
 v4 = {
@@ -115,7 +104,53 @@ v8 = {
   "kind": "ScalarField",
   "name": "likes",
   "storageKey": null
-};
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "kind": "LinkedField",
+  "name": "pageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endCursor",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasNextPage",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v12 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 2147483647
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -123,7 +158,29 @@ return {
     "metadata": null,
     "name": "CoursesComponentQuery",
     "selections": [
-      (v3/*: any*/),
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "user",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CourseComponent_user"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CourseEditComponent_user"
+          }
+        ],
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -133,11 +190,11 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
+            "alias": "courses",
             "args": null,
             "concreteType": "CourseConnection",
             "kind": "LinkedField",
-            "name": "courses",
+            "name": "__Courses_courses_connection",
             "plural": false,
             "selections": [
               {
@@ -156,8 +213,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v1/*: any*/),
                       (v2/*: any*/),
+                      (v3/*: any*/),
                       (v4/*: any*/),
                       (v5/*: any*/),
                       (v6/*: any*/),
@@ -167,13 +224,16 @@ return {
                         "args": null,
                         "kind": "FragmentSpread",
                         "name": "CourseComponent_course"
-                      }
+                      },
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v10/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v11/*: any*/)
             ],
             "storageKey": null
           }
@@ -190,7 +250,26 @@ return {
     "kind": "Operation",
     "name": "CoursesComponentQuery",
     "selections": [
-      (v3/*: any*/),
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "user",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "username",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -201,7 +280,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": null,
+            "args": (v12/*: any*/),
             "concreteType": "CourseConnection",
             "kind": "LinkedField",
             "name": "courses",
@@ -223,21 +302,33 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v1/*: any*/),
                       (v2/*: any*/),
+                      (v3/*: any*/),
                       (v4/*: any*/),
                       (v5/*: any*/),
                       (v6/*: any*/),
                       (v7/*: any*/),
-                      (v8/*: any*/)
+                      (v8/*: any*/),
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v10/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v11/*: any*/)
             ],
-            "storageKey": null
+            "storageKey": "courses(first:2147483647)"
+          },
+          {
+            "alias": null,
+            "args": (v12/*: any*/),
+            "filters": null,
+            "handle": "connection",
+            "key": "Courses_courses",
+            "kind": "LinkedHandle",
+            "name": "courses"
           }
         ],
         "storageKey": null
@@ -245,16 +336,28 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2645063b9c24df6b6f38e720c21f9ccc",
+    "cacheID": "9f7ebaab8938bb250e013ff20b5c0580",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "connection": [
+        {
+          "count": null,
+          "cursor": null,
+          "direction": "forward",
+          "path": [
+            "courses",
+            "courses"
+          ]
+        }
+      ]
+    },
     "name": "CoursesComponentQuery",
     "operationKind": "query",
-    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n  }\n  courses {\n    courses {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          likes\n          ...CourseComponent_course\n        }\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n"
+    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    ...CourseComponent_user\n    ...CourseEditComponent_user\n  }\n  courses {\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          likes\n          ...CourseComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CourseEditComponent_user on User {\n  id\n  _id\n  username\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b1364255bb7d21999e74e944b75a6b10";
+(node as any).hash = "d6bd04d3008733388067a8016c267aec";
 
 export default node;

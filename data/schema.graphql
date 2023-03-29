@@ -121,12 +121,13 @@ input RemoveCourseInput {
 }
 
 type LikeCoursePayload {
-  likedCourseId: ID!
+  courseEdge: CourseEdge!
   clientMutationId: String
 }
 
 input LikeCourseInput {
   user_id: ID!
   course_id: ID!
+  remove: Boolean
   clientMutationId: String
 }

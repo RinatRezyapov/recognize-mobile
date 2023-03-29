@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27e847721ab074175202e907600e0188>>
+ * @generated SignedSource<<2d07c00cad977688cbbb44fb98d61666>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type LikeCourseInput = {
   clientMutationId?: string | null;
   course_id: string;
+  remove?: boolean | null;
   user_id: string;
 };
 export type CourseCardComponentMutation$variables = {
@@ -19,7 +20,19 @@ export type CourseCardComponentMutation$variables = {
 };
 export type CourseCardComponentMutation$data = {
   readonly likeCourse: {
-    readonly likedCourseId: string;
+    readonly courseEdge: {
+      readonly node: {
+        readonly _id: string | null;
+        readonly authorId: string | null;
+        readonly body: string | null;
+        readonly createdAt: number | null;
+        readonly description: string | null;
+        readonly id: string;
+        readonly likes: ReadonlyArray<string | null> | null;
+        readonly title: string | null;
+        readonly updatedAt: number | null;
+      } | null;
+    };
   } | null;
 };
 export type CourseCardComponentMutation = {
@@ -53,8 +66,86 @@ v1 = [
       {
         "alias": null,
         "args": null,
-        "kind": "ScalarField",
-        "name": "likedCourseId",
+        "concreteType": "CourseEdge",
+        "kind": "LinkedField",
+        "name": "courseEdge",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Course",
+            "kind": "LinkedField",
+            "name": "node",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "_id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "body",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "authorId",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "createdAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "updatedAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "likes",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
         "storageKey": null
       }
     ],
@@ -79,16 +170,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "feed2581dcdc509673b729b5aa1fe502",
+    "cacheID": "e154ac0b8b8f1a023569c94a48a093ea",
     "id": null,
     "metadata": {},
     "name": "CourseCardComponentMutation",
     "operationKind": "mutation",
-    "text": "mutation CourseCardComponentMutation(\n  $input: LikeCourseInput!\n) {\n  likeCourse(input: $input) {\n    likedCourseId\n  }\n}\n"
+    "text": "mutation CourseCardComponentMutation(\n  $input: LikeCourseInput!\n) {\n  likeCourse(input: $input) {\n    courseEdge {\n      node {\n        id\n        _id\n        title\n        body\n        description\n        authorId\n        createdAt\n        updatedAt\n        likes\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f9f9a4240a048dc563f61d92becad77a";
+(node as any).hash = "e0a3954e65b16b1bd16a0f04c8e11bc2";
 
 export default node;

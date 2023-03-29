@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5d34a2c7615125e830c51202909d4447>>
+ * @generated SignedSource<<c9ee8ecd021fbb952a9e8f525a732564>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,7 @@ export type ProfilePageQuery$data = {
     readonly email: string | null;
     readonly id: string;
     readonly username: string | null;
-    readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_user">;
+    readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_user" | "CourseEditComponent_user">;
   } | null;
 };
 export type ProfilePageQuery = {
@@ -174,6 +174,11 @@ return {
             "name": "CourseComponent_user"
           },
           {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CourseEditComponent_user"
+          },
+          {
             "alias": "courses",
             "args": null,
             "concreteType": "CourseConnection",
@@ -310,7 +315,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5d2eca52c3c1d9afa68f99ea67c7b63d",
+    "cacheID": "9189904c916b727909f9d10ada9f0758",
     "id": null,
     "metadata": {
       "connection": [
@@ -327,11 +332,11 @@ return {
     },
     "name": "ProfilePageQuery",
     "operationKind": "query",
-    "text": "query ProfilePageQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CourseComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CourseEditComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_course on Course {\n  title\n  description\n  body\n}\n"
+    "text": "query ProfilePageQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CourseComponent_user\n    ...CourseEditComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CourseEditComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n}\n\nfragment CourseEditComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CoursePlayerComponent_course on Course {\n  title\n  description\n  body\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9171a974ef5d8a9a4c18a5a65af84ad4";
+(node as any).hash = "37d240fba32ea7cdb91611ba86f671c8";
 
 export default node;

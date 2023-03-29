@@ -16,9 +16,11 @@ const CoursesComponentQuery = graphql`
     user(id: $id) {
       id
       _id
+      ...CourseComponent_user
+      ...CourseEditComponent_user
     }
     courses {
-      courses {
+      courses(first: 2147483647) @connection(key: "Courses_courses") {
         edges {
           node {
             id
@@ -47,7 +49,7 @@ const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
           return (
             <TouchableOpacity
               key={node.id}
-              onPress={() => navigation.navigate('Course', { id: node._id, courseRef: node })}
+              onPress={() => navigation.navigate('Course', { id: node._id, courseRef: node, userRef: data.user })}
             >
               <CourseCardComponent
                 id={node.id}

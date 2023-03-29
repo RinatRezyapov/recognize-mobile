@@ -87,7 +87,6 @@ const CanvasComponent: React.FC<IProps> = ({ children }) => {
   const onClick = (x, y) => {
     initParticles(x, y);
     //initParticles(e.nativeEvent.locationX, e.nativeEvent.locationY);
-    //console.log(e.nativeEvent.locationX, e.nativeEvent.locationY);
 
     //render(canvas.current)
   }
