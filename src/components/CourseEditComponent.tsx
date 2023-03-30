@@ -62,7 +62,7 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
         }
       }
     })
-    navigation.navigate('Courses');
+    navigation.navigate('Profile');
   }
 
   if (!course) return <ActivityIndicator size="large" />;

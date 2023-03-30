@@ -45,16 +45,15 @@ const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
   return (
     <Wrapper>
       <ScrollView>
-        {data?.courses?.courses?.edges?.map(({ node }) => {
+        {data?.courses?.courses?.edges?.map((edge) => {
           return (
             <TouchableOpacity
-              key={node.id}
-              onPress={() => navigation.navigate('Course', { id: node._id, courseRef: node, userRef: data.user })}
+              key={edge?.node?.id}
+              onPress={() => navigation.navigate('Course', { id: edge?.node?._id, courseRef: edge?.node, userRef: data.user })}
             >
               <CourseCardComponent
-                id={node.id}
                 user={data.user}
-                course={node}
+                course={edge?.node}
               />
             </TouchableOpacity>
           )

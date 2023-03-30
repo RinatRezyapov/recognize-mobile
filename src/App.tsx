@@ -17,10 +17,10 @@ const Stack = createNativeStackNavigator();
 
 type RootStackParamList = {
   Profile: undefined;
-  Course: { id: string };
+  Course: { id: string, userRef: any, courseRef: any };
   CourseCreate: undefined;
-  CourseEdit: { id: string };
-  CoursePlayer: { id: string };
+  CourseEdit: { id: string, courseRef: any, userRef: any };
+  CoursePlayer: { id: string, courseRef: any };
 };
 
 export type NavigationType<T> = NativeStackScreenProps<RootStackParamList, T>;

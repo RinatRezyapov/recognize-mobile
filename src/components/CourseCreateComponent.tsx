@@ -2,6 +2,7 @@ import React from 'react';
 import { ConnectionHandler, graphql, useLazyLoadQuery, useMutation } from "react-relay";
 
 import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
+import { FormMode } from '../types/forms';
 
 export const UserQuery = graphql`
   query CourseCreateComponentQuery($id: String) {
@@ -86,7 +87,7 @@ const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }
     navigation.navigate('Profile');
   }
 
-  return <NewCourseForm onSubmit={onSubmit} />;
+  return <NewCourseForm mode={FormMode.create} onSubmit={onSubmit} />;
 }
 
 export default CourseCreateComponent;

@@ -7,16 +7,15 @@ import {
   View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { ConnectionHandler, graphql, useMutation } from 'react-relay';
+import { graphql, useMutation } from 'react-relay';
 
 interface IProps {
-  id: string;
   user: any;
   course: any;
 }
 
 
-const CourseCardComponent: React.FC<IProps> = ({ id, user, course }) => {
+const CourseCardComponent: React.FC<IProps> = ({ user, course }) => {
 
   const likedByUser = course.likes?.includes(user._id);
 
@@ -45,7 +44,7 @@ const CourseCardComponent: React.FC<IProps> = ({ id, user, course }) => {
       variables: {
         input: {
           user_id: user.id,
-          course_id: id,
+          course_id: course.id,
           remove: likedByUser
         }
       },
