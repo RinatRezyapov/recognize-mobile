@@ -1,8 +1,10 @@
 import styled from "@emotion/native";
 import React, { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, Image, StyleSheet, Text, TextInput, View } from "react-native";
+
 import { FormMode } from "../types/forms";
+import { ImagePickerResponse, launchImageLibrary } from "react-native-image-picker";
 
 export interface IFormFields {
   title: string;
@@ -18,6 +20,7 @@ interface IProps {
 
 
 const NewCourseForm: FC<IProps> = ({ mode, defaultValues, onSubmit }) => {
+  const [photo, setPhoto] = React.useState<ImagePickerResponse | null>(null);
 
   const { control, handleSubmit, formState: { errors } } = useForm<IFormFields>({
     defaultValues: defaultValues || {
@@ -27,39 +30,57 @@ const NewCourseForm: FC<IProps> = ({ mode, defaultValues, onSubmit }) => {
     }
   });
 
+  const onUploadImageClick = () => {
+
+  }
+
+  const onChooseImageClick = () => {
+    launchImageLibrary({ noData: true }, (response) => {
+      if (response) setPhoto(response.assets?.[0]);
+    });
+  }
+
   return <Wrapper>
-    <View>
-      <TextInputLabel>Title</TextInputLabel>
-      <Controller
-        name='title'
-        rules={{ required: true }}
-        control={control}
-        render={({ field: { value, onChange, onBlur } }) => (
-          <TextInputNeo
-            style={styles.input}
-            value={value}
-            onChangeText={value => onChange(value)}
-            onBlur={onBlur}
+    <ImageWithDetailsWrapper>
+      <ImageWrapper>
+        {photo && <StyledImage source={{ uri: photo.uri }} />}
+      </ImageWrapper>
+      <DetailsWrapper>
+        <View>
+          <TextInputLabel>Title</TextInputLabel>
+          <Controller
+            name='title'
+            rules={{ required: true }}
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <TextInputNeo
+                style={styles.input}
+                value={value}
+                onChangeText={value => onChange(value)}
+                onBlur={onBlur}
+              />
+            )}
           />
-        )}
-      />
-    </View>
-    <View>
-      <TextInputLabel>Description</TextInputLabel>
-      <Controller
-        name='description'
-        rules={{ required: true }}
-        control={control}
-        render={({ field: { value, onChange, onBlur } }) => (
-          <TextInputNeo
-            style={styles.input}
-            value={value}
-            onChangeText={value => onChange(value)}
-            onBlur={onBlur}
+        </View>
+        <View>
+          <TextInputLabel>Description</TextInputLabel>
+          <Controller
+            name='description'
+            rules={{ required: true }}
+            control={control}
+            render={({ field: { value, onChange, onBlur } }) => (
+              <TextInputNeo
+                style={styles.input}
+                value={value}
+                onChangeText={value => onChange(value)}
+                onBlur={onBlur}
+              />
+            )}
           />
-        )}
-      />
-    </View>
+        </View>
+      </DetailsWrapper>
+    </ImageWithDetailsWrapper>
+
     <View>
       <TextInputLabel>Words</TextInputLabel>
       <Controller
@@ -79,6 +100,7 @@ const NewCourseForm: FC<IProps> = ({ mode, defaultValues, onSubmit }) => {
       />
     </View>
     <Button title={mode === FormMode.update ? 'Update' : 'Create'} onPress={handleSubmit(onSubmit)} />
+    <Button title="Upload Image" onPress={onChooseImageClick} />
   </Wrapper>
 }
 
@@ -115,4 +137,28 @@ const TextInputNeo = styled(TextInput)`
 const TextInputLabel = styled(Text)`
   margin: 0 0 8px 8px;
 
+`;
+
+
+
+const StyledImage = styled(Image)`
+  width: 100px;
+  height: 100px;
+  borderRadius: 16px;
+`;
+
+const ImageWithDetailsWrapper = styled(View)`
+  display: flex;
+  flexDirection: row;
+  gap: 16px;
+`;
+
+const ImageWrapper = styled(View)`
+  width: 70px;
+  height: 70px;
+  flex: 1;
+`;
+
+const DetailsWrapper = styled(View)`
+  flex: 2;
 `;
