@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3556770fb561eacf4c96586e4203e5a5>>
+ * @generated SignedSource<<757571b6c85c5687597552bfe49eb2ae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AddCourseInput = {
   authorId: string;
+  avatar: string;
   body: string;
   clientMutationId?: string | null;
   createdAt: string;

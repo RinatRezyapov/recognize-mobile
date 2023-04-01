@@ -16,6 +16,7 @@ const AddCourseMutation = mutationWithClientMutationId({
     title: { type: new GraphQLNonNull(GraphQLString) },
     description: { type: new GraphQLNonNull(GraphQLString) },
     body: { type: new GraphQLNonNull(GraphQLString) },
+    avatar: { type: new GraphQLNonNull(GraphQLString) },
     createdAt: { type: new GraphQLNonNull(GraphQLString) },
     updatedAt: { type: new GraphQLNonNull(GraphQLString) },
   },

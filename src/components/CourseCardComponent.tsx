@@ -1,6 +1,7 @@
 import styled from '@emotion/native';
 import React from 'react';
 import {
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -33,6 +34,7 @@ const CourseCardComponent: React.FC<IProps> = ({ user, course }) => {
             createdAt
             updatedAt
             likes
+            avatar
           }
         }
       }
@@ -50,28 +52,51 @@ const CourseCardComponent: React.FC<IProps> = ({ user, course }) => {
       },
     })
   }
-
+  console.log(course.avatar)
   return (
-    <View style={styles.courseContainer}>
-      <Text style={styles.courseTitle}>
-        {course.title}
-      </Text>
-      <Text style={styles.courseDescription}>
-        {course.description}
-      </Text>
-      <CardFooter>
-        <Text>By: {course.authorId}</Text>
-        {parseInt(course.authorId) !== user.id && <TouchableOpacity
-          onPress={() => onLikePress()}
-        >
-          <Icon name={likedByUser ? "heart" : "hearto"} size={30} color='red' />
-        </TouchableOpacity>}
-      </CardFooter>
-    </View>
+    <Wrapper>
+      <Avatar source={{ uri: 'data:image/jpeg;base64,' + course.avatar }} />
+      <Details>
+        <Text style={styles.courseTitle}>
+          {course.title}
+        </Text>
+        <Text style={styles.courseDescription}>
+          {course.description}
+        </Text>
+        <CardFooter>
+          <Text>By: {course.authorId.slice(0, 10)}</Text>
+          {parseInt(course.authorId) !== user.id && <TouchableOpacity
+            onPress={() => onLikePress()}
+          >
+            <Icon name={likedByUser ? "heart" : "hearto"} size={30} color='red' />
+          </TouchableOpacity>}
+        </CardFooter>
+      </Details>
+    </Wrapper>
   );
 }
 
 export default CourseCardComponent;
+
+const Wrapper = styled.View`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid lightgrey;
+  border-radius: 20px;
+  background-color: white;
+`;
+
+const Avatar = styled.Image`
+  flex: 1;
+  border-radius: 20px;
+`;
+
+const Details = styled.View`
+  flex: 2;
+`;
 
 const CardFooter = styled.View`
   display: flex;

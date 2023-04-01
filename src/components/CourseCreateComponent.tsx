@@ -58,6 +58,7 @@ const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }
 
   const [mutate] = useMutation(mutation);
   const onSubmit = async (fields: NewCourseFormFields) => {
+
     mutate({
       variables: {
         input: {
@@ -65,6 +66,7 @@ const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }
           title: fields.title,
           description: fields.description,
           body: fields.data,
+          avatar: fields.avatar,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d07c00cad977688cbbb44fb98d61666>>
+ * @generated SignedSource<<6cf4c607e7f2cec118a9ad0a0c65db84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type CourseCardComponentMutation$data = {
       readonly node: {
         readonly _id: string | null;
         readonly authorId: string | null;
+        readonly avatar: string | null;
         readonly body: string | null;
         readonly createdAt: number | null;
         readonly description: string | null;
@@ -141,6 +142,13 @@ v1 = [
                 "kind": "ScalarField",
                 "name": "likes",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "avatar",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -170,16 +178,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "e154ac0b8b8f1a023569c94a48a093ea",
+    "cacheID": "135dfb8658c1f0a22ea19ed3b03459a6",
     "id": null,
     "metadata": {},
     "name": "CourseCardComponentMutation",
     "operationKind": "mutation",
-    "text": "mutation CourseCardComponentMutation(\n  $input: LikeCourseInput!\n) {\n  likeCourse(input: $input) {\n    courseEdge {\n      node {\n        id\n        _id\n        title\n        body\n        description\n        authorId\n        createdAt\n        updatedAt\n        likes\n      }\n    }\n  }\n}\n"
+    "text": "mutation CourseCardComponentMutation(\n  $input: LikeCourseInput!\n) {\n  likeCourse(input: $input) {\n    courseEdge {\n      node {\n        id\n        _id\n        title\n        body\n        description\n        authorId\n        createdAt\n        updatedAt\n        likes\n        avatar\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e0a3954e65b16b1bd16a0f04c8e11bc2";
+(node as any).hash = "06366bab7ef00b5bd5cdb6fd85b9856e";
 
 export default node;

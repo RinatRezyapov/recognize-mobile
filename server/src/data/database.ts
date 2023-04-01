@@ -14,6 +14,7 @@ export const addCourse = (pgPool, authorId, data) => {
     title,
     description,
     body, 
+    avatar,
     created_at, 
     updated_at
     ) VALUES (
@@ -21,6 +22,7 @@ export const addCourse = (pgPool, authorId, data) => {
       '${data.title}', 
       '${data.description}', 
       '${data.body}', 
+      '${data.avatar}', 
       '${data.createdAt}', 
       '${data.updatedAt}'
     ) returning *;`).then(response => response.rows?.[0]);

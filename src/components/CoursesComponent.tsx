@@ -30,6 +30,7 @@ const CoursesComponentQuery = graphql`
             body
             authorId
             likes
+            avatar
             ...CourseComponent_course
           }
         }

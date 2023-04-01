@@ -4,12 +4,13 @@ import { Controller, useForm } from "react-hook-form";
 import { Button, Image, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { FormMode } from "../types/forms";
-import { ImagePickerResponse, launchImageLibrary } from "react-native-image-picker";
+import { Asset, ImagePickerResponse, launchImageLibrary } from "react-native-image-picker";
 
 export interface IFormFields {
   title: string;
   description: string;
   data: string;
+  avatar: string;
 }
 
 interface IProps {
@@ -20,85 +21,84 @@ interface IProps {
 
 
 const NewCourseForm: FC<IProps> = ({ mode, defaultValues, onSubmit }) => {
-  const [photo, setPhoto] = React.useState<ImagePickerResponse | null>(null);
+  const [image, setImage] = React.useState<Asset | null>(null);
 
-  const { control, handleSubmit, formState: { errors } } = useForm<IFormFields>({
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm<IFormFields>({
     defaultValues: defaultValues || {
       title: '',
       description: '',
-      data: ''
+      data: '',
+      avatar: '',
     }
   });
 
-  const onUploadImageClick = () => {
 
-  }
 
   const onChooseImageClick = () => {
-    launchImageLibrary({ noData: true }, (response) => {
-      if (response) setPhoto(response.assets?.[0]);
+    launchImageLibrary({ mediaType: 'photo', includeBase64: true }, (response) => {
+      const img = response.assets?.[0];
+      if (img?.base64) {
+        setImage(img);
+        console.log(img)
+        setValue('avatar', img.base64)
+      }
     });
   }
 
   return <Wrapper>
     <ImageWithDetailsWrapper>
       <ImageWrapper>
-        {photo && <StyledImage source={{ uri: photo.uri }} />}
+        {image && <StyledImage source={{ uri: image.uri }} />}
       </ImageWrapper>
       <DetailsWrapper>
-        <View>
-          <TextInputLabel>Title</TextInputLabel>
-          <Controller
-            name='title'
-            rules={{ required: true }}
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <TextInputNeo
-                style={styles.input}
-                value={value}
-                onChangeText={value => onChange(value)}
-                onBlur={onBlur}
-              />
-            )}
-          />
-        </View>
-        <View>
-          <TextInputLabel>Description</TextInputLabel>
-          <Controller
-            name='description'
-            rules={{ required: true }}
-            control={control}
-            render={({ field: { value, onChange, onBlur } }) => (
-              <TextInputNeo
-                style={styles.input}
-                value={value}
-                onChangeText={value => onChange(value)}
-                onBlur={onBlur}
-              />
-            )}
-          />
-        </View>
+        <Controller
+          name='title'
+          rules={{ required: true }}
+          control={control}
+          render={({ field: { value, onChange, onBlur } }) => (
+            <TextInputNeo
+              style={styles.input}
+              placeholder="Label"
+              value={value}
+              onChangeText={value => onChange(value)}
+              onBlur={onBlur}
+            />
+          )}
+        />
+        <Controller
+          name='description'
+          rules={{ required: true }}
+          control={control}
+          render={({ field: { value, onChange, onBlur } }) => (
+            <TextInputNeo
+              style={styles.input}
+              placeholder="Description"
+              value={value}
+              onChangeText={value => onChange(value)}
+              onBlur={onBlur}
+            />
+          )}
+        />
+
       </DetailsWrapper>
     </ImageWithDetailsWrapper>
+    <Controller
+      name='data'
+      rules={{ required: true }}
+      control={control}
+      render={({ field: { value, onChange, onBlur } }) => (
+        <TextInputNeo
+          multiline
+          numberOfLines={7}
+          placeholder="Words"
+          style={styles.input}
+          value={value}
+          onChangeText={value => onChange(value)}
+          onBlur={onBlur}
+        />
+      )}
+    />
 
-    <View>
-      <TextInputLabel>Words</TextInputLabel>
-      <Controller
-        name='data'
-        rules={{ required: true }}
-        control={control}
-        render={({ field: { value, onChange, onBlur } }) => (
-          <TextInputNeo
-            multiline
-            numberOfLines={7}
-            style={styles.input}
-            value={value}
-            onChangeText={value => onChange(value)}
-            onBlur={onBlur}
-          />
-        )}
-      />
-    </View>
     <Button title={mode === FormMode.update ? 'Update' : 'Create'} onPress={handleSubmit(onSubmit)} />
     <Button title="Upload Image" onPress={onChooseImageClick} />
   </Wrapper>
@@ -134,16 +134,11 @@ const TextInputNeo = styled(TextInput)`
   padding: 16px;
 `;
 
-const TextInputLabel = styled(Text)`
-  margin: 0 0 8px 8px;
-
-`;
-
 
 
 const StyledImage = styled(Image)`
-  width: 100px;
-  height: 100px;
+  width: 135px;
+  height: 135px;
   borderRadius: 16px;
 `;
 
@@ -156,9 +151,11 @@ const ImageWithDetailsWrapper = styled(View)`
 const ImageWrapper = styled(View)`
   width: 70px;
   height: 70px;
-  flex: 1;
+  flex: 2;
 `;
 
 const DetailsWrapper = styled(View)`
-  flex: 2;
+  display: flex;
+  gap: 16px;
+  flex: 3;
 `;

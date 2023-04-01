@@ -51,6 +51,10 @@ const GraphQLCourse = new GraphQLObjectType({
       type: GraphQLString,
       resolve: course => course.body,
     },
+    avatar: {
+      type: GraphQLString,
+      resolve: course => course.avatar,
+    },
     createdAt: {
       type: GraphQLInt,
       resolve: course => course.created_at,

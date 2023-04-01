@@ -65,6 +65,7 @@ type Course implements Node {
   authorId: String
   title: String
   body: String
+  avatar: String
   createdAt: Int
   updatedAt: Int
   likes: [String]
@@ -92,6 +93,7 @@ input AddCourseInput {
   title: String!
   description: String!
   body: String!
+  avatar: String!
   createdAt: String!
   updatedAt: String!
   clientMutationId: String
