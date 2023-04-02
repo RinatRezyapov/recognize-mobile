@@ -12,6 +12,7 @@ import CourseCreateComponent from './components/CourseCreateComponent';
 import CourseEditComponent from './components/CourseEditComponent';
 import CoursePlayerComponent from './components/CoursePlayerComponent';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,8 +32,9 @@ const App = () => {
     <CanvasProvider>
       <RelayEnvironmentProvider environment={RelayEnvironment}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={HomePage} options={{ title: 'Home', headerShown: false }} />
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen name="Login" component={LoginPage} options={{ headerShown: false }} />
+            <Stack.Screen name="Home" component={HomePage} options={{ headerShown: false }} />
             <Stack.Screen name="Course" component={CourseComponent} options={{ title: 'Course' }} />
             <Stack.Screen name="CoursePlayer" component={CoursePlayerComponent} options={{ title: 'Course Player' }} />
             <Stack.Screen name="CourseCreate" component={CourseCreateComponent} options={{ title: 'New Course' }} />

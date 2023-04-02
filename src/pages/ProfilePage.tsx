@@ -1,7 +1,6 @@
-import React, { Suspense } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { graphql, loadQuery } from 'react-relay';
-import RelayEnvironment from '../RelayEnvironment';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { graphql, useLazyLoadQuery } from 'react-relay';
 import { NavigationType } from '../App';
 import ProfileComponent from '../components/ProfileComponent';
 
@@ -37,18 +36,11 @@ export const ProfilePageQuery = graphql`
   }
 `
 
-const initialQueryRef = loadQuery(
-  RelayEnvironment,
-  ProfilePageQuery,
-  { id: "ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce" },
-);
-
-const ProfilePage: React.FC<IProps> = ({ navigation }) => {
+const ProfilePage: React.FC<IProps> = ({ navigation, route }) => {
+  const data = useLazyLoadQuery(ProfilePageQuery, { id: route.params?.id })
   return (
     <View style={styles.container}>
-      <Suspense fallback={<Text>{"Loading..."}</Text>}>
-        <ProfileComponent navigation={navigation} initialQueryRef={initialQueryRef} />
-      </Suspense>
+      <ProfileComponent navigation={navigation} data={data} />
     </View>
   );
 }

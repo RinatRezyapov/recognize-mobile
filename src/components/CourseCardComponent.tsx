@@ -52,7 +52,7 @@ const CourseCardComponent: React.FC<IProps> = ({ user, course }) => {
       },
     })
   }
-  console.log(course.avatar)
+
   return (
     <Wrapper>
       <Avatar source={{ uri: 'data:image/jpeg;base64,' + course.avatar }} />

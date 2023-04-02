@@ -39,7 +39,6 @@ const NewCourseForm: FC<IProps> = ({ mode, defaultValues, onSubmit }) => {
       const img = response.assets?.[0];
       if (img?.base64) {
         setImage(img);
-        console.log(img)
         setValue('avatar', img.base64)
       }
     });

@@ -2,18 +2,17 @@ import styled from '@emotion/native';
 import { Button } from '@react-native-material/core';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { usePreloadedQuery } from 'react-relay';
+import { useLazyLoadQuery, usePreloadedQuery } from 'react-relay';
 import MyCourseCardComponent from './MyCourseCardComponent';
 import { ProfilePageQuery } from '../pages/ProfilePage';
 import { ProfileComponentQuery as ProfileComponentQueryType } from './__generated__/ProfileComponentQuery.graphql';
 
 interface IProps {
-  initialQueryRef: any;
+  data: any;
   navigation: any;
 }
 
-const ProfileComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
-  const data = usePreloadedQuery<ProfileComponentQueryType>(ProfilePageQuery, initialQueryRef);
+const ProfileComponent: React.FC<IProps> = ({ data, navigation }) => {
 
   return (
     <View style={styles.personalInfo}>
