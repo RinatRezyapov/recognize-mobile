@@ -13,8 +13,8 @@ interface IProps extends NavigationType<'Profile'> {
 }
 
 const LoginPage: React.FC<IProps> = ({ navigation }) => {
-  const [login, setLogin] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [login, setLogin] = useState<string>('Rinat');
+  const [password, setPassword] = useState<string>('Password');
   const onLoginChange = (value: string) => setLogin(value);
   const onPasswordChange = (value: string) => setPassword(value);
   const onSubmit = () => {

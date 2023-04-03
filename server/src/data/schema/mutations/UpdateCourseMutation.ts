@@ -20,7 +20,7 @@ const UpdateCourseMutation = mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLCourseEdge),
       resolve: async ({ id }, { }, { pgPool }) => {
         const course = await getCourse(id, pgPool);
-        const courses = await getCourses("ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce", pgPool);
+        const courses = await getCourses(id, pgPool);
         return {
           cursor: cursorForObjectInConnection([...courses], course),
           node: course,

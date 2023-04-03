@@ -8,6 +8,7 @@ const UserQuery = {
     id: { type: GraphQLString },
   },
   resolve: (root, { id }, { pgPool }) => {
+    console.log('UserQuery', id)
     return getUser(id, pgPool);
   }
 }

@@ -2,17 +2,15 @@ import styled from '@emotion/native';
 import { Button } from '@react-native-material/core';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useLazyLoadQuery, usePreloadedQuery } from 'react-relay';
-import MyCourseCardComponent from './MyCourseCardComponent';
-import { ProfilePageQuery } from '../pages/ProfilePage';
-import { ProfileComponentQuery as ProfileComponentQueryType } from './__generated__/ProfileComponentQuery.graphql';
+import CourseCardComponent from './CourseCardComponent';
 
 interface IProps {
   data: any;
   navigation: any;
+  userId: string;
 }
 
-const ProfileComponent: React.FC<IProps> = ({ data, navigation }) => {
+const ProfileComponent: React.FC<IProps> = ({ data, navigation, userId }) => {
 
   return (
     <View style={styles.personalInfo}>
@@ -21,11 +19,12 @@ const ProfileComponent: React.FC<IProps> = ({ data, navigation }) => {
         <View>
           <Text style={styles.username}>{data?.user?.username}</Text>
           <Text style={styles.email}>{data?.user?.email}</Text>
+          <Button title='Logout' tintColor='white' color='#f73378' onPress={() => navigation.navigate('Login')} />
         </View>
       </PersonalInfo>
       <View>
         <Text style={styles.myCoursesTitle}>My courses</Text>
-        <StyledButton variant='outlined' color="white" title='New course' onPress={() => navigation.navigate('CourseCreate')} />
+        <StyledButton tintColor='white' color="#35baf6" title='New course' onPress={() => navigation.navigate('CourseCreate', { id: userId })} />
         <ScrollView>
           {data?.user?.courses?.edges?.map(({ node }) => {
             return (
@@ -33,9 +32,9 @@ const ProfileComponent: React.FC<IProps> = ({ data, navigation }) => {
                 key={node?.id}
                 onPress={() => navigation.navigate('Course', { id: node?._id, courseRef: node, userRef: data?.user })}
               >
-                <MyCourseCardComponent
-                  title={node?.title}
-                  description={node?.description}
+                <CourseCardComponent
+                  user={data.user}
+                  course={node}
                 />
               </TouchableOpacity>
             )
@@ -49,8 +48,7 @@ const ProfileComponent: React.FC<IProps> = ({ data, navigation }) => {
 export default ProfileComponent;
 
 const StyledButton = styled(Button)`
-  backgroundColor: #2196f3;
-  color: white;
+
   margin: 16px 0;
 `;
 
@@ -73,7 +71,7 @@ const styles = StyleSheet.create({
   profileImg: {
     height: 150,
     width: 150,
-    borderRadius: 100,
+    borderRadius: 30,
     borderWidth: 4,
 
   },

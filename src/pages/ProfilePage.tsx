@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { graphql, useLazyLoadQuery } from 'react-relay';
 import { NavigationType } from '../App';
 import ProfileComponent from '../components/ProfileComponent';
@@ -25,6 +25,8 @@ export const ProfilePageQuery = graphql`
             title
             description
             body
+            avatar
+            authorId
             ...CourseComponent_course
             ...CoursePlayerComponent_course
             ...CourseEditComponent_course
@@ -37,10 +39,13 @@ export const ProfilePageQuery = graphql`
 `
 
 const ProfilePage: React.FC<IProps> = ({ navigation, route }) => {
-  const data = useLazyLoadQuery(ProfilePageQuery, { id: route.params?.id })
+
+  const data = useLazyLoadQuery(ProfilePageQuery, { id: route.params?.id });
+
   return (
     <View style={styles.container}>
-      <ProfileComponent navigation={navigation} data={data} />
+      <Text>Test</Text>
+      <ProfileComponent userId={route.params?.id} navigation={navigation} data={data} />
     </View>
   );
 }

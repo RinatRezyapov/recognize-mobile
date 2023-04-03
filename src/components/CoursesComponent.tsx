@@ -9,6 +9,7 @@ import { CoursesComponentQuery as CoursesComponentQueryType } from './__generate
 interface IProps {
   initialQueryRef: any;
   navigation: any;
+  route: any;
 }
 
 const CoursesComponentQuery = graphql`
@@ -39,9 +40,9 @@ const CoursesComponentQuery = graphql`
   }
 `
 
-const CoursesComponent: React.FC<IProps> = ({ navigation }) => {
+const CoursesComponent: React.FC<IProps> = ({ navigation, route }) => {
 
-  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, { id: "ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce" });
+  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, { id: route.params.id });
 
   return (
     <Wrapper>
@@ -68,4 +69,6 @@ export default CoursesComponent;
 
 const Wrapper = styled.View`
   padding: 32px 16px;
+  background-color: white;
+  height: 100%;
 `;

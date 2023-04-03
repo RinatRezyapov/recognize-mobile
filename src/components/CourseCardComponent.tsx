@@ -18,6 +18,7 @@ interface IProps {
 
 const CourseCardComponent: React.FC<IProps> = ({ user, course }) => {
 
+  const userOwned = course.authorId === user._id;
   const likedByUser = course.likes?.includes(user._id);
 
   const mutation = graphql`
@@ -63,14 +64,12 @@ const CourseCardComponent: React.FC<IProps> = ({ user, course }) => {
         <Text style={styles.courseDescription}>
           {course.description}
         </Text>
-        <CardFooter>
+        {!userOwned && <CardFooter>
           <Text>By: {course.authorId.slice(0, 10)}</Text>
-          {parseInt(course.authorId) !== user.id && <TouchableOpacity
-            onPress={() => onLikePress()}
-          >
+          <TouchableOpacity onPress={() => onLikePress()}>
             <Icon name={likedByUser ? "heart" : "hearto"} size={30} color='red' />
-          </TouchableOpacity>}
-        </CardFooter>
+          </TouchableOpacity>
+        </CardFooter>}
       </Details>
     </Wrapper>
   );
@@ -82,11 +81,12 @@ const Wrapper = styled.View`
   display: flex;
   flex-direction: row;
   gap: 16px;
-  margin-bottom: 16px;
+  margin: 0 8px 16px 8px;
   padding: 16px;
-  border: 1px solid lightgrey;
-  border-radius: 20px;
+  border-radius: 30px;
   background-color: white;
+  elevation: 10;
+  min-height: 130px;
 `;
 
 const Avatar = styled.Image`

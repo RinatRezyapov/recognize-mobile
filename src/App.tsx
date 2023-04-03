@@ -13,6 +13,8 @@ import CourseEditComponent from './components/CourseEditComponent';
 import CoursePlayerComponent from './components/CoursePlayerComponent';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import styled from '@emotion/native';
+import { View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 

@@ -46,14 +46,15 @@ const mutation = graphql`
 `;
 
 
-interface IProps  {
+interface IProps {
   initialQueryRef: any;
   navigation: any;
+  route: any;
 }
 
-const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation }) => {
+const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation, route }) => {
 
-  const { user } = useLazyLoadQuery(UserQuery, { id: "ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce" });
+  const { user } = useLazyLoadQuery(UserQuery, { id: route.params.id });
 
 
   const [mutate] = useMutation(mutation);
