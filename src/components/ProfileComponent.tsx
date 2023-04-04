@@ -13,17 +13,16 @@ interface IProps {
 const ProfileComponent: React.FC<IProps> = ({ data, navigation, userId }) => {
 
   return (
-    <View style={styles.personalInfo}>
+    <Wrapper>
       <PersonalInfo>
-        <Image source={require("./profile-pic.png")} style={styles.profileImg} />
+        <Avatar source={require("./profile-pic.png")} />
         <View>
-          <Text style={styles.username}>{data?.user?.username}</Text>
-          <Text style={styles.email}>{data?.user?.email}</Text>
+          <UsernameText>{data?.user?.username}</UsernameText>
+          <EmailText>{data?.user?.email}</EmailText>
           <Button title='Logout' tintColor='white' color='#f73378' onPress={() => navigation.navigate('Login')} />
         </View>
       </PersonalInfo>
       <View>
-        <Text style={styles.myCoursesTitle}>My courses</Text>
         <StyledButton tintColor='white' color="#35baf6" title='New course' onPress={() => navigation.navigate('CourseCreate', { id: userId })} />
         <ScrollView>
           {data?.user?.courses?.edges?.map(({ node }) => {
@@ -41,14 +40,19 @@ const ProfileComponent: React.FC<IProps> = ({ data, navigation, userId }) => {
           })}
         </ScrollView>
       </View>
-    </View>
+    </Wrapper>
   );
 }
 
 export default ProfileComponent;
 
-const StyledButton = styled(Button)`
+const Wrapper = styled.View`
+  padding: 16px;
+  background-color: white;
+  height: 100%;
+`;
 
+const StyledButton = styled(Button)`
   margin: 16px 0;
 `;
 
@@ -58,32 +62,17 @@ const PersonalInfo = styled.View`
   gap: 16px;
 `;
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    height: '100%'
-  },
-  personalInfo: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 16,
-  },
-  profileImg: {
-    height: 150,
-    width: 150,
-    borderRadius: 30,
-    borderWidth: 4,
+const UsernameText = styled.Text`
+  font-size: 24px;
+`;
 
-  },
-  username: {
-    fontSize: 24,
+const EmailText = styled.Text`
+  font-size: 12px;
+`;
 
-  },
-  email: {
-    fontSize: 12,
-
-  },
-  myCoursesTitle: {
-    fontSize: 18,
-  }
-});
+const Avatar = styled.Image`
+  height: 150px;
+  width: 150px;
+  border-radius: 30px;
+  border-width: 4px;
+`;

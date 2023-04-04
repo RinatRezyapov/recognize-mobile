@@ -81,7 +81,7 @@ const Wrapper = styled.View`
   display: flex;
   flex-direction: row;
   gap: 16px;
-  margin: 0 8px 16px 8px;
+  margin: 8px;
   padding: 16px;
   border-radius: 30px;
   background-color: white;
