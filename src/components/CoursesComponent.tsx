@@ -30,6 +30,7 @@ const CoursesComponentQuery = graphql`
             description
             body
             authorId
+            author
             likes
             avatar
             ...CourseComponent_course

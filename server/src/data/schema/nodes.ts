@@ -4,6 +4,7 @@ import { GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString } from 'graph
 import { globalIdField, nodeDefinitions, fromGlobalId, connectionDefinitions, connectionFromArray, connectionArgs } from 'graphql-relay';
 
 
+
 const { nodeInterface, nodeField } = nodeDefinitions(
   (globalId, { pgPool }) => {
     const { type, id } = fromGlobalId(globalId);
@@ -42,6 +43,13 @@ const GraphQLCourse = new GraphQLObjectType({
     authorId: {
       type: GraphQLString,
       resolve: course => course.author_id,
+    },
+    author: {
+      type: GraphQLString,
+      resolve: async (course, {}, { pgPool }) => {
+        const user = await getUser(course.author_id, pgPool);
+        return user.username;
+      }
     },
     title: {
       type: GraphQLString,
@@ -82,7 +90,7 @@ const {
   nodeType: GraphQLCourse,
 })
 
-const GraphQLUser = new GraphQLObjectType({
+var GraphQLUser = new GraphQLObjectType({
   name: 'User',
   fields: {
     id: globalIdField('User'),

@@ -63,6 +63,7 @@ type Course implements Node {
   _id: String
   description: String
   authorId: String
+  author: String
   title: String
   body: String
   avatar: String

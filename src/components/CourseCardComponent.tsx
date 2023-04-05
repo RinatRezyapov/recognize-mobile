@@ -65,7 +65,7 @@ const CourseCardComponent: React.FC<IProps> = ({ user, course }) => {
           {course.description}
         </Text>
         {!userOwned && <CardFooter>
-          <Text>By: {course.authorId.slice(0, 10)}</Text>
+          <Text>By: {course.author}</Text>
           <TouchableOpacity onPress={() => onLikePress()}>
             <Icon name={likedByUser ? "heart" : "hearto"} size={30} color='red' />
           </TouchableOpacity>
