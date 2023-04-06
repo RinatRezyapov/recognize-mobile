@@ -19,11 +19,13 @@ import { View } from 'react-native';
 const Stack = createNativeStackNavigator();
 
 type RootStackParamList = {
-  Profile: undefined;
-  Course: { id: string, userRef: any, courseRef: any };
+  Profile: { userId: string };
+  Home: { userId: string };
+  Course: { userRef: any, courseRef: any };
   CourseCreate: undefined;
-  CourseEdit: { id: string, courseRef: any, userRef: any };
-  CoursePlayer: { id: string, courseRef: any };
+  CourseEdit: { courseId: string, courseRef: any, userRef: any };
+  CoursePlayer: { courseId: string, courseRef: any };
+  Courses: { userId: string }
 };
 
 export type NavigationType<T> = NativeStackScreenProps<RootStackParamList, T>;

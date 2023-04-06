@@ -9,28 +9,29 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ConnectionHandler, graphql, useFragment, useMutation } from 'react-relay';
 import { NavigationType } from '../App';
+import { CourseComponent_course$key } from './__generated__/CourseComponent_course.graphql';
+import { CourseComponent_user$key } from './__generated__/CourseComponent_user.graphql';
 
 interface IProps extends NavigationType<'Course'> {
 
 }
 
 const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
-
-  const isUserOwned = !!route.params.userRef;
-
-  const course = useFragment(
+  const course = useFragment<CourseComponent_course$key>(
     graphql`
       fragment CourseComponent_course on Course {
         id
+        _id
         title
         description
         body
+        authorId
       }
     `,
     route.params.courseRef,
   );
 
-  const user = useFragment(
+  const user = useFragment<CourseComponent_user$key>(
     graphql`
       fragment CourseComponent_user on User {
         id
@@ -41,6 +42,8 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
     route.params.userRef,
   );
 
+  const isUserOwned = course.authorId === user._id;
+
   const mutation = graphql`
     mutation CourseComponentMutation($input: RemoveCourseInput!) {
       removeCourse(input: $input) {
@@ -50,11 +53,12 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   `;
   const [mutate] = useMutation(mutation);
 
-  const onDeleteCourseClick = (id: string) => () => {
+  const onDeleteCourseClick = (courseId: string | null) => () => {
+    if (!courseId) return;
     mutate({
       variables: {
         input: {
-          id,
+          id: courseId
         }
       },
       updater: (store) => {
@@ -76,15 +80,18 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
         ConnectionHandler.deleteNode(connection, removedEdgeID?.toString());
       },
     })
-    navigation.navigate('Profile');
+    if (!user._id) return;
+    navigation.navigate('Profile', { userId: user._id });
   };
 
-  const onEditCourseClick = (id: string) => async () => {
-    navigation.navigate('CourseEdit', { id, courseRef: route.params.courseRef, userRef: route.params.userRef  });
+  const onEditCourseClick = (courseId: string | null) => async () => {
+    if (!courseId) return;
+    navigation.navigate('CourseEdit', { courseId, courseRef: route.params.courseRef, userRef: route.params.userRef  });
   }
 
-  const onStartCourseClick = (id: string) => async () => {
-    navigation.navigate('CoursePlayer', { id, courseRef: route.params.courseRef });
+  const onStartCourseClick = (courseId: string | null) => async () => {
+    if (!courseId) return;
+    navigation.navigate('CoursePlayer', { courseId, courseRef: route.params.courseRef });
   };
 
   if (!course) return <ActivityIndicator size="large" />;
@@ -114,9 +121,9 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
       </View>
     </View>
     <View style={styles.buttonsContainer}>
-      <Button title='Start' onPress={onStartCourseClick(route?.params?.id)} />
-      {isUserOwned && <Button title='Edit' onPress={onEditCourseClick(route?.params?.id)} />}
-      {isUserOwned && <Button title='Remove' onPress={onDeleteCourseClick(course?.id)} />}
+      <Button title='Start' onPress={onStartCourseClick(course._id)} />
+      {isUserOwned && <Button title='Edit' onPress={onEditCourseClick(course._id)} />}
+      {isUserOwned && <Button title='Remove' onPress={onDeleteCourseClick(course._id)} />}
     </View>
   </View>;
 }

@@ -5,12 +5,8 @@ import { graphql, useLazyLoadQuery } from 'react-relay';
 
 import CourseCardComponent from './CourseCardComponent';
 import { CoursesComponentQuery as CoursesComponentQueryType } from './__generated__/CoursesComponentQuery.graphql';
+import { NavigationType } from '../App';
 
-interface IProps {
-  initialQueryRef: any;
-  navigation: any;
-  route: any;
-}
 
 const CoursesComponentQuery = graphql`
   query CoursesComponentQuery($id: String) {
@@ -41,18 +37,22 @@ const CoursesComponentQuery = graphql`
   }
 `
 
+interface IProps extends NavigationType<'Profile'> {
+  initialQueryRef: any;
+}
+
 const CoursesComponent: React.FC<IProps> = ({ navigation, route }) => {
 
-  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, { id: route.params.id });
+  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, { id: route.params.userId });
 
   return (
     <Wrapper>
       <ScrollView>
-        {data?.courses?.courses?.edges?.map((edge) => {
+        {data?.courses?.courses?.edges?.filter(v => v?.node?.authorId !== route.params.userId)?.map((edge) => {
           return (
             <TouchableOpacity
               key={edge?.node?.id}
-              onPress={() => navigation.navigate('Course', { id: edge?.node?._id, courseRef: edge?.node, userRef: data.user })}
+              onPress={() => navigation.navigate('Course', { courseRef: edge?.node, userRef: data.user })}
             >
               <CourseCardComponent
                 user={data.user}

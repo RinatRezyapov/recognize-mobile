@@ -11,12 +11,22 @@ interface IProps extends NavigationType<'Home'> {
 
 const Tab = createBottomTabNavigator();
 
-const HomePage: React.FC<IProps> = ({ navigation, route }) => {
+const HomePage: React.FC<IProps> = ({ route }) => {
 
   return (
     <Tab.Navigator initialRouteName="Profile" screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="Profile" initialParams={{ id: route.params?.id }} component={ProfilePage} options={{ tabBarIcon: ({ focused }) => <Icon name="user" size={30} color={focused ? "lightblue" : "grey"} /> }} />
-      <Tab.Screen name="Courses" initialParams={{ id: route.params?.id }} component={CoursesComponent} options={{ tabBarIcon: ({ focused }) => <Icon name="th-list" size={30} color={focused ? "lightblue" : "grey"} /> }} />
+      <Tab.Screen
+        name="Profile"
+        initialParams={{ userId: route.params?.userId }}
+        component={ProfilePage}
+        options={{ tabBarIcon: ({ focused }) => <Icon name="user" size={30} color={focused ? "lightblue" : "grey"} /> }}
+      />
+      <Tab.Screen
+        name="Courses"
+        initialParams={{ userId: route.params?.userId }}
+        component={CoursesComponent}
+        options={{ tabBarIcon: ({ focused }) => <Icon name="th-list" size={30} color={focused ? "lightblue" : "grey"} /> }}
+      />
     </Tab.Navigator>
   );
 }

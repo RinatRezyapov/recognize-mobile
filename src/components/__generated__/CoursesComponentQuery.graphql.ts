@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<59961ce196ded735076db568001d3ff5>>
+ * @generated SignedSource<<35923052f0b4a6c62a882b53af94b6bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -356,7 +356,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "31f24c0eb6a616ddb7638e281ca29dd0",
+    "cacheID": "2931266aed64efd5f8210a13644f8a2e",
     "id": null,
     "metadata": {
       "connection": [
@@ -373,7 +373,7 @@ return {
     },
     "name": "CoursesComponentQuery",
     "operationKind": "query",
-    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    ...CourseComponent_user\n    ...CourseEditComponent_user\n  }\n  courses {\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          author\n          likes\n          avatar\n          ...CourseComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CourseEditComponent_user on User {\n  id\n  _id\n  username\n}\n"
+    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    ...CourseComponent_user\n    ...CourseEditComponent_user\n  }\n  courses {\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          author\n          likes\n          avatar\n          ...CourseComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  authorId\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CourseEditComponent_user on User {\n  id\n  _id\n  username\n}\n"
   }
 };
 })();

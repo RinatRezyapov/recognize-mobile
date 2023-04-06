@@ -1,12 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { graphql, useLazyLoadQuery } from 'react-relay';
 import { NavigationType } from '../App';
 import ProfileComponent from '../components/ProfileComponent';
-
-interface IProps extends NavigationType<'Profile'> {
-
-}
 
 export const ProfilePageQuery = graphql`
   query ProfilePageQuery($id: String) {
@@ -38,12 +33,16 @@ export const ProfilePageQuery = graphql`
   }
 `
 
+interface IProps extends NavigationType<'Profile'> {
+
+}
+
 const ProfilePage: React.FC<IProps> = ({ navigation, route }) => {
 
-  const data = useLazyLoadQuery(ProfilePageQuery, { id: route.params?.id });
+  const data = useLazyLoadQuery(ProfilePageQuery, { id: route.params?.userId });
 
   return (
-    <ProfileComponent userId={route.params?.id} navigation={navigation} data={data} />
+    <ProfileComponent userId={route.params?.userId} navigation={navigation} data={data} />
   );
 }
 

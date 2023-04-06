@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { NavigationType } from '../App';
 
-const USERS = {
+const USERS: { [key: string]: string } = {
   Rinat: "ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce",
   Brandon: "a7fe332f-bb07-4c4e-a9ea-cc320d0e3514"
 }
@@ -18,7 +18,7 @@ const LoginPage: React.FC<IProps> = ({ navigation }) => {
   const onLoginChange = (value: string) => setLogin(value);
   const onPasswordChange = (value: string) => setPassword(value);
   const onSubmit = () => {
-    navigation.navigate('Home', { id: USERS[login] });
+    navigation.navigate('Home', { userId: USERS[login] });
   }
   return (
     <View style={styles.container}>

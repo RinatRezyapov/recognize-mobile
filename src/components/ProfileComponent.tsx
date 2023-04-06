@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import { Button } from '@react-native-material/core';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import CourseCardComponent from './CourseCardComponent';
 
 interface IProps {
