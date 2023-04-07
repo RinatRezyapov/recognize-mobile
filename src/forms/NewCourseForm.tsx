@@ -1,16 +1,16 @@
 import styled from "@emotion/native";
 import React, { FC } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Button, Image, StyleSheet, Text, TextInput, View } from "react-native";
-
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { FormMode } from "../types/forms";
 import { Asset, ImagePickerResponse, launchImageLibrary } from "react-native-image-picker";
 
 export interface IFormFields {
   title: string;
   description: string;
-  data: string;
   avatar: string;
+  words: { value: string }[];
 }
 
 interface IProps {
@@ -27,9 +27,15 @@ const NewCourseForm: FC<IProps> = ({ mode, defaultValues, onSubmit }) => {
     defaultValues: defaultValues || {
       title: '',
       description: '',
-      data: '',
       avatar: '',
+      words: new Array(5).fill(null).map(() => ({ value: '' })),
     }
+  });
+
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+    control,
+    name: "words",
+
   });
 
 
@@ -47,7 +53,13 @@ const NewCourseForm: FC<IProps> = ({ mode, defaultValues, onSubmit }) => {
   return <Wrapper>
     <ImageWithDetailsWrapper>
       <ImageWrapper>
-        {image && <StyledImage source={{ uri: image.uri }} />}
+        {image ? (
+          <StyledImage source={{ uri: image.uri }} />
+        ) : (
+          <ImagePlaceholder onPress={onChooseImageClick}>
+            <Icon name="add-photo-alternate" size={30} />
+          </ImagePlaceholder>
+        )}
       </ImageWrapper>
       <DetailsWrapper>
         <Controller
@@ -81,25 +93,33 @@ const NewCourseForm: FC<IProps> = ({ mode, defaultValues, onSubmit }) => {
 
       </DetailsWrapper>
     </ImageWithDetailsWrapper>
-    <Controller
-      name='data'
-      rules={{ required: true }}
-      control={control}
-      render={({ field: { value, onChange, onBlur } }) => (
-        <TextInputNeo
-          multiline
-          numberOfLines={7}
-          placeholder="Words"
-          style={styles.input}
-          value={value}
-          onChangeText={value => onChange(value)}
-          onBlur={onBlur}
+    {fields.map((field, idx) => (
+      <FieldRowContainer key={field.id}>
+        <Controller
+          key={field.id}
+          name={`words.${idx}.value`}
+          rules={{ required: true }}
+          control={control}
+          render={({ field: { value, onChange, onBlur } }) => (
+            <FielInput
+              placeholder="Word"
+              style={styles.input}
+              value={value}
+              onChangeText={value => onChange(value)}
+              onBlur={onBlur}
+            />
+          )}
         />
-      )}
-    />
+        <TouchableOpacity onPress={() => remove(idx)}>
+          <Icon name="remove" size={30} />
+        </TouchableOpacity>
+      </FieldRowContainer>
 
+    ))}
+    <AddTouchableWrapper onPress={() => append({ value: '' })}>
+      <Icon name="add" size={30} />
+    </AddTouchableWrapper>
     <Button title={mode === FormMode.update ? 'Update' : 'Create'} onPress={handleSubmit(onSubmit)} />
-    <Button title="Upload Image" onPress={onChooseImageClick} />
   </Wrapper>
 }
 
@@ -133,7 +153,32 @@ const TextInputNeo = styled(TextInput)`
   padding: 16px;
 `;
 
+const FielInput = styled(TextInputNeo)`
+  flex: 1;
+`;
 
+const FieldRowContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+`;
+
+const ImagePlaceholder = styled.TouchableOpacity`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 135px;
+  height: 135px;
+  borderWidth: 1px;
+  borderRadius: 16px;
+  borderColor: lightgrey;
+`;
+
+const AddTouchableWrapper = styled.TouchableOpacity`
+  display: flex;
+  align-items: flex-end;
+`;
 
 const StyledImage = styled(Image)`
   width: 135px;

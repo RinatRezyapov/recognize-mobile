@@ -66,7 +66,7 @@ const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation, 
           authorId: user.id,
           title: fields.title,
           description: fields.description,
-          body: fields.data,
+          body: fields.words.map(v => v.value).join(' '),
           avatar: fields.avatar,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()

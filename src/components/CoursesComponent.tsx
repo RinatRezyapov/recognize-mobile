@@ -30,6 +30,7 @@ const CoursesComponentQuery = graphql`
             likes
             avatar
             ...CourseComponent_course
+            ...CoursePlayerComponent_course
           }
         }
       }

@@ -58,7 +58,7 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
           id: course.id,
           title: fields.title,
           description: fields.description,
-          body: fields.data,
+          body: fields.words.map(v => v.value).join(' '),
         }
       }
     })
@@ -71,7 +71,7 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
   const description = course.description;
   const data = course.body;
 
-  return <NewCourseForm mode={FormMode.update} defaultValues={{ title, description, data }} onSubmit={onSubmit} />;
+  return <NewCourseForm mode={FormMode.update} defaultValues={{ title, description }} onSubmit={onSubmit} />;
 }
 
 export default CourseEditComponent;
