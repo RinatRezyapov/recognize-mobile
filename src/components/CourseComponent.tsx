@@ -54,6 +54,7 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   const [mutate] = useMutation(mutation);
 
   const onDeleteCourseClick = (courseId: string | null) => () => {
+
     if (!courseId) return;
     mutate({
       variables: {
@@ -63,18 +64,12 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
       },
       updater: (store) => {
         const payload = store.get(user.id);
-
-        if (payload == null) return;
+        if (!payload) return;
 
         const removedEdgeID = store.getRootField('removeCourse')?.getValue('deletedCourseId');
-
         if (!removedEdgeID) return;
 
-        const connection = ConnectionHandler.getConnection(
-          payload,
-          'Courses_courses',
-        );
-
+        const connection = ConnectionHandler.getConnection(payload, 'Courses_courses');
         if (!connection) return;
 
         ConnectionHandler.deleteNode(connection, removedEdgeID?.toString());
@@ -86,7 +81,7 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
 
   const onEditCourseClick = (courseId: string | null) => async () => {
     if (!courseId) return;
-    navigation.navigate('CourseEdit', { courseId, courseRef: route.params.courseRef, userRef: route.params.userRef  });
+    navigation.navigate('CourseEdit', { courseId, courseRef: route.params.courseRef, userRef: route.params.userRef });
   }
 
   const onStartCourseClick = (courseId: string | null) => async () => {
@@ -123,7 +118,7 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
     <View style={styles.buttonsContainer}>
       <Button title='Start' onPress={onStartCourseClick(course._id)} />
       {isUserOwned && <Button title='Edit' onPress={onEditCourseClick(course._id)} />}
-      {isUserOwned && <Button title='Remove' onPress={onDeleteCourseClick(course._id)} />}
+      {isUserOwned && <Button title='Remove' onPress={onDeleteCourseClick(course.id)} />}
     </View>
   </View>;
 }
