@@ -1,16 +1,16 @@
-import styled from "@emotion/native";
-import React, { FC } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import styled from '@emotion/native';
+import React, {FC} from 'react';
+import {Controller, useFieldArray, useForm} from 'react-hook-form';
+import {Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { FormMode } from "../types/forms";
-import { Asset, ImagePickerResponse, launchImageLibrary } from "react-native-image-picker";
+import {FormMode} from '../types/forms';
+import {Asset, ImagePickerResponse, launchImageLibrary} from 'react-native-image-picker';
 
 export interface IFormFields {
   title: string;
   description: string;
   avatar: string;
-  words: { value: string }[];
+  words: {value: string}[];
 }
 
 interface IProps {
@@ -19,109 +19,110 @@ interface IProps {
   onSubmit: (value: IFormFields) => void;
 }
 
-
-const NewCourseForm: FC<IProps> = ({ mode, defaultValues, onSubmit }) => {
+const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
   const [image, setImage] = React.useState<Asset | null>(null);
 
-  const { control, handleSubmit, setValue, formState: { errors } } = useForm<IFormFields>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: {errors},
+  } = useForm<IFormFields>({
     defaultValues: defaultValues || {
       title: '',
       description: '',
       avatar: '',
-      words: new Array(5).fill(null).map(() => ({ value: '' })),
-    }
+      words: new Array(5).fill(null).map(() => ({value: ''})),
+    },
   });
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+  const {fields, append, prepend, remove, swap, move, insert} = useFieldArray({
     control,
-    name: "words",
-
+    name: 'words',
   });
-
-
 
   const onChooseImageClick = () => {
-    launchImageLibrary({ mediaType: 'photo', includeBase64: true }, (response) => {
+    launchImageLibrary({mediaType: 'photo', includeBase64: true}, response => {
       const img = response.assets?.[0];
       if (img?.base64) {
         setImage(img);
-        setValue('avatar', img.base64)
+        setValue('avatar', img.base64);
       }
     });
-  }
+  };
 
-  return <Wrapper>
-    <ImageWithDetailsWrapper>
-      <ImageWrapper>
-        {image ? (
-          <StyledImage source={{ uri: image.uri }} />
-        ) : (
-          <ImagePlaceholder onPress={onChooseImageClick}>
-            <Icon name="add-photo-alternate" size={30} />
-          </ImagePlaceholder>
-        )}
-      </ImageWrapper>
-      <DetailsWrapper>
-        <Controller
-          name='title'
-          rules={{ required: true }}
-          control={control}
-          render={({ field: { value, onChange, onBlur } }) => (
-            <TextInputNeo
-              style={styles.input}
-              placeholder="Label"
-              value={value}
-              onChangeText={value => onChange(value)}
-              onBlur={onBlur}
-            />
+  return (
+    <Wrapper>
+      <ImageWithDetailsWrapper>
+        <ImageWrapper>
+          {image ? (
+            <StyledImage source={{uri: image.uri}} />
+          ) : (
+            <ImagePlaceholder onPress={onChooseImageClick}>
+              <Icon name="add-photo-alternate" size={30} />
+            </ImagePlaceholder>
           )}
-        />
-        <Controller
-          name='description'
-          rules={{ required: true }}
-          control={control}
-          render={({ field: { value, onChange, onBlur } }) => (
-            <TextInputNeo
-              style={styles.input}
-              placeholder="Description"
-              value={value}
-              onChangeText={value => onChange(value)}
-              onBlur={onBlur}
-            />
-          )}
-        />
-
-      </DetailsWrapper>
-    </ImageWithDetailsWrapper>
-    {fields.map((field, idx) => (
-      <FieldRowContainer key={field.id}>
-        <Controller
-          key={field.id}
-          name={`words.${idx}.value`}
-          rules={{ required: true }}
-          control={control}
-          render={({ field: { value, onChange, onBlur } }) => (
-            <FielInput
-              placeholder="Word"
-              style={styles.input}
-              value={value}
-              onChangeText={value => onChange(value)}
-              onBlur={onBlur}
-            />
-          )}
-        />
-        <TouchableOpacity onPress={() => remove(idx)}>
-          <Icon name="remove" size={30} />
-        </TouchableOpacity>
-      </FieldRowContainer>
-
-    ))}
-    <AddTouchableWrapper onPress={() => append({ value: '' })}>
-      <Icon name="add" size={30} />
-    </AddTouchableWrapper>
-    <Button title={mode === FormMode.update ? 'Update' : 'Create'} onPress={handleSubmit(onSubmit)} />
-  </Wrapper>
-}
+        </ImageWrapper>
+        <DetailsWrapper>
+          <Controller
+            name="title"
+            rules={{required: true}}
+            control={control}
+            render={({field: {value, onChange, onBlur}}) => (
+              <TextInputNeo
+                style={styles.input}
+                placeholder="Label"
+                value={value}
+                onChangeText={value => onChange(value)}
+                onBlur={onBlur}
+              />
+            )}
+          />
+          <Controller
+            name="description"
+            rules={{required: true}}
+            control={control}
+            render={({field: {value, onChange, onBlur}}) => (
+              <TextInputNeo
+                style={styles.input}
+                placeholder="Description"
+                value={value}
+                onChangeText={value => onChange(value)}
+                onBlur={onBlur}
+              />
+            )}
+          />
+        </DetailsWrapper>
+      </ImageWithDetailsWrapper>
+      {fields.map((field, idx) => (
+        <FieldRowContainer key={field.id}>
+          <Controller
+            key={field.id}
+            name={`words.${idx}.value`}
+            rules={{required: true}}
+            control={control}
+            render={({field: {value, onChange, onBlur}}) => (
+              <FielInput
+                placeholder="Word"
+                style={styles.input}
+                value={value}
+                onChangeText={value => onChange(value)}
+                onBlur={onBlur}
+              />
+            )}
+          />
+          <TouchableOpacity onPress={() => remove(idx)}>
+            <Icon name="remove" size={30} />
+          </TouchableOpacity>
+        </FieldRowContainer>
+      ))}
+      <AddTouchableWrapper onPress={() => append({value: ''})}>
+        <Icon name="add" size={30} />
+      </AddTouchableWrapper>
+      <Button title={mode === FormMode.update ? 'Update' : 'Create'} onPress={handleSubmit(onSubmit)} />
+    </Wrapper>
+  );
+};
 
 export default NewCourseForm;
 
@@ -133,8 +134,8 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     borderWidth: 1,
     borderRadius: 4,
-  }
-})
+  },
+});
 
 const Wrapper = styled(View)`
   display: flex;
@@ -149,7 +150,7 @@ const TextInputNeo = styled(TextInput)`
   elevation: 5;
   background-color: white;
   border-width: 0;
-  text-align-vertical: ${({ multiline }) => multiline ? 'top' : 'center'};
+  text-align-vertical: ${({multiline}) => (multiline ? 'top' : 'center')};
   padding: 16px;
 `;
 
@@ -170,9 +171,9 @@ const ImagePlaceholder = styled.TouchableOpacity`
   align-items: center;
   width: 135px;
   height: 135px;
-  borderWidth: 1px;
-  borderRadius: 16px;
-  borderColor: lightgrey;
+  borderwidth: 1px;
+  borderradius: 16px;
+  bordercolor: lightgrey;
 `;
 
 const AddTouchableWrapper = styled.TouchableOpacity`
@@ -183,12 +184,12 @@ const AddTouchableWrapper = styled.TouchableOpacity`
 const StyledImage = styled(Image)`
   width: 135px;
   height: 135px;
-  borderRadius: 16px;
+  borderradius: 16px;
 `;
 
 const ImageWithDetailsWrapper = styled(View)`
   display: flex;
-  flexDirection: row;
+  flexdirection: row;
   gap: 16px;
 `;
 

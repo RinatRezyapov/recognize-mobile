@@ -1,16 +1,16 @@
 import React from 'react';
-import { ConnectionHandler, graphql, useLazyLoadQuery, useMutation } from "react-relay";
+import {ConnectionHandler, graphql, useLazyLoadQuery, useMutation} from 'react-relay';
 
-import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
-import { FormMode } from '../types/forms';
+import NewCourseForm, {IFormFields as NewCourseFormFields} from '../forms/NewCourseForm';
+import {FormMode} from '../types/forms';
 
 export const UserQuery = graphql`
   query CourseCreateComponentQuery($id: String) {
     user(id: $id) {
-      id,
-      _id,
-      username, 
-      email,
+      id
+      _id
+      username
+      email
       courses(first: 2147483647) @connection(key: "Courses_courses") {
         edges {
           node {
@@ -24,7 +24,7 @@ export const UserQuery = graphql`
       }
     }
   }
-`
+`;
 
 const mutation = graphql`
   mutation CourseCreateComponentMutation($input: AddCourseInput!) {
@@ -45,21 +45,17 @@ const mutation = graphql`
   }
 `;
 
-
 interface IProps {
   initialQueryRef: any;
   navigation: any;
   route: any;
 }
 
-const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation, route }) => {
-
-  const { user } = useLazyLoadQuery(UserQuery, { id: route.params.id });
-
+const CourseCreateComponent: React.FC<IProps> = ({initialQueryRef, navigation, route}) => {
+  const {user} = useLazyLoadQuery(UserQuery, {id: route.params.id});
 
   const [mutate] = useMutation(mutation);
   const onSubmit = async (fields: NewCourseFormFields) => {
-
     mutate({
       variables: {
         input: {
@@ -69,28 +65,25 @@ const CourseCreateComponent: React.FC<IProps> = ({ initialQueryRef, navigation, 
           body: fields.words.map(v => v.value).join(' '),
           avatar: fields.avatar,
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        }
+          updatedAt: new Date().toISOString(),
+        },
       },
-      updater: (store) => {
+      updater: store => {
         const payload = store.get(user.id);
         if (payload == null) {
           return;
         }
         const newEdge = store.getRootField('addCourse')?.getLinkedRecord('courseEdge');
         if (!newEdge) return;
-        const connection = ConnectionHandler.getConnection(
-          payload,
-          'Courses_courses',
-        );
+        const connection = ConnectionHandler.getConnection(payload, 'Courses_courses');
         if (!connection) return;
         ConnectionHandler.insertEdgeAfter(connection, newEdge, null);
       },
-    })
+    });
     navigation.navigate('Profile');
-  }
+  };
 
   return <NewCourseForm mode={FormMode.create} onSubmit={onSubmit} />;
-}
+};
 
 export default CourseCreateComponent;

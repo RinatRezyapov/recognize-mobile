@@ -1,21 +1,13 @@
 import styled from '@emotion/native';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
-import { graphql, useFragment } from 'react-relay';
-import { CanvasContext } from '../utils/context/CanvasProvider';
-import { NavigationType } from '../App';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {graphql, useFragment} from 'react-relay';
+import {CanvasContext} from '../utils/context/CanvasProvider';
+import {NavigationType} from '../App';
 
-interface IProps extends NavigationType<'Course'> {
+interface IProps extends NavigationType<'Course'> {}
 
-}
-
-const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
+const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
   const course = useFragment(
     graphql`
       fragment CoursePlayerComponent_course on Course {
@@ -28,7 +20,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
   );
 
   const resultRef = useRef(null);
-  const { animateSparks, renderCanvas } = useContext(CanvasContext)
+  const {animateSparks, renderCanvas} = useContext(CanvasContext);
   const [pause, setPause] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState<string[]>([]);
   const [answer, setAnswer] = useState<string[]>([]);
@@ -43,7 +35,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
 
   const getRandomInt = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min)) + min;
-  }
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -54,7 +46,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
         .replace(/[^\w\s]|_/g, '')
         .replace(/\s+/g, ' ')
         .toLowerCase()
-        .split(' ')
+        .split(' ');
 
       setAnswer([]);
       setBackground('#4615b2');
@@ -65,18 +57,20 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
         data.splice(idx, 1);
         return word;
       });
-      const answers = [...Array(answersCount)].map(e => {
-        const idx = getRandomInt(0, data.length);
-        const word = data[idx];
-        data.splice(idx, 1);
-        return word;
-      }).filter(v => v);
+      const answers = [...Array(answersCount)]
+        .map(e => {
+          const idx = getRandomInt(0, data.length);
+          const word = data[idx];
+          data.splice(idx, 1);
+          return word;
+        })
+        .filter(v => v);
       setAnswers([...words, ...answers].sort(() => Math.random() - 0.5));
       setCurrentPhrase(words);
       setPhraseVisibility(true);
       setTimeout(() => setPhraseVisibility(false), intervalMs);
       setPause(true);
-      setTimeStart(Date.now())
+      setTimeStart(Date.now());
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -89,54 +83,53 @@ const CoursePlayerComponent: React.FC<IProps> = ({ navigation, route }) => {
       setPause(false);
 
       resultRef?.current?.measure((width, height, px, py, fx, fy) => {
-        animateSparks(fx + 50, fy)
+        animateSparks(fx + 50, fy);
       });
-
     } else {
       setBackground('#ff4569');
       setPause(false);
     }
-  }
+  };
 
   const onAnswerSelect = (ans: string) => () => {
     const newAnswer = [...answer, ans];
     setAnswer(newAnswer);
     if (newAnswer.length === wordsCount) {
-      setTimeout(() => onUserInputSubmit(newAnswer.join(' ')), 1000)
+      setTimeout(() => onUserInputSubmit(newAnswer.join(' ')), 1000);
     }
-  }
+  };
 
   if (!course) return <ActivityIndicator size="large" />;
 
   return (
     <Container backgroundColor={background}>
       <View style={styles.viewer}>
-        <Text ref={resultRef} style={styles.phrase}>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</Text>
-        <Text style={styles.reactionTime}>{reactionTime ? (reactionTime / 1000) : ''}</Text>
+        <Text ref={resultRef} style={styles.phrase}>
+          {phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}
+        </Text>
+        <Text style={styles.reactionTime}>{reactionTime ? reactionTime / 1000 : ''}</Text>
         {renderCanvas()}
       </View>
       <View style={styles.answersContainer}>
         {answers.map((answer, idx) => (
           <TouchableOpacity key={idx} style={styles.answerButton} onPress={onAnswerSelect(answer)}>
-            <Text style={styles.answerButtonText}>
-              {answer}
-            </Text>
-          </TouchableOpacity >
+            <Text style={styles.answerButtonText}>{answer}</Text>
+          </TouchableOpacity>
         ))}
       </View>
     </Container>
   );
-}
+};
 
 export default CoursePlayerComponent;
 
-const Container = styled.View<{ backgroundColor: string }>`
+const Container = styled.View<{backgroundColor: string}>`
   display: flex;
   height: 100%;
   gap: 16px;
   padding: 16px;
   background-color: ${props => props.backgroundColor};
-`
+`;
 
 const styles = StyleSheet.create({
   viewer: {
@@ -193,6 +186,5 @@ const styles = StyleSheet.create({
   reactionTime: {
     color: 'white',
     fontWeight: '700',
-  }
+  },
 });
-

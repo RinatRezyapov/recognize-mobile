@@ -1,23 +1,15 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { graphql, useMutation } from 'react-relay';
+import {graphql, useMutation} from 'react-relay';
 
 interface IProps {
   user: any;
   course: any;
 }
 
-
-const CourseCardComponent: React.FC<IProps> = ({ user, course }) => {
-
+const CourseCardComponent: React.FC<IProps> = ({user, course}) => {
   const userOwned = course.authorId === user._id;
   const likedByUser = course.likes?.includes(user._id);
 
@@ -48,32 +40,30 @@ const CourseCardComponent: React.FC<IProps> = ({ user, course }) => {
         input: {
           user_id: user.id,
           course_id: course.id,
-          remove: likedByUser
-        }
+          remove: likedByUser,
+        },
       },
-    })
-  }
+    });
+  };
 
   return (
     <Wrapper>
-      <Avatar source={{ uri: 'data:image/jpeg;base64,' + course.avatar }} />
+      <Avatar source={{uri: 'data:image/jpeg;base64,' + course.avatar}} />
       <Details>
-        <Text style={styles.courseTitle}>
-          {course.title}
-        </Text>
-        <Text style={styles.courseDescription}>
-          {course.description}
-        </Text>
-        {!userOwned && <CardFooter>
-          <Text>By: {course.author}</Text>
-          <TouchableOpacity onPress={() => onLikePress()}>
-            <Icon name={likedByUser ? "heart" : "hearto"} size={30} color='red' />
-          </TouchableOpacity>
-        </CardFooter>}
+        <Text style={styles.courseTitle}>{course.title}</Text>
+        <Text style={styles.courseDescription}>{course.description}</Text>
+        {!userOwned && (
+          <CardFooter>
+            <Text>By: {course.author}</Text>
+            <TouchableOpacity onPress={() => onLikePress()}>
+              <Icon name={likedByUser ? 'heart' : 'hearto'} size={30} color="red" />
+            </TouchableOpacity>
+          </CardFooter>
+        )}
       </Details>
     </Wrapper>
   );
-}
+};
 
 export default CourseCardComponent;
 

@@ -9,8 +9,8 @@ async function fetchGraphQL(text: string, variables: any) {
       variables,
     }),
   })
-  .then(response => response.json())
-  .catch(err => console.error(err))
+    .then(response => response.json())
+    .catch(err => console.error(err));
 }
 
 export default fetchGraphQL;

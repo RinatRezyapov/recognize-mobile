@@ -1,15 +1,13 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
-import { graphql, useFragment, useMutation } from "react-relay";
-import NewCourseForm, { IFormFields as NewCourseFormFields } from '../forms/NewCourseForm';
-import { FormMode } from '../types/forms';
-import { NavigationType } from '../App';
+import {ActivityIndicator} from 'react-native';
+import {graphql, useFragment, useMutation} from 'react-relay';
+import NewCourseForm, {IFormFields as NewCourseFormFields} from '../forms/NewCourseForm';
+import {FormMode} from '../types/forms';
+import {NavigationType} from '../App';
 
-interface IProps extends NavigationType<'Course'> {
+interface IProps extends NavigationType<'Course'> {}
 
-}
-
-const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
+const CourseEditComponent: React.FC<IProps> = ({navigation, route}) => {
   const user = useFragment(
     graphql`
       fragment CourseEditComponent_user on User {
@@ -35,23 +33,22 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
   );
 
   const mutation = graphql`
-  mutation CourseEditComponentMutation($input: UpdateCourseInput!) {
-    updateCourse(input: $input) {
-      courseEdge {
-        node {
-          id
-          _id
-        title
-        description
-        body
+    mutation CourseEditComponentMutation($input: UpdateCourseInput!) {
+      updateCourse(input: $input) {
+        courseEdge {
+          node {
+            id
+            _id
+            title
+            description
+            body
+          }
         }
       }
     }
-  }
   `;
   const [mutate] = useMutation(mutation);
   const onSubmit = async (fields: NewCourseFormFields) => {
-
     mutate({
       variables: {
         input: {
@@ -59,11 +56,11 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
           title: fields.title,
           description: fields.description,
           body: fields.words.map(v => v.value).join(' '),
-        }
-      }
-    })
+        },
+      },
+    });
     navigation.navigate('Profile');
-  }
+  };
 
   if (!course) return <ActivityIndicator size="large" />;
 
@@ -71,7 +68,7 @@ const CourseEditComponent: React.FC<IProps> = ({ navigation, route }) => {
   const description = course.description;
   const data = course.body;
 
-  return <NewCourseForm mode={FormMode.update} defaultValues={{ title, description }} onSubmit={onSubmit} />;
-}
+  return <NewCourseForm mode={FormMode.update} defaultValues={{title, description}} onSubmit={onSubmit} />;
+};
 
 export default CourseEditComponent;

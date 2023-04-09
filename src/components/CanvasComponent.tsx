@@ -1,32 +1,27 @@
 import React from 'react';
 
-import { Dimensions, View } from 'react-native';
+import {Dimensions, View} from 'react-native';
 
-import {
-  rect,
-  Skia,
-  SkiaView,
-  useDrawCallback
-} from '@shopify/react-native-skia';
+import {rect, Skia, SkiaView, useDrawCallback} from '@shopify/react-native-skia';
 
 const paint = Skia.Paint();
 paint.setAntiAlias(false);
 paint.setColor(Skia.Color('yellow'));
 
-const { width, height } = Dimensions.get('screen');
+const {width, height} = Dimensions.get('screen');
 
 interface IProps {
   children: any;
 }
 
-const CanvasComponent: React.FC<IProps> = ({ children }) => {
+const CanvasComponent: React.FC<IProps> = ({children}) => {
   const particles = [];
   var colors = ['#029DAF', '#E5D599', '#FFC219', '#F07C19', '#E32551'];
   var gravity = 0.04;
 
   function initParticles(x, y) {
     for (var i = 0; i < 100; i++) {
-      createParticle(i, x, y)
+      createParticle(i, x, y);
       //setTimeout(createParticle, 20 * i, i);
     }
   }
@@ -47,7 +42,6 @@ const CanvasComponent: React.FC<IProps> = ({ children }) => {
   }
 
   function Particle(x, y, vx, vy, size, color, opacity) {
-
     function reset() {
       opacity = 0;
       this.finished = true;
@@ -62,11 +56,11 @@ const CanvasComponent: React.FC<IProps> = ({ children }) => {
       vy += gravity;
       x += vx;
       y += vy;
-    }
+    };
 
     this.draw = function (canvas) {
       canvas.drawRect(rect(x, y, size, size), paint);
-    }
+    };
   }
 
   function render(canvas) {
@@ -80,7 +74,7 @@ const CanvasComponent: React.FC<IProps> = ({ children }) => {
     }
   }
 
-  const onDraw = useDrawCallback((canvas) => {
+  const onDraw = useDrawCallback(canvas => {
     render(canvas);
   });
 
@@ -89,16 +83,29 @@ const CanvasComponent: React.FC<IProps> = ({ children }) => {
     //initParticles(e.nativeEvent.locationX, e.nativeEvent.locationY);
 
     //render(canvas.current)
-  }
+  };
 
   return (
     // <TouchableOpacity onPress={onClick}  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
     <View>
-      {React.cloneElement(children, { animate: onClick } )}
-      <SkiaView style={{ position: 'absolute', borderColor: 'red', zIndex: -1, borderWidth: 1, top: 0, left: 0, width: '100%', height: '100%' }} onDraw={onDraw} mode="continuous" />
+      {React.cloneElement(children, {animate: onClick})}
+      <SkiaView
+        style={{
+          position: 'absolute',
+          borderColor: 'red',
+          zIndex: -1,
+          borderWidth: 1,
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+        }}
+        onDraw={onDraw}
+        mode="continuous"
+      />
     </View>
     // </TouchableOpacity >
   );
-}
+};
 
 export default CanvasComponent;

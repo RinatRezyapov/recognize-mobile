@@ -1,6 +1,6 @@
 import React from 'react';
-import { graphql, useLazyLoadQuery } from 'react-relay';
-import { NavigationType } from '../App';
+import {graphql, useLazyLoadQuery} from 'react-relay';
+import {NavigationType} from '../App';
 import ProfileComponent from '../components/ProfileComponent';
 
 export const ProfilePageQuery = graphql`
@@ -8,7 +8,7 @@ export const ProfilePageQuery = graphql`
     user(id: $id) {
       id
       _id
-      username,
+      username
       email
       ...CourseComponent_user
       ...CourseEditComponent_user
@@ -25,25 +25,19 @@ export const ProfilePageQuery = graphql`
             ...CourseComponent_course
             ...CoursePlayerComponent_course
             ...CourseEditComponent_course
-            
           }
         }
       }
     }
   }
-`
+`;
 
-interface IProps extends NavigationType<'Profile'> {
+interface IProps extends NavigationType<'Profile'> {}
 
-}
+const ProfilePage: React.FC<IProps> = ({navigation, route}) => {
+  const data = useLazyLoadQuery(ProfilePageQuery, {id: route.params?.userId});
 
-const ProfilePage: React.FC<IProps> = ({ navigation, route }) => {
-
-  const data = useLazyLoadQuery(ProfilePageQuery, { id: route.params?.userId });
-
-  return (
-    <ProfileComponent userId={route.params?.userId} navigation={navigation} data={data} />
-  );
-}
+  return <ProfileComponent userId={route.params?.userId} navigation={navigation} data={data} />;
+};
 
 export default ProfilePage;

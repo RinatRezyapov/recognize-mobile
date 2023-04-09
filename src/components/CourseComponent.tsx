@@ -1,22 +1,14 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  Button,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import {ActivityIndicator, Button, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ConnectionHandler, graphql, useFragment, useMutation } from 'react-relay';
-import { NavigationType } from '../App';
-import { CourseComponent_course$key } from './__generated__/CourseComponent_course.graphql';
-import { CourseComponent_user$key } from './__generated__/CourseComponent_user.graphql';
+import {ConnectionHandler, graphql, useFragment, useMutation} from 'react-relay';
+import {NavigationType} from '../App';
+import {CourseComponent_course$key} from './__generated__/CourseComponent_course.graphql';
+import {CourseComponent_user$key} from './__generated__/CourseComponent_user.graphql';
 
-interface IProps extends NavigationType<'Course'> {
+interface IProps extends NavigationType<'Course'> {}
 
-}
-
-const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
+const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
   const course = useFragment<CourseComponent_course$key>(
     graphql`
       fragment CourseComponent_course on Course {
@@ -54,15 +46,14 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
   const [mutate] = useMutation(mutation);
 
   const onDeleteCourseClick = (courseId: string | null) => () => {
-
     if (!courseId) return;
     mutate({
       variables: {
         input: {
-          id: courseId
-        }
+          id: courseId,
+        },
       },
-      updater: (store) => {
+      updater: store => {
         const payload = store.get(user.id);
         if (!payload) return;
 
@@ -74,54 +65,61 @@ const CourseComponent: React.FC<IProps> = ({ navigation, route }) => {
 
         ConnectionHandler.deleteNode(connection, removedEdgeID?.toString());
       },
-    })
+    });
     if (!user._id) return;
-    navigation.navigate('Profile', { userId: user._id });
+    navigation.navigate('Profile', {
+      userId: user._id,
+    });
   };
 
   const onEditCourseClick = (courseId: string | null) => async () => {
     if (!courseId) return;
-    navigation.navigate('CourseEdit', { courseId, courseRef: route.params.courseRef, userRef: route.params.userRef });
-  }
+    navigation.navigate('CourseEdit', {
+      courseId,
+      courseRef: route.params.courseRef,
+      userRef: route.params.userRef,
+    });
+  };
 
   const onStartCourseClick = (courseId: string | null) => async () => {
     if (!courseId) return;
-    navigation.navigate('CoursePlayer', { courseId, courseRef: route.params.courseRef });
+    navigation.navigate('CoursePlayer', {
+      courseId,
+      courseRef: route.params.courseRef,
+    });
   };
 
   if (!course) return <ActivityIndicator size="large" />;
 
-  return <View style={styles.container}>
-    <View style={styles.iconContainer}>
-      <Icon name="eye" size={120} />
-    </View>
-    <Text style={styles.nameText}>{course.title}</Text>
-    <Text style={styles.descriptionText}>{course.description}</Text>
-    <View style={styles.scoreContainer}>
-      <View style={styles.scoreItem}>
-        <Text style={styles.scoreValue}>
-          2.25
-        </Text>
-        <Text style={styles.scoreLabel}>
-          Reaction time
-        </Text>
+  return (
+    <View style={styles.container}>
+      <View style={styles.iconContainer}>
+        <Icon name="eye" size={120} />
       </View>
-      <View style={styles.scoreItem}>
-        <Text style={styles.scoreValue}>
-          300/2500
-        </Text>
-        <Text style={styles.scoreLabel}>
-          Recognized
-        </Text>
+      <Text style={styles.nameText}>{course.title}</Text>
+      <Text style={styles.descriptionText}>{course.description}</Text>
+      <View style={styles.scoreContainer}>
+        <View style={styles.scoreItem}>
+          <Text style={styles.scoreValue}>2.25</Text>
+          <Text style={styles.scoreLabel}>Reaction time</Text>
+        </View>
+        <View style={styles.scoreItem}>
+          <Text style={styles.scoreValue}>300/2500</Text>
+          <Text style={styles.scoreLabel}>Recognized</Text>
+        </View>
+      </View>
+      <View style={styles.buttonsContainer}>
+        <Button title="Start" onPress={onStartCourseClick(course._id)} />
+        {isUserOwned && (
+          <>
+            <Button title="Edit" onPress={onEditCourseClick(course._id)} />
+            <Button title="Remove" onPress={onDeleteCourseClick(course.id)} />
+          </>
+        )}
       </View>
     </View>
-    <View style={styles.buttonsContainer}>
-      <Button title='Start' onPress={onStartCourseClick(course._id)} />
-      {isUserOwned && <Button title='Edit' onPress={onEditCourseClick(course._id)} />}
-      {isUserOwned && <Button title='Remove' onPress={onDeleteCourseClick(course.id)} />}
-    </View>
-  </View>;
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -133,11 +131,11 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: 36,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   descriptionText: {
     fontSize: 18,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   bodyText: {
     fontSize: 12,
@@ -147,13 +145,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
-    marginTop: 32
+    marginTop: 32,
   },
   iconContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 72
+    marginTop: 72,
   },
   scoreContainer: {
     display: 'flex',
@@ -162,20 +160,20 @@ const styles = StyleSheet.create({
     gap: 32,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    padding: 16
+    padding: 16,
   },
   scoreItem: {
     flex: 1,
   },
   scoreValue: {
     fontSize: 18,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   scoreLabel: {
     textTransform: 'uppercase',
     fontSize: 12,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 export default CourseComponent;

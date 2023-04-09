@@ -1,12 +1,11 @@
 import styled from '@emotion/native';
 import React from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
-import { graphql, useLazyLoadQuery } from 'react-relay';
+import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {graphql, useLazyLoadQuery} from 'react-relay';
 
 import CourseCardComponent from './CourseCardComponent';
-import { CoursesComponentQuery as CoursesComponentQueryType } from './__generated__/CoursesComponentQuery.graphql';
-import { NavigationType } from '../App';
-
+import {CoursesComponentQuery as CoursesComponentQueryType} from './__generated__/CoursesComponentQuery.graphql';
+import {NavigationType} from '../App';
 
 const CoursesComponentQuery = graphql`
   query CoursesComponentQuery($id: String) {
@@ -36,36 +35,33 @@ const CoursesComponentQuery = graphql`
       }
     }
   }
-`
+`;
 
 interface IProps extends NavigationType<'Profile'> {
   initialQueryRef: any;
 }
 
-const CoursesComponent: React.FC<IProps> = ({ navigation, route }) => {
-
-  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, { id: route.params.userId });
+const CoursesComponent: React.FC<IProps> = ({navigation, route}) => {
+  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, {id: route.params.userId});
 
   return (
     <Wrapper>
       <ScrollView>
-        {data?.courses?.courses?.edges?.filter(v => v?.node?.authorId !== route.params.userId)?.map((edge) => {
-          return (
-            <TouchableOpacity
-              key={edge?.node?.id}
-              onPress={() => navigation.navigate('Course', { courseRef: edge?.node, userRef: data.user })}
-            >
-              <CourseCardComponent
-                user={data.user}
-                course={edge?.node}
-              />
-            </TouchableOpacity>
-          )
-        })}
+        {data?.courses?.courses?.edges
+          ?.filter(v => v?.node?.authorId !== route.params.userId)
+          ?.map(edge => {
+            return (
+              <TouchableOpacity
+                key={edge?.node?.id}
+                onPress={() => navigation.navigate('Course', {courseRef: edge?.node, userRef: data.user})}>
+                <CourseCardComponent user={data.user} course={edge?.node} />
+              </TouchableOpacity>
+            );
+          })}
       </ScrollView>
     </Wrapper>
   );
-}
+};
 
 export default CoursesComponent;
 
