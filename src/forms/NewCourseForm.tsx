@@ -58,8 +58,10 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
           {image ? (
             <StyledImage source={{uri: image.uri}} />
           ) : (
-            <ImagePlaceholder onPress={onChooseImageClick}>
-              <Icon name="add-photo-alternate" size={30} />
+            <ImagePlaceholder>
+              <TouchableOpacity onPress={onChooseImageClick}>
+                <Icon name="add-photo-alternate" size={30} />
+              </TouchableOpacity>
             </ImagePlaceholder>
           )}
         </ImageWrapper>
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Wrapper = styled(View)`
+const Wrapper = styled.View`
   display: flex;
   gap: 16px;
   padding: 16px;
@@ -165,15 +167,15 @@ const FieldRowContainer = styled.View`
   gap: 16px;
 `;
 
-const ImagePlaceholder = styled.TouchableOpacity`
+const ImagePlaceholder = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 135px;
   height: 135px;
-  borderwidth: 1px;
-  borderradius: 16px;
-  bordercolor: lightgrey;
+  border-width: 1px;
+  border-radius: 16px;
+  border-color: lightgrey;
 `;
 
 const AddTouchableWrapper = styled.TouchableOpacity`
@@ -184,22 +186,22 @@ const AddTouchableWrapper = styled.TouchableOpacity`
 const StyledImage = styled(Image)`
   width: 135px;
   height: 135px;
-  borderradius: 16px;
+  border-radius: 16px;
 `;
 
-const ImageWithDetailsWrapper = styled(View)`
+const ImageWithDetailsWrapper = styled.View`
   display: flex;
-  flexdirection: row;
+  flex-direction: row;
   gap: 16px;
 `;
 
-const ImageWrapper = styled(View)`
+const ImageWrapper = styled.View`
   width: 70px;
   height: 70px;
   flex: 2;
 `;
 
-const DetailsWrapper = styled(View)`
+const DetailsWrapper = styled.View`
   display: flex;
   gap: 16px;
   flex: 3;

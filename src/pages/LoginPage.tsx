@@ -8,16 +8,15 @@ const USERS: {[key: string]: string} = {
   Brandon: 'a7fe332f-bb07-4c4e-a9ea-cc320d0e3514',
 };
 
-interface IProps extends NavigationType<'Profile'> {}
+interface IProps extends NavigationType<'Login'> {}
 
 const LoginPage: React.FC<IProps> = ({navigation}) => {
   const [login, setLogin] = useState<string>('Rinat');
   const [password, setPassword] = useState<string>('Password');
   const onLoginChange = (value: string) => setLogin(value);
   const onPasswordChange = (value: string) => setPassword(value);
-  const onSubmit = () => {
-    navigation.navigate('Home', {userId: USERS[login]});
-  };
+  const onSubmit = () => navigation.navigate('Home', {userId: USERS[login]});
+
   return (
     <View style={styles.container}>
       <TextInput placeholder="Login" value={login} onChangeText={onLoginChange} />
