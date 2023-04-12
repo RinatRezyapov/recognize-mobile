@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, Button, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {ConnectionHandler, graphql, useFragment, useMutation} from 'react-relay';
 import {NavigationType} from '../App';
@@ -18,6 +18,14 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
         description
         body
         authorId
+        scores {
+          edges {
+            node {
+              userId
+              score
+            }
+          }
+        }
       }
     `,
     route.params.courseRef,
@@ -108,6 +116,16 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
           <Text style={styles.scoreLabel}>Recognized</Text>
         </View>
       </View>
+      <ScrollView>
+        {course.scores?.edges?.map((v, idx) => {
+          console.log(v.node);
+          return (
+            <Text key={idx}>
+              {v.node.userId}: {v.node.score}
+            </Text>
+          );
+        })}
+      </ScrollView>
       <View style={styles.buttonsContainer}>
         <Button title="Start" onPress={onStartCourseClick(course._id)} />
         {isUserOwned && (

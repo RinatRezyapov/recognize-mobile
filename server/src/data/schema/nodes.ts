@@ -1,24 +1,28 @@
+import {getAllCourses, getCourse, getCourseLikes, getCourseScores, getCourses, getUser} from '../database';
+import {GraphQLFloat, GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString} from 'graphql';
+import {
+  globalIdField,
+  nodeDefinitions,
+  fromGlobalId,
+  connectionDefinitions,
+  connectionFromArray,
+  connectionArgs,
+} from 'graphql-relay';
 
-import { getAllCourses, getCourse, getCourseLikes, getCourses, getUser } from '../database';
-import { GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString } from 'graphql';
-import { globalIdField, nodeDefinitions, fromGlobalId, connectionDefinitions, connectionFromArray, connectionArgs } from 'graphql-relay';
-
-
-
-const { nodeInterface, nodeField } = nodeDefinitions(
-  (globalId, { pgPool }) => {
-    const { type, id } = fromGlobalId(globalId);
+const {nodeInterface, nodeField} = nodeDefinitions(
+  (globalId, {pgPool}) => {
+    const {type, id} = fromGlobalId(globalId);
     if (type === 'Course') {
-      return (getCourse(id, pgPool));
+      return getCourse(id, pgPool);
     } else if (type === 'User') {
-      return (getUser(id, pgPool));
+      return getUser(id, pgPool);
     }
     return null;
   },
-  (obj) => {
+  obj => {
     return GraphQLCourse;
-  }
-)
+  },
+);
 
 const todosArgs = {
   status: {
@@ -27,6 +31,25 @@ const todosArgs = {
   },
   ...connectionArgs,
 };
+
+const GraphQLScore = new GraphQLObjectType({
+  name: 'Score',
+  fields: {
+    userId: {
+      type: GraphQLString,
+      resolve: score => score.user_id,
+    },
+    score: {
+      type: GraphQLFloat,
+      resolve: score => score.score,
+    },
+  },
+});
+
+const {connectionType: ScoresConnection, edgeType: GraphQLScoreEdge} = connectionDefinitions({
+  name: 'Score',
+  nodeType: GraphQLScore,
+});
 
 const GraphQLCourse = new GraphQLObjectType({
   name: 'Course',
@@ -46,10 +69,10 @@ const GraphQLCourse = new GraphQLObjectType({
     },
     author: {
       type: GraphQLString,
-      resolve: async (course, {}, { pgPool }) => {
+      resolve: async (course, {}, {pgPool}) => {
         const user = await getUser(course.author_id, pgPool);
         return user.username;
-      }
+      },
     },
     title: {
       type: GraphQLString,
@@ -73,22 +96,39 @@ const GraphQLCourse = new GraphQLObjectType({
     },
     likes: {
       type: GraphQLList(GraphQLString),
-      resolve: async (course, {}, { pgPool }) => {
+      resolve: async (course, {}, {pgPool}) => {
         const likes = await getCourseLikes(course.id, pgPool);
-        return likes.map(v => v.user_id)
-      }
-    }
+        return likes.map(v => v.user_id);
+      },
+    },
+    scores: {
+      type: ScoresConnection,
+      args: todosArgs,
+      resolve: async (course, {after, before, first, last}, {pgPool}) => {
+        try {
+          const scores = await getCourseScores(course.id, pgPool);
+          return connectionFromArray(scores, {after, before, first, last});
+        } catch (err) {
+          console.error(err);
+        }
+      },
+    },
+    // scores: {
+    //   type: GraphQLList(GraphQLInt),
+    //   resolve: async (course, {}, {pgPool}) => {
+    //     const scores = await getCourseScores(course.id, pgPool);
+
+    //     return scores.map(v => v.score);
+    //   },
+    // },
   },
   interfaces: [nodeInterface],
 });
 
-const {
-  connectionType: CoursesConnection,
-  edgeType: GraphQLCourseEdge,
-} = connectionDefinitions({
+const {connectionType: CoursesConnection, edgeType: GraphQLCourseEdge} = connectionDefinitions({
   name: 'Course',
   nodeType: GraphQLCourse,
-})
+});
 
 var GraphQLUser = new GraphQLObjectType({
   name: 'User',
@@ -96,31 +136,31 @@ var GraphQLUser = new GraphQLObjectType({
     id: globalIdField('User'),
     _id: {
       type: GraphQLString,
-      resolve: user => user.id
+      resolve: user => user.id,
     },
     username: {
       type: GraphQLString,
-      resolve: user => user.username
+      resolve: user => user.username,
     },
     email: {
       type: GraphQLString,
-      resolve: user => user.email
+      resolve: user => user.email,
     },
     courses: {
       type: CoursesConnection,
       args: todosArgs,
-      resolve: async (user, { after, before, first, last }, { pgPool }) => {
+      resolve: async (user, {after, before, first, last}, {pgPool}) => {
         try {
           const courses = await getCourses(user.id, pgPool);
-          return connectionFromArray(courses, { after, before, first, last });
+          return connectionFromArray(courses, {after, before, first, last});
         } catch (err) {
           console.error(err);
         }
-      }
+      },
     },
   },
   interfaces: [nodeInterface],
-})
+});
 
 const GraphQLCourses = new GraphQLObjectType({
   name: 'Courses',
@@ -128,18 +168,17 @@ const GraphQLCourses = new GraphQLObjectType({
     courses: {
       type: CoursesConnection,
       args: todosArgs,
-      resolve: async (user, { after, before, first, last }, { pgPool }) => {
+      resolve: async (user, {after, before, first, last}, {pgPool}) => {
         try {
           const courses = await getAllCourses(pgPool);
 
-          return connectionFromArray(courses, { after, before, first, last });
+          return connectionFromArray(courses, {after, before, first, last});
         } catch (err) {
           console.error(err);
         }
-      }
+      },
     },
   },
-})
+});
 
-
-export { GraphQLUser, GraphQLCourse, GraphQLCourses, GraphQLCourseEdge, nodeField }
+export {GraphQLUser, GraphQLCourse, GraphQLCourses, GraphQLCourseEdge, nodeField};

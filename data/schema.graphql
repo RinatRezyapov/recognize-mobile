@@ -70,6 +70,30 @@ type Course implements Node {
   createdAt: Int
   updatedAt: Int
   likes: [String]
+  scores(status: String = "any", after: String, first: Int, before: String, last: Int): ScoreConnection
+}
+
+"""A connection to a list of items."""
+type ScoreConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ScoreEdge]
+}
+
+"""An edge in a connection."""
+type ScoreEdge {
+  """The item at the end of the edge"""
+  node: Score
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Score {
+  userId: String
+  score: Float
 }
 
 type Courses {

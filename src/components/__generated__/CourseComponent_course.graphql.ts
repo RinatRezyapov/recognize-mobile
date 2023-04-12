@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a6a35e994425a31ad6645bf2e3600d2>>
+ * @generated SignedSource<<63a293f4a0573216d1260e71c2aeacf6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,14 @@ export type CourseComponent_course$data = {
   readonly body: string | null;
   readonly description: string | null;
   readonly id: string;
+  readonly scores: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly score: number | null;
+        readonly userId: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
   readonly title: string | null;
   readonly " $fragmentType": "CourseComponent_course";
 };
@@ -71,12 +79,59 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "authorId",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ScoreConnection",
+      "kind": "LinkedField",
+      "name": "scores",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ScoreEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Score",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "userId",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "score",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Course",
   "abstractKey": null
 };
 
-(node as any).hash = "2f93db34a83ec34ad39bec6882e66941";
+(node as any).hash = "1f4c291c2489efe03e5c94b5bf4ba18e";
 
 export default node;
