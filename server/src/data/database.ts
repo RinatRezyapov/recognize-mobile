@@ -77,3 +77,18 @@ export const getCourseScores = (id, pgPool) => {
     return response.rows;
   });
 };
+
+export const getScore = (userId, courseId, pgPool) => {
+  return pgPool?.query(`SELECT * FROM scores where user_id='${userId}' AND course_id='${courseId}';`).then(response => {
+    return response.rows;
+  });
+};
+
+export const addScore = (userId, courseId, score, pgPool) => {
+  return pgPool
+    ?.query(`UPDATE scores SET score=${score} where user_id='${userId}' AND course_id='${courseId}';`)
+    .then(response => {
+      return response.rows;
+    });
+};
+//UPDATE courses SET title='${data.title}', description='${data.description}', body='${data.body}' WHERE id='${id}' RETURNING *;

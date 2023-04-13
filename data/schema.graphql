@@ -92,7 +92,7 @@ type ScoreEdge {
 }
 
 type Score {
-  userId: String
+  username: String
   score: Float
 }
 
@@ -105,6 +105,7 @@ type Mutation {
   updateCourse(input: UpdateCourseInput!): UpdateCoursePayload
   removeCourse(input: RemoveCourseInput!): RemoveCoursePayload
   likeCourse(input: LikeCourseInput!): LikeCoursePayload
+  addScore(input: AddScoreInput!): AddScorePayload
 }
 
 type AddCoursePayload {
@@ -156,5 +157,17 @@ input LikeCourseInput {
   user_id: ID!
   course_id: ID!
   remove: Boolean
+  clientMutationId: String
+}
+
+type AddScorePayload {
+  scoreEdge: CourseEdge!
+  clientMutationId: String
+}
+
+input AddScoreInput {
+  user_id: ID!
+  course_id: ID!
+  score: Float!
   clientMutationId: String
 }

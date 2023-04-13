@@ -21,7 +21,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
         scores {
           edges {
             node {
-              userId
+              username
               score
             }
           }
@@ -98,7 +98,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
   };
 
   if (!course) return <ActivityIndicator size="large" />;
-
+  console.log(user.id, course.id);
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
@@ -118,10 +118,9 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
       </View>
       <ScrollView>
         {course.scores?.edges?.map((v, idx) => {
-          console.log(v.node);
           return (
             <Text key={idx}>
-              {v.node.userId}: {v.node.score}
+              {v?.node?.username}: {v?.node?.score}
             </Text>
           );
         })}

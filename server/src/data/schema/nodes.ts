@@ -35,9 +35,12 @@ const todosArgs = {
 const GraphQLScore = new GraphQLObjectType({
   name: 'Score',
   fields: {
-    userId: {
+    username: {
       type: GraphQLString,
-      resolve: score => score.user_id,
+      resolve: async (score, {}, {pgPool}) => {
+        const user = await getUser(score.user_id, pgPool);
+        return user.username;
+      },
     },
     score: {
       type: GraphQLFloat,
