@@ -94,6 +94,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
     navigation.navigate('CoursePlayer', {
       courseId,
       courseRef: route.params.courseRef,
+      userRef: route.params.userRef,
     });
   };
 

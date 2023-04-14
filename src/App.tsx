@@ -20,7 +20,7 @@ type RootStackParamList = {
   Course: {userRef: any; courseRef: any};
   CourseCreate: undefined;
   CourseEdit: {courseId: string; courseRef: any; userRef: any};
-  CoursePlayer: {courseId: string; courseRef: any};
+  CoursePlayer: {courseId: string; courseRef: any; userRef: any};
   Courses: {userId: string};
 };
 

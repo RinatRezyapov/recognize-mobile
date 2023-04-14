@@ -1,13 +1,36 @@
 import styled from '@emotion/native';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {graphql, useFragment} from 'react-relay';
+import {graphql, useFragment, useMutation} from 'react-relay';
 import {CanvasContext} from '../utils/context/CanvasProvider';
 import {NavigationType} from '../App';
+
+const mutation = graphql`
+  mutation CoursePlayerComponentMutation($input: AddScoreInput!) {
+    addScore(input: $input) {
+      scoreEdge {
+        node {
+          id
+        }
+      }
+    }
+  }
+`;
 
 interface IProps extends NavigationType<'Course'> {}
 
 const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
+  const user = useFragment(
+    graphql`
+      fragment CoursePlayerComponent_user on User {
+        id
+        _id
+        username
+      }
+    `,
+    route.params.userRef,
+  );
+
   const course = useFragment(
     graphql`
       fragment CoursePlayerComponent_course on Course {
@@ -18,6 +41,8 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
     `,
     route.params.courseRef,
   );
+
+  const [mutate] = useMutation(mutation);
 
   const resultRef = useRef(null);
   const {animateSparks, renderCanvas} = useContext(CanvasContext);
@@ -79,7 +104,17 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
   const onUserInputSubmit = (userInput: string) => {
     if (userInput === currentPhrase.join(' ')) {
       setBackground('#03a9f4');
-      setReactionTime(Date.now() - timeStart);
+      const newReactionTime = Date.now() - timeStart;
+      setReactionTime(newReactionTime);
+      mutate({
+        variables: {
+          input: {
+            user_id: user.id,
+            course_id: course.id,
+            score: newReactionTime,
+          },
+        },
+      });
       setPause(false);
 
       resultRef?.current?.measure((width, height, px, py, fx, fy) => {

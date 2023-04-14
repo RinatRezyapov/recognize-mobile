@@ -14,6 +14,7 @@ const CoursesComponentQuery = graphql`
       _id
       ...CourseComponent_user
       ...CourseEditComponent_user
+      ...CoursePlayerComponent_user
     }
     courses {
       courses(first: 2147483647) @connection(key: "Courses_courses") {
