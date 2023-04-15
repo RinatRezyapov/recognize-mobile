@@ -16,6 +16,7 @@
   "author": "Rinat Rezyapov",
   "license": "ISC",
   "dependencies": {
+    "@types/pg": "^8.6.6",
     "concurrently": "^6.2.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",

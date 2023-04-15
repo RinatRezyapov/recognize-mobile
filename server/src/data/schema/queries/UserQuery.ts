@@ -1,18 +1,16 @@
-import { GraphQLString } from 'graphql';
-import { getUser } from '../../database';
-import { GraphQLUser } from '../nodes';
+import {GraphQLString} from 'graphql';
+import {getUser} from '../../database';
+import {GraphQLUser} from '../nodes';
 
 const UserQuery = {
   type: GraphQLUser,
   args: {
-    id: { type: GraphQLString },
+    id: {type: GraphQLString},
   },
-  resolve: (root, { id }, { pgPool }) => {
-    console.log('UserQuery', id)
+  resolve: (_, {id}, {pgPool}) => {
+    console.log('UserQuery', id);
     return getUser(id, pgPool);
-  }
-}
+  },
+};
 
-
-export { UserQuery };
-
+export {UserQuery};
