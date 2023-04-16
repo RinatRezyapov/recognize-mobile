@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, Button, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {ConnectionHandler, graphql, useFragment, useMutation} from 'react-relay';
 import {NavigationType} from '../App';
@@ -98,8 +98,6 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
     });
   };
 
-  if (!course) return <ActivityIndicator size="large" />;
-  console.log(user.id, course.id);
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>

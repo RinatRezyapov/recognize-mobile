@@ -1,24 +1,13 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
 import {graphql, useFragment, useMutation} from 'react-relay';
+import {NavigationType} from '../App';
 import NewCourseForm, {IFormFields as NewCourseFormFields} from '../forms/NewCourseForm';
 import {FormMode} from '../types/forms';
-import {NavigationType} from '../App';
 
 interface IProps extends NavigationType<'Course'> {}
 
 const CourseEditComponent: React.FC<IProps> = ({navigation, route}) => {
-  const user = useFragment(
-    graphql`
-      fragment CourseEditComponent_user on User {
-        id
-        _id
-        username
-      }
-    `,
-    route.params.userRef,
-  );
-
   const course = useFragment(
     graphql`
       fragment CourseEditComponent_course on Course {
@@ -66,7 +55,6 @@ const CourseEditComponent: React.FC<IProps> = ({navigation, route}) => {
 
   const title = course.title;
   const description = course.description;
-  const data = course.body;
 
   return <NewCourseForm mode={FormMode.update} defaultValues={{title, description}} onSubmit={onSubmit} />;
 };

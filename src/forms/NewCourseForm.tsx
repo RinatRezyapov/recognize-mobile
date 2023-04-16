@@ -51,8 +51,6 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
     });
   };
 
-  console.log(errors.title);
-
   return (
     <ScrollView>
       <Wrapper>
