@@ -11,7 +11,7 @@ export const ProfilePageQuery = graphql`
       username
       email
       ...CourseComponent_user
-      ...CourseEditComponent_user
+      ...CoursePlayerComponent_user
       courses(first: 2147483647) @connection(key: "Courses_courses") {
         edges {
           node {

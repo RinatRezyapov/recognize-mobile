@@ -34,6 +34,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
   const course = useFragment(
     graphql`
       fragment CoursePlayerComponent_course on Course {
+        id
         title
         description
         body
@@ -104,8 +105,9 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
   const onUserInputSubmit = (userInput: string) => {
     if (userInput === currentPhrase.join(' ')) {
       setBackground('#03a9f4');
-      const newReactionTime = Date.now() - timeStart;
+      const newReactionTime = (Date.now() - timeStart) / 1000;
       setReactionTime(newReactionTime);
+      console.log('onUserInputSubmit', user.id, course.id, newReactionTime);
       mutate({
         variables: {
           input: {
@@ -142,7 +144,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
         <Text ref={resultRef} style={styles.phrase}>
           {phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}
         </Text>
-        <Text style={styles.reactionTime}>{reactionTime ? reactionTime / 1000 : ''}</Text>
+        <Text style={styles.reactionTime}>{reactionTime ? reactionTime : ''}</Text>
         {renderCanvas()}
       </View>
       <View style={styles.answersContainer}>

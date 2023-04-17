@@ -25,14 +25,15 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
   const {
     control,
     handleSubmit,
+    getValues,
     setValue,
     formState: {errors},
   } = useForm<IFormFields>({
-    defaultValues: defaultValues || {
-      title: '',
-      description: '',
-      avatar: '',
-      words: new Array(5).fill(null).map(() => ({value: ''})),
+    defaultValues: {
+      title: defaultValues?.title,
+      description: defaultValues?.description,
+      avatar: defaultValues?.avatar,
+      words: defaultValues?.words || new Array(5).fill(null).map(() => ({value: ''})),
     },
   });
 
@@ -51,13 +52,17 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
     });
   };
 
+  const avatar = getValues().avatar;
+
+  const avatarUri = 'data:image/png;base64,' + avatar;
+
   return (
     <ScrollView>
       <Wrapper>
         <ImageWithDetailsWrapper>
           <ImageWrapper>
-            {image ? (
-              <StyledImage source={{uri: image.uri}} />
+            {image || avatar ? (
+              <StyledImage source={{uri: avatarUri || image.uri}} />
             ) : (
               <ImagePlaceholder>
                 <TouchableOpacity onPress={onChooseImageClick}>

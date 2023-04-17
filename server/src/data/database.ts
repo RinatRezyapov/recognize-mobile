@@ -86,6 +86,14 @@ export const getScore = (userId, courseId, pgPool) => {
 
 export const addScore = (userId, courseId, score, pgPool) => {
   return pgPool
+    ?.query(`INSERT into scores (user_id, course_id, score) VALUES ('${userId}', '${courseId}', ${score});`)
+    .then(response => {
+      return response.rows;
+    });
+};
+
+export const updateScore = (userId, courseId, score, pgPool) => {
+  return pgPool
     ?.query(`UPDATE scores SET score=${score} where user_id='${userId}' AND course_id='${courseId}';`)
     .then(response => {
       return response.rows;

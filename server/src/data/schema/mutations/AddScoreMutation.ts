@@ -1,6 +1,6 @@
 import {GraphQLFloat, GraphQLID, GraphQLNonNull} from 'graphql';
 import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
-import {addScore, getCourseScores, getScore} from '../../database';
+import {addScore, getCourseScores, getScore, updateScore} from '../../database';
 import {GraphQLCourseEdge} from '../nodes';
 
 const AddScoreMutation = mutationWithClientMutationId({
@@ -26,11 +26,12 @@ const AddScoreMutation = mutationWithClientMutationId({
   mutateAndGetPayload: async ({user_id, course_id, score}, {pgPool}) => {
     const localUserId = fromGlobalId(user_id).id;
     const localCourseId = fromGlobalId(course_id).id;
-
     const oldScoreData = await getScore(localUserId, localCourseId, pgPool);
 
-    if (oldScoreData?.[0].score > score) {
+    if (oldScoreData.length === 0) {
       await addScore(localUserId, localCourseId, score, pgPool);
+    } else if (oldScoreData?.[0].score > score) {
+      await updateScore(localUserId, localCourseId, score, pgPool);
     }
 
     return {user_id: localUserId, course_id: localCourseId};

@@ -13,7 +13,6 @@ const CoursesComponentQuery = graphql`
       id
       _id
       ...CourseComponent_user
-      ...CourseEditComponent_user
       ...CoursePlayerComponent_user
     }
     courses {
