@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<92a1253c4e686f886bf66385c6e8b846>>
+ * @generated SignedSource<<5d29cfeabb2090d7c6ddc80985c8dbff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ export type ProfilePageQuery$data = {
     readonly email: string | null;
     readonly id: string;
     readonly username: string | null;
-    readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_user" | "CoursePlayerComponent_user">;
+    readonly " $fragmentSpreads": FragmentRefs<"CoursePlayerComponent_user">;
   } | null;
 };
 export type ProfilePageQuery = {
@@ -187,11 +187,6 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "CourseComponent_user"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
             "name": "CoursePlayerComponent_user"
           },
           {
@@ -337,7 +332,7 @@ return {
                                     "alias": null,
                                     "args": null,
                                     "kind": "ScalarField",
-                                    "name": "score",
+                                    "name": "value",
                                     "storageKey": null
                                   }
                                 ],
@@ -376,7 +371,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ad27e46b8b1f6c6d6b6d9a179ec1f0ab",
+    "cacheID": "45558fe6e9db066c13679b40b677db16",
     "id": null,
     "metadata": {
       "connection": [
@@ -393,11 +388,11 @@ return {
     },
     "name": "ProfilePageQuery",
     "operationKind": "query",
-    "text": "query ProfilePageQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CourseComponent_user\n    ...CoursePlayerComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          avatar\n          authorId\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  authorId\n  scores {\n    edges {\n      node {\n        username\n        score\n      }\n    }\n  }\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n  username\n}\n\nfragment CourseEditComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  avatar\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_user on User {\n  id\n  _id\n  username\n}\n"
+    "text": "query ProfilePageQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CoursePlayerComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          avatar\n          authorId\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  authorId\n  scores {\n    edges {\n      node {\n        username\n        value\n      }\n    }\n  }\n}\n\nfragment CourseEditComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  avatar\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_user on User {\n  id\n  _id\n  username\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3431068c1a75a305a1e940eaaf50a35a";
+(node as any).hash = "f6f703627675fd397b10f52447fdb798";
 
 export default node;

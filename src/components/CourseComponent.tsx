@@ -1,10 +1,24 @@
 import React from 'react';
 import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {ConnectionHandler, graphql, useFragment, useMutation} from 'react-relay';
+import {ConnectionHandler, graphql, useFragment, useLazyLoadQuery, useMutation} from 'react-relay';
 import {NavigationType} from '../App';
 import {CourseComponent_course$key} from './__generated__/CourseComponent_course.graphql';
 import {CourseComponent_user$key} from './__generated__/CourseComponent_user.graphql';
+
+export const CourseComponentQuery = graphql`
+  query CourseComponentQuery($id: String, $courseId: String) {
+    user(id: $id) {
+      id
+      _id
+      username
+      score(courseId: $courseId) {
+        username
+        value
+      }
+    }
+  }
+`;
 
 interface IProps extends NavigationType<'Course'> {}
 
@@ -22,7 +36,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
           edges {
             node {
               username
-              score
+              value
             }
           }
         }
@@ -31,16 +45,10 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
     route.params.courseRef,
   );
 
-  const user = useFragment<CourseComponent_user$key>(
-    graphql`
-      fragment CourseComponent_user on User {
-        id
-        _id
-        username
-      }
-    `,
-    route.params.userRef,
-  );
+  const {user} = useLazyLoadQuery(CourseComponentQuery, {
+    id: route.params.userRef._id,
+    courseId: course?._id,
+  });
 
   const isUserOwned = course.authorId === user._id;
 
@@ -107,7 +115,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
       <Text style={styles.descriptionText}>{course.description}</Text>
       <View style={styles.scoreContainer}>
         <View style={styles.scoreItem}>
-          <Text style={styles.scoreValue}>2.25</Text>
+          <Text style={styles.scoreValue}>{user.score?.value}</Text>
           <Text style={styles.scoreLabel}>Reaction time</Text>
         </View>
         <View style={styles.scoreItem}>
@@ -119,7 +127,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
         {course.scores?.edges?.map((v, idx) => {
           return (
             <Text key={idx}>
-              {v?.node?.username}: {v?.node?.score}
+              {v?.node?.username}: {v?.node?.value}
             </Text>
           );
         })}
@@ -136,6 +144,8 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
     </View>
   );
 };
+
+export default CourseComponent;
 
 const styles = StyleSheet.create({
   container: {
@@ -191,5 +201,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default CourseComponent;

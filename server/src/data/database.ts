@@ -80,7 +80,7 @@ export const getCourseScores = (id, pgPool) => {
 
 export const getScore = (userId, courseId, pgPool) => {
   return pgPool?.query(`SELECT * FROM scores where user_id='${userId}' AND course_id='${courseId}';`).then(response => {
-    return response.rows;
+    return response.rows?.[0];
   });
 };
 

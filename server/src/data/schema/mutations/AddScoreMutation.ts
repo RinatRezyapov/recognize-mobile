@@ -28,9 +28,9 @@ const AddScoreMutation = mutationWithClientMutationId({
     const localCourseId = fromGlobalId(course_id).id;
     const oldScoreData = await getScore(localUserId, localCourseId, pgPool);
 
-    if (oldScoreData.length === 0) {
+    if (!oldScoreData) {
       await addScore(localUserId, localCourseId, score, pgPool);
-    } else if (oldScoreData?.[0].score > score) {
+    } else if (oldScoreData.score > score) {
       await updateScore(localUserId, localCourseId, score, pgPool);
     }
 

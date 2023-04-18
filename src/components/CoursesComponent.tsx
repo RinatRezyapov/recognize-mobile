@@ -12,7 +12,6 @@ const CoursesComponentQuery = graphql`
     user(id: $id) {
       id
       _id
-      ...CourseComponent_user
       ...CoursePlayerComponent_user
     }
     courses {

@@ -15,6 +15,7 @@ type User implements Node {
   _id: String
   username: String
   email: String
+  score(courseId: String): Score
   courses(status: String = "any", after: String, first: Int, before: String, last: Int): CourseConnection
 }
 
@@ -22,6 +23,11 @@ type User implements Node {
 interface Node {
   """The id of the object."""
   id: ID!
+}
+
+type Score {
+  username: String
+  value: Float
 }
 
 """A connection to a list of items."""
@@ -89,11 +95,6 @@ type ScoreEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
-}
-
-type Score {
-  username: String
-  score: Float
 }
 
 type Courses {

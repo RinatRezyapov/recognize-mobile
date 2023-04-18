@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e460d8dfb3656611aebc0b25d5b541e1>>
+ * @generated SignedSource<<816323844f919b8578c2f8613dd6d067>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,18 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type CourseComponentQuery$variables = {
-  id?: number | null;
+  courseId?: string | null;
+  id?: string | null;
 };
 export type CourseComponentQuery$data = {
-  readonly course: {
-    readonly body: string | null;
-    readonly description: string | null;
+  readonly user: {
+    readonly _id: string | null;
     readonly id: string;
-    readonly title: string | null;
+    readonly score: {
+      readonly username: string | null;
+      readonly value: number | null;
+    } | null;
+    readonly username: string | null;
   } | null;
 };
 export type CourseComponentQuery = {
@@ -26,14 +30,24 @@ export type CourseComponentQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "courseId"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "id"
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "username",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": [
@@ -43,9 +57,9 @@ v1 = [
         "variableName": "id"
       }
     ],
-    "concreteType": "Course",
+    "concreteType": "User",
     "kind": "LinkedField",
-    "name": "course",
+    "name": "user",
     "plural": false,
     "selections": [
       {
@@ -59,21 +73,33 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "title",
+        "name": "_id",
         "storageKey": null
       },
+      (v2/*: any*/),
       {
         "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "description",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "body",
+        "args": [
+          {
+            "kind": "Variable",
+            "name": "courseId",
+            "variableName": "courseId"
+          }
+        ],
+        "concreteType": "Score",
+        "kind": "LinkedField",
+        "name": "score",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "value",
+            "storageKey": null
+          }
+        ],
         "storageKey": null
       }
     ],
@@ -82,32 +108,38 @@ v1 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "CourseComponentQuery",
-    "selections": (v1/*: any*/),
+    "selections": (v3/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "CourseComponentQuery",
-    "selections": (v1/*: any*/)
+    "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "8dff4e427d138c141d33b46f2f3bf051",
+    "cacheID": "e5e8f4b4a68d2d8c6ef2d02492a77776",
     "id": null,
     "metadata": {},
     "name": "CourseComponentQuery",
     "operationKind": "query",
-    "text": "query CourseComponentQuery(\n  $id: Int\n) {\n  course(id: $id) {\n    id\n    title\n    description\n    body\n  }\n}\n"
+    "text": "query CourseComponentQuery(\n  $id: String\n  $courseId: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    score(courseId: $courseId) {\n      username\n      value\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c7374262a70926269967f83666040e06";
+(node as any).hash = "e1c4d4e2e08de3dd2c13ecb888e7cfaa";
 
 export default node;

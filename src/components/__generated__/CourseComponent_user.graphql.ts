@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e1e268d8220e81eb4248333aa9d903d>>
+ * @generated SignedSource<<feb07503b83b7bd015b6cc8b16bf265c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,9 @@ import { FragmentRefs } from "relay-runtime";
 export type CourseComponent_user$data = {
   readonly _id: string | null;
   readonly id: string;
+  readonly score: {
+    readonly value: number | null;
+  } | null;
   readonly username: string | null;
   readonly " $fragmentType": "CourseComponent_user";
 };
@@ -47,12 +50,36 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "username",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "courseId",
+          "value": "09ab269d-cbc8-4c75-82c0-db7100ee6788"
+        }
+      ],
+      "concreteType": "Score",
+      "kind": "LinkedField",
+      "name": "score",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "value",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "score(courseId:\"09ab269d-cbc8-4c75-82c0-db7100ee6788\")"
     }
   ],
   "type": "User",
   "abstractKey": null
 };
 
-(node as any).hash = "23a328eea806ad79c3c38b22ccdd540a";
+(node as any).hash = "88940ef802317a775e4a20d1035c5225";
 
 export default node;

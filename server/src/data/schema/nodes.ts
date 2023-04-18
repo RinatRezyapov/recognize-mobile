@@ -1,4 +1,4 @@
-import {getAllCourses, getCourse, getCourseLikes, getCourseScores, getCourses, getUser} from '../database';
+import {getAllCourses, getCourse, getCourseLikes, getCourseScores, getCourses, getScore, getUser} from '../database';
 import {GraphQLFloat, GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString} from 'graphql';
 import {
   globalIdField,
@@ -42,7 +42,7 @@ const GraphQLScore = new GraphQLObjectType({
         return user.username;
       },
     },
-    score: {
+    value: {
       type: GraphQLFloat,
       resolve: score => score.score,
     },
@@ -116,14 +116,6 @@ const GraphQLCourse = new GraphQLObjectType({
         }
       },
     },
-    // scores: {
-    //   type: GraphQLList(GraphQLInt),
-    //   resolve: async (course, {}, {pgPool}) => {
-    //     const scores = await getCourseScores(course.id, pgPool);
-
-    //     return scores.map(v => v.score);
-    //   },
-    // },
   },
   interfaces: [nodeInterface],
 });
@@ -148,6 +140,17 @@ var GraphQLUser = new GraphQLObjectType({
     email: {
       type: GraphQLString,
       resolve: user => user.email,
+    },
+    score: {
+      type: GraphQLScore,
+      args: {
+        courseId: {
+          type: GraphQLString,
+        },
+      },
+      resolve: async (user, {courseId}, {pgPool}) => {
+        return await getScore(user.id, courseId, pgPool);
+      },
     },
     courses: {
       type: CoursesConnection,
