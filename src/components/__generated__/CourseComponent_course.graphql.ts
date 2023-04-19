@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9a78388a1c52b4020c98a88c44019a3>>
+ * @generated SignedSource<<c8aadba66ccc1fb4238aa37040bd3859>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type CourseComponent_course$data = {
   readonly scores: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly id: string;
         readonly username: string | null;
         readonly value: number | null;
       } | null;
@@ -32,19 +33,21 @@ export type CourseComponent_course$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_course">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "CourseComponent_course",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -104,6 +107,7 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -131,7 +135,8 @@ const node: ReaderFragment = {
   "type": "Course",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "23ffc643a7b989a24a9bbea42e8fb506";
+(node as any).hash = "dfbb43f8b37f6ba7534eb718a1741ca3";
 
 export default node;

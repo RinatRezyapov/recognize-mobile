@@ -35,6 +35,7 @@ const todosArgs = {
 const GraphQLScore = new GraphQLObjectType({
   name: 'Score',
   fields: {
+    id: globalIdField('Score', score => score.user_id + ':' + score.course_id),
     username: {
       type: GraphQLString,
       resolve: async (score, {}, {pgPool}) => {
@@ -187,4 +188,4 @@ const GraphQLCourses = new GraphQLObjectType({
   },
 });
 
-export {GraphQLUser, GraphQLCourse, GraphQLCourses, GraphQLCourseEdge, nodeField};
+export {GraphQLUser, GraphQLCourse, GraphQLCourses, GraphQLCourseEdge, GraphQLScoreEdge, nodeField};

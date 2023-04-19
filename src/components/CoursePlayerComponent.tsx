@@ -11,6 +11,8 @@ const mutation = graphql`
       scoreEdge {
         node {
           id
+          username
+          value
         }
       }
     }
@@ -107,7 +109,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
       setBackground('#03a9f4');
       const newReactionTime = (Date.now() - timeStart) / 1000;
       setReactionTime(newReactionTime);
-      console.log('onUserInputSubmit', user.id, course.id, newReactionTime);
+
       mutate({
         variables: {
           input: {

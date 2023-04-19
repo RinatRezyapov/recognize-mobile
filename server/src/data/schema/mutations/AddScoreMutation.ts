@@ -1,7 +1,7 @@
 import {GraphQLFloat, GraphQLID, GraphQLNonNull} from 'graphql';
 import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
 import {addScore, getCourseScores, getScore, updateScore} from '../../database';
-import {GraphQLCourseEdge} from '../nodes';
+import {GraphQLScoreEdge} from '../nodes';
 
 const AddScoreMutation = mutationWithClientMutationId({
   name: 'AddScore',
@@ -12,10 +12,11 @@ const AddScoreMutation = mutationWithClientMutationId({
   },
   outputFields: {
     scoreEdge: {
-      type: new GraphQLNonNull(GraphQLCourseEdge),
+      type: new GraphQLNonNull(GraphQLScoreEdge),
       resolve: async ({user_id, course_id}, {}, {pgPool}) => {
         const score = await getScore(user_id, course_id, pgPool);
         const scores = await getCourseScores(course_id, pgPool);
+
         return {
           cursor: cursorForObjectInConnection([...scores], score),
           node: score,

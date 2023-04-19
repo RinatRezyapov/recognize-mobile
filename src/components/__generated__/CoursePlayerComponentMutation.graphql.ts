@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc658a5291c719f7d7455047c12fd066>>
+ * @generated SignedSource<<a0884888a6578f451a922d9de605d83f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,8 @@ export type CoursePlayerComponentMutation$data = {
     readonly scoreEdge: {
       readonly node: {
         readonly id: string;
+        readonly username: string | null;
+        readonly value: number | null;
       } | null;
     };
   } | null;
@@ -58,7 +60,7 @@ v1 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "CourseEdge",
+        "concreteType": "ScoreEdge",
         "kind": "LinkedField",
         "name": "scoreEdge",
         "plural": false,
@@ -66,7 +68,7 @@ v1 = [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Course",
+            "concreteType": "Score",
             "kind": "LinkedField",
             "name": "node",
             "plural": false,
@@ -76,6 +78,20 @@ v1 = [
                 "args": null,
                 "kind": "ScalarField",
                 "name": "id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "username",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "value",
                 "storageKey": null
               }
             ],
@@ -106,16 +122,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "a991c0dc2b147b054fc7918fdfea22c8",
+    "cacheID": "aa72b53a7f3d269fb22af123aa29cda6",
     "id": null,
     "metadata": {},
     "name": "CoursePlayerComponentMutation",
     "operationKind": "mutation",
-    "text": "mutation CoursePlayerComponentMutation(\n  $input: AddScoreInput!\n) {\n  addScore(input: $input) {\n    scoreEdge {\n      node {\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation CoursePlayerComponentMutation(\n  $input: AddScoreInput!\n) {\n  addScore(input: $input) {\n    scoreEdge {\n      node {\n        id\n        username\n        value\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "048d4996ecccddf8b3ddc6b8da984198";
+(node as any).hash = "1ecfff91e9df5ae492acb661eb07d8cd";
 
 export default node;

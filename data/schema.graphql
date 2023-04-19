@@ -26,6 +26,8 @@ interface Node {
 }
 
 type Score {
+  """The ID of an object"""
+  id: ID!
   username: String
   value: Float
 }
@@ -162,7 +164,7 @@ input LikeCourseInput {
 }
 
 type AddScorePayload {
-  scoreEdge: CourseEdge!
+  scoreEdge: ScoreEdge!
   clientMutationId: String
 }
 

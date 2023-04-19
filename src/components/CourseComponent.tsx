@@ -13,6 +13,7 @@ export const CourseComponentQuery = graphql`
       _id
       username
       score(courseId: $courseId) {
+        id
         username
         value
       }
@@ -35,6 +36,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
         scores {
           edges {
             node {
+              id
               username
               value
             }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e64a04564367fd8d271f49126888663a>>
+ * @generated SignedSource<<9e52e522dab18dc73567b2a876520adf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -354,6 +354,7 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
+                                  (v2/*: any*/),
                                   (v14/*: any*/),
                                   {
                                     "alias": null,
@@ -398,7 +399,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a5f3ddeed9a81af2ab355e872f9ebd2f",
+    "cacheID": "1d1b6b10070c8466cd3ec3883db41c45",
     "id": null,
     "metadata": {
       "connection": [
@@ -415,7 +416,7 @@ return {
     },
     "name": "CoursesComponentQuery",
     "operationKind": "query",
-    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    ...CoursePlayerComponent_user\n  }\n  courses {\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          author\n          likes\n          avatar\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  authorId\n  scores {\n    edges {\n      node {\n        username\n        value\n      }\n    }\n  }\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_user on User {\n  id\n  _id\n  username\n}\n"
+    "text": "query CoursesComponentQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    ...CoursePlayerComponent_user\n  }\n  courses {\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          author\n          likes\n          avatar\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  authorId\n  scores {\n    edges {\n      node {\n        id\n        username\n        value\n      }\n    }\n  }\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_user on User {\n  id\n  _id\n  username\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<816323844f919b8578c2f8613dd6d067>>
+ * @generated SignedSource<<f3e979c4f591e67f0d5d2a7bcd02a927>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type CourseComponentQuery$data = {
     readonly _id: string | null;
     readonly id: string;
     readonly score: {
+      readonly id: string;
       readonly username: string | null;
       readonly value: number | null;
     } | null;
@@ -44,10 +45,17 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "username",
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "alias": null,
     "args": [
@@ -62,13 +70,7 @@ v3 = [
     "name": "user",
     "plural": false,
     "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
+      (v2/*: any*/),
       {
         "alias": null,
         "args": null,
@@ -76,7 +78,7 @@ v3 = [
         "name": "_id",
         "storageKey": null
       },
-      (v2/*: any*/),
+      (v3/*: any*/),
       {
         "alias": null,
         "args": [
@@ -92,6 +94,7 @@ v3 = [
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -115,7 +118,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "CourseComponentQuery",
-    "selections": (v3/*: any*/),
+    "selections": (v4/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
@@ -127,19 +130,19 @@ return {
     ],
     "kind": "Operation",
     "name": "CourseComponentQuery",
-    "selections": (v3/*: any*/)
+    "selections": (v4/*: any*/)
   },
   "params": {
-    "cacheID": "e5e8f4b4a68d2d8c6ef2d02492a77776",
+    "cacheID": "b342894d9efdc6637fb5dd16e82a9795",
     "id": null,
     "metadata": {},
     "name": "CourseComponentQuery",
     "operationKind": "query",
-    "text": "query CourseComponentQuery(\n  $id: String\n  $courseId: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    score(courseId: $courseId) {\n      username\n      value\n    }\n  }\n}\n"
+    "text": "query CourseComponentQuery(\n  $id: String\n  $courseId: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    score(courseId: $courseId) {\n      id\n      username\n      value\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e1c4d4e2e08de3dd2c13ecb888e7cfaa";
+(node as any).hash = "d6e471838eed034471353e42b1fb5ac5";
 
 export default node;
