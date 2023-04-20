@@ -5,6 +5,8 @@ import {ConnectionHandler, graphql, useFragment, useLazyLoadQuery, useMutation} 
 import {NavigationType} from '../App';
 import {CourseComponent_course$key} from './__generated__/CourseComponent_course.graphql';
 import {CourseComponent_user$key} from './__generated__/CourseComponent_user.graphql';
+import {CourseComponentQuery as CourseComponentQueryType} from './__generated__/CourseComponentQuery.graphql';
+import {useRemoveCourseMutation} from '../mutations/RemoveCourseMutation';
 
 export const CourseComponentQuery = graphql`
   query CourseComponentQuery($id: String, $courseId: String) {
@@ -47,44 +49,19 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
     route.params.courseRef,
   );
 
-  const {user} = useLazyLoadQuery(CourseComponentQuery, {
+  const {user} = useLazyLoadQuery<CourseComponentQueryType>(CourseComponentQuery, {
     id: route.params.userRef._id,
     courseId: course?._id,
   });
 
-  const isUserOwned = course.authorId === user._id;
+  const isUserOwned = course.authorId === user?._id;
 
-  const mutation = graphql`
-    mutation CourseComponentMutation($input: RemoveCourseInput!) {
-      removeCourse(input: $input) {
-        deletedCourseId
-      }
-    }
-  `;
-  const [mutate] = useMutation(mutation);
+  const commitRemoveCourseMutation = useRemoveCourseMutation(user?.id);
 
   const onDeleteCourseClick = (courseId: string | null) => () => {
     if (!courseId) return;
-    mutate({
-      variables: {
-        input: {
-          id: courseId,
-        },
-      },
-      updater: store => {
-        const payload = store.get(user.id);
-        if (!payload) return;
-
-        const removedEdgeID = store.getRootField('removeCourse')?.getValue('deletedCourseId');
-        if (!removedEdgeID) return;
-
-        const connection = ConnectionHandler.getConnection(payload, 'Courses_courses');
-        if (!connection) return;
-
-        ConnectionHandler.deleteNode(connection, removedEdgeID?.toString());
-      },
-    });
-    if (!user._id) return;
+    commitRemoveCourseMutation(courseId);
+    if (!user?._id) return;
     navigation.navigate('Profile', {
       userId: user._id,
     });
@@ -117,7 +94,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
       <Text style={styles.descriptionText}>{course.description}</Text>
       <View style={styles.scoreContainer}>
         <View style={styles.scoreItem}>
-          <Text style={styles.scoreValue}>{user.score?.value}</Text>
+          <Text style={styles.scoreValue}>{user?.score?.value || '-'}</Text>
           <Text style={styles.scoreLabel}>Reaction time</Text>
         </View>
         <View style={styles.scoreItem}>
