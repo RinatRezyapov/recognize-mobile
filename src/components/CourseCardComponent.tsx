@@ -73,15 +73,15 @@ const Wrapper = styled.View`
   gap: 16px;
   margin: 8px;
   padding: 16px;
-  border-radius: 30px;
+  border-radius: 8px;
   background-color: white;
-  elevation: 10;
+  border: 1px solid lightgrey;
   min-height: 130px;
 `;
 
 const Avatar = styled.Image`
   flex: 1;
-  border-radius: 20px;
+  border-radius: 8px;
 `;
 
 const Details = styled.View`

@@ -4,20 +4,7 @@ import {ActivityIndicator, StyleSheet, Text, TouchableOpacity, View} from 'react
 import {graphql, useFragment, useMutation} from 'react-relay';
 import {CanvasContext} from '../utils/context/CanvasProvider';
 import {NavigationType} from '../App';
-
-const mutation = graphql`
-  mutation CoursePlayerComponentMutation($input: AddScoreInput!) {
-    addScore(input: $input) {
-      scoreEdge {
-        node {
-          id
-          username
-          value
-        }
-      }
-    }
-  }
-`;
+import {useAddScoreMutation} from '../mutations/AddScoreMutation';
 
 interface IProps extends NavigationType<'Course'> {}
 
@@ -45,7 +32,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
     route.params.courseRef,
   );
 
-  const [mutate] = useMutation(mutation);
+  const commitAddScoreMutation = useAddScoreMutation(user.id, course.id);
 
   const resultRef = useRef(null);
   const {animateSparks, renderCanvas} = useContext(CanvasContext);
@@ -109,16 +96,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
       setBackground('#03a9f4');
       const newReactionTime = (Date.now() - timeStart) / 1000;
       setReactionTime(newReactionTime);
-
-      mutate({
-        variables: {
-          input: {
-            user_id: user.id,
-            course_id: course.id,
-            score: newReactionTime,
-          },
-        },
-      });
+      commitAddScoreMutation(newReactionTime);
       setPause(false);
 
       resultRef?.current?.measure((width, height, px, py, fx, fy) => {

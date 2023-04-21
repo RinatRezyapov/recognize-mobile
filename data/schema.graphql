@@ -169,8 +169,8 @@ type AddScorePayload {
 }
 
 input AddScoreInput {
-  user_id: ID!
-  course_id: ID!
+  userId: ID!
+  courseId: ID!
   score: Float!
   clientMutationId: String
 }

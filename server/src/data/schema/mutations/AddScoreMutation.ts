@@ -6,16 +6,16 @@ import {GraphQLScoreEdge} from '../nodes';
 const AddScoreMutation = mutationWithClientMutationId({
   name: 'AddScore',
   inputFields: {
-    user_id: {type: new GraphQLNonNull(GraphQLID)},
-    course_id: {type: new GraphQLNonNull(GraphQLID)},
+    userId: {type: new GraphQLNonNull(GraphQLID)},
+    courseId: {type: new GraphQLNonNull(GraphQLID)},
     score: {type: new GraphQLNonNull(GraphQLFloat)},
   },
   outputFields: {
     scoreEdge: {
       type: new GraphQLNonNull(GraphQLScoreEdge),
-      resolve: async ({user_id, course_id}, {}, {pgPool}) => {
-        const score = await getScore(user_id, course_id, pgPool);
-        const scores = await getCourseScores(course_id, pgPool);
+      resolve: async ({userId, courseId}, {}, {pgPool}) => {
+        const score = await getScore(userId, courseId, pgPool);
+        const scores = await getCourseScores(courseId, pgPool);
 
         return {
           cursor: cursorForObjectInConnection([...scores], score),
@@ -24,9 +24,9 @@ const AddScoreMutation = mutationWithClientMutationId({
       },
     },
   },
-  mutateAndGetPayload: async ({user_id, course_id, score}, {pgPool}) => {
-    const localUserId = fromGlobalId(user_id).id;
-    const localCourseId = fromGlobalId(course_id).id;
+  mutateAndGetPayload: async ({userId, courseId, score}, {pgPool}) => {
+    const localUserId = fromGlobalId(userId).id;
+    const localCourseId = fromGlobalId(courseId).id;
     const oldScoreData = await getScore(localUserId, localCourseId, pgPool);
 
     if (!oldScoreData) {
@@ -35,7 +35,7 @@ const AddScoreMutation = mutationWithClientMutationId({
       await updateScore(localUserId, localCourseId, score, pgPool);
     }
 
-    return {user_id: localUserId, course_id: localCourseId};
+    return {userId: localUserId, courseId: localCourseId};
   },
 });
 

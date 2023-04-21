@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fce947fe60836b4f58ed5da2e2d8aabb>>
+ * @generated SignedSource<<6a2d51da07b0dafa24abec317e54662a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,10 +15,10 @@ export type AddScoreInput = {
   score: number;
   userId: string;
 };
-export type CoursePlayerComponentMutation$variables = {
+export type AddScoreMutation$variables = {
   input: AddScoreInput;
 };
-export type CoursePlayerComponentMutation$data = {
+export type AddScoreMutation$data = {
   readonly addScore: {
     readonly scoreEdge: {
       readonly node: {
@@ -29,9 +29,9 @@ export type CoursePlayerComponentMutation$data = {
     };
   } | null;
 };
-export type CoursePlayerComponentMutation = {
-  response: CoursePlayerComponentMutation$data;
-  variables: CoursePlayerComponentMutation$variables;
+export type AddScoreMutation = {
+  response: AddScoreMutation$data;
+  variables: AddScoreMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -109,7 +109,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CoursePlayerComponentMutation",
+    "name": "AddScoreMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -118,20 +118,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CoursePlayerComponentMutation",
+    "name": "AddScoreMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "aa72b53a7f3d269fb22af123aa29cda6",
+    "cacheID": "e1cc6b5c8cb8e90b8555f57f1ff135dc",
     "id": null,
     "metadata": {},
-    "name": "CoursePlayerComponentMutation",
+    "name": "AddScoreMutation",
     "operationKind": "mutation",
-    "text": "mutation CoursePlayerComponentMutation(\n  $input: AddScoreInput!\n) {\n  addScore(input: $input) {\n    scoreEdge {\n      node {\n        id\n        username\n        value\n      }\n    }\n  }\n}\n"
+    "text": "mutation AddScoreMutation(\n  $input: AddScoreInput!\n) {\n  addScore(input: $input) {\n    scoreEdge {\n      node {\n        id\n        username\n        value\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1ecfff91e9df5ae492acb661eb07d8cd";
+(node as any).hash = "24450d70cfcee81e0ea7587c993d4557";
 
 export default node;
