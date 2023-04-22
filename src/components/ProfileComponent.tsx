@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import {Button} from '@react-native-material/core';
 import React from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import CourseCardComponent from './CourseCardComponent';
 
 interface IProps {
@@ -18,7 +18,13 @@ const ProfileComponent: React.FC<IProps> = ({data, navigation, userId}) => {
         <View>
           <UsernameText>{data?.user?.username}</UsernameText>
           <EmailText>{data?.user?.email}</EmailText>
-          <Button title="Logout" tintColor="white" color="#f73378" onPress={() => navigation.navigate('Login')} />
+          <StyledButton
+            title="Logout"
+            tintColor="white"
+            color="#f73378"
+            disableElevation
+            onPress={() => navigation.navigate('Login')}
+          />
         </View>
       </PersonalInfo>
       <View>
@@ -26,6 +32,7 @@ const ProfileComponent: React.FC<IProps> = ({data, navigation, userId}) => {
           tintColor="white"
           color="#35baf6"
           title="New course"
+          disableElevation
           onPress={() => navigation.navigate('CourseCreate', {id: userId})}
         />
         <ScrollView>
@@ -53,6 +60,7 @@ const Wrapper = styled.View`
 `;
 
 const StyledButton = styled(Button)`
+  border-radius: 16px;
   margin: 16px 0;
 `;
 
@@ -73,6 +81,12 @@ const EmailText = styled.Text`
 const Avatar = styled.Image`
   height: 150px;
   width: 150px;
-  border-radius: 30px;
+  border-radius: 16px;
   border-width: 4px;
 `;
+
+const styles = StyleSheet.create({
+  button: {
+    borderRadius: 50,
+  },
+});

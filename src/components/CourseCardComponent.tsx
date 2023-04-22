@@ -1,8 +1,8 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {graphql, useMutation} from 'react-relay';
+import {useLikeCourseMutation} from '../mutations/LikeCourseMutation';
 
 interface IProps {
   user: any;
@@ -10,41 +10,11 @@ interface IProps {
 }
 
 const CourseCardComponent: React.FC<IProps> = ({user, course}) => {
+  const commitLikeCourseMutation = useLikeCourseMutation(user._id, course._id);
   const userOwned = course.authorId === user._id;
   const likedByUser = course.likes?.includes(user._id);
 
-  const mutation = graphql`
-    mutation CourseCardComponentMutation($input: LikeCourseInput!) {
-      likeCourse(input: $input) {
-        courseEdge {
-          node {
-            id
-            _id
-            title
-            body
-            description
-            authorId
-            createdAt
-            updatedAt
-            likes
-            avatar
-          }
-        }
-      }
-    }
-  `;
-  const [mutate] = useMutation(mutation);
-  const onLikePress = () => {
-    mutate({
-      variables: {
-        input: {
-          user_id: user.id,
-          course_id: course.id,
-          remove: likedByUser,
-        },
-      },
-    });
-  };
+  const onLikePress = () => commitLikeCourseMutation(likedByUser);
 
   return (
     <Wrapper>
@@ -73,7 +43,7 @@ const Wrapper = styled.View`
   gap: 16px;
   margin: 8px;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 16px;
   background-color: white;
   border: 1px solid lightgrey;
   min-height: 130px;
@@ -81,7 +51,7 @@ const Wrapper = styled.View`
 
 const Avatar = styled.Image`
   flex: 1;
-  border-radius: 8px;
+  border-radius: 16px;
 `;
 
 const Details = styled.View`

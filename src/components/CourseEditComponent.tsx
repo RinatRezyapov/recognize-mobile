@@ -1,8 +1,9 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
-import {graphql, useFragment, useMutation} from 'react-relay';
+import {graphql, useFragment} from 'react-relay';
 import {NavigationType} from '../App';
 import NewCourseForm, {IFormFields as NewCourseFormFields} from '../forms/NewCourseForm';
+import {useUpdateCourseMutation} from '../mutations/UpdateCourseMutation';
 import {FormMode} from '../types/forms';
 import {CourseEditComponent_course$key} from './__generated__/CourseEditComponent_course.graphql';
 
@@ -22,34 +23,10 @@ const CourseEditComponent: React.FC<IProps> = ({navigation, route}) => {
     `,
     route.params.courseRef,
   );
+  const commitUpdateCourseMutation = useUpdateCourseMutation(course.id);
 
-  const mutation = graphql`
-    mutation CourseEditComponentMutation($input: UpdateCourseInput!) {
-      updateCourse(input: $input) {
-        courseEdge {
-          node {
-            id
-            _id
-            title
-            description
-            body
-          }
-        }
-      }
-    }
-  `;
-  const [mutate] = useMutation(mutation);
   const onSubmit = async (fields: NewCourseFormFields) => {
-    mutate({
-      variables: {
-        input: {
-          id: course.id,
-          title: fields.title,
-          description: fields.description,
-          body: fields.words.map(v => v.value).join(' '),
-        },
-      },
-    });
+    commitUpdateCourseMutation(fields);
     navigation.navigate('Profile');
   };
 
