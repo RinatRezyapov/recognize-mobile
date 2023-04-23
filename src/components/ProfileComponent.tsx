@@ -3,9 +3,10 @@ import {Button} from '@react-native-material/core';
 import React from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import CourseCardComponent from './CourseCardComponent';
+import {ProfilePageQuery$data} from '../pages/__generated__/ProfilePageQuery.graphql';
 
 interface IProps {
-  data: any;
+  data: ProfilePageQuery$data;
   navigation: any;
   userId: string;
 }

@@ -4,6 +4,7 @@ import {graphql, useLazyLoadQuery} from 'react-relay';
 import NewCourseForm, {IFormFields as NewCourseFormFields} from '../forms/NewCourseForm';
 import {useAddCourseMutation} from '../mutations/AddCourseMutation';
 import {FormMode} from '../types/forms';
+import {CourseCreateComponentQuery as CourseCreateComponentQueryType} from './__generated__/CourseCreateComponentQuery.graphql';
 
 export const UserQuery = graphql`
   query CourseCreateComponentQuery($id: String) {
@@ -33,9 +34,9 @@ interface IProps {
   route: any;
 }
 
-const CourseCreateComponent: React.FC<IProps> = ({initialQueryRef, navigation, route}) => {
-  const {user} = useLazyLoadQuery(UserQuery, {id: route.params.id});
-  const commitAddCourseMutation = useAddCourseMutation(user.id);
+const CourseCreateComponent: React.FC<IProps> = ({navigation, route}) => {
+  const {user} = useLazyLoadQuery<CourseCreateComponentQueryType>(UserQuery, {id: route.params.id});
+  const commitAddCourseMutation = useAddCourseMutation(user?.id);
 
   const onSubmit = async (fields: NewCourseFormFields) => {
     commitAddCourseMutation(fields);
