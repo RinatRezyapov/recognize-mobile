@@ -5,6 +5,21 @@ import {graphql, useFragment, useMutation} from 'react-relay';
 import {CanvasContext} from '../utils/context/CanvasProvider';
 import {NavigationType} from '../App';
 import {useAddScoreMutation} from '../mutations/AddScoreMutation';
+import Icon from 'react-native-vector-icons/Entypo';
+
+function selectRandomWords(arr: string[], num: number) {
+  if (arr.length <= num) {
+    return arr;
+  }
+
+  const selected = new Set();
+  while (selected.size < num) {
+    const index = Math.floor(Math.random() * arr.length);
+    selected.add(arr[index]);
+  }
+
+  return Array.from(selected);
+}
 
 interface IProps extends NavigationType<'Course'> {}
 
@@ -34,7 +49,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
 
   const commitAddScoreMutation = useAddScoreMutation(user.id, course.id);
 
-  const resultRef = useRef(null);
+  const resultRef = useRef<Text>(null);
   const {animateSparks, renderCanvas} = useContext(CanvasContext);
   const [pause, setPause] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState<string[]>([]);
@@ -66,20 +81,8 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
       setAnswer([]);
       setBackground('#4615b2');
 
-      const words = [...Array(wordsCount)].map(e => {
-        const idx = getRandomInt(0, data.length);
-        const word = data[idx];
-        data.splice(idx, 1);
-        return word;
-      });
-      const answers = [...Array(answersCount)]
-        .map(e => {
-          const idx = getRandomInt(0, data.length);
-          const word = data[idx];
-          data.splice(idx, 1);
-          return word;
-        })
-        .filter(v => v);
+      const words = selectRandomWords(data, wordsCount);
+      const answers = selectRandomWords(data, answersCount);
       setAnswers([...words, ...answers].sort(() => Math.random() - 0.5));
       setCurrentPhrase(words);
       setPhraseVisibility(true);
@@ -100,7 +103,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
       setPause(false);
 
       resultRef?.current?.measure((width, height, px, py, fx, fy) => {
-        animateSparks(fx + 50, fy);
+        animateSparks(fx, fy);
       });
     } else {
       setBackground('#ff4569');
@@ -120,12 +123,15 @@ const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
 
   return (
     <Container backgroundColor={background}>
-      <View style={styles.viewer}>
-        <Text ref={resultRef} style={styles.phrase}>
-          {phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}
+      <StopWatchResult>
+        <Icon name="stopwatch" size={70} color="white" />
+        <Text ref={resultRef} style={styles.reactionTime}>
+          {reactionTime ? reactionTime : '-'}
         </Text>
-        <Text style={styles.reactionTime}>{reactionTime ? reactionTime : ''}</Text>
         {renderCanvas()}
+      </StopWatchResult>
+      <View style={styles.viewer}>
+        <Text style={styles.phrase}>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</Text>
       </View>
       <View style={styles.answersContainer}>
         {answers.map((answer, idx) => (
@@ -146,6 +152,14 @@ const Container = styled.View<{backgroundColor: string}>`
   gap: 16px;
   padding: 16px;
   background-color: ${props => props.backgroundColor};
+`;
+
+const StopWatchResult = styled.View`
+  display: flex;
+  position: absolute;
+  padding: 8px;
+  align-items: center;
+  width: 100px;
 `;
 
 const styles = StyleSheet.create({
@@ -203,5 +217,6 @@ const styles = StyleSheet.create({
   reactionTime: {
     color: 'white',
     fontWeight: '700',
+    textAlign: 'center',
   },
 });

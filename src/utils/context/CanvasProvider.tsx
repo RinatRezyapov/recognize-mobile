@@ -1,35 +1,38 @@
-import React, { createContext } from 'react';
+import React, {createContext, FC, ReactNode} from 'react';
 
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 
-import {
-  rect,
-  SkCanvas,
-  Skia, SkiaView, useDrawCallback
-} from '@shopify/react-native-skia';
+import {rect, SkCanvas, Skia, SkiaView, useDrawCallback} from '@shopify/react-native-skia';
+import styled from '@emotion/native';
 
-
-const { width, height } = Dimensions.get('screen');
+const {width, height} = Dimensions.get('screen');
 
 interface IProps {
-  children: any;
+  children: ReactNode;
 }
 
+interface ICanvasContext {
+  animateSparks: (x: number, y: number) => void;
+  renderCanvas: () => JSX.Element;
+}
 
-export const CanvasContext = createContext('hey');
-const CanvasProvider = ({ children }) => {
-  const particles = [];
+export const CanvasContext = createContext<ICanvasContext>({
+  animateSparks: () => {},
+  renderCanvas: () => <></>,
+});
+
+const CanvasProvider: FC<IProps> = ({children}) => {
+  const particles: Particle[] = [];
   var colors = ['#029DAF', '#E5D599', '#FFC219', '#F07C19', '#E32551'];
   var gravity = 0.09;
 
-  function initParticles(x, y) {
+  function initParticles(x: number, y: number) {
     for (var i = 0; i < 20; i++) {
-
       setTimeout(() => createParticle(i, x, y), i);
     }
   }
 
-  function createParticle(i, x, y) {
+  function createParticle(i: number, x: number, y: number) {
     // initial position in middle of canvas
     // var x = width * 0.5;
     // var y = height * 0.5;
@@ -44,29 +47,46 @@ const CanvasProvider = ({ children }) => {
     particles.push(p);
   }
 
-  function Particle(x, y, vx, vy, size, color, opacity) {
+  class Particle {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+    color: string;
+    opacity: number;
+    finished: boolean = false;
 
-    function reset() {
-      opacity = 0;
+    constructor(x: number, y: number, vx: number, vy: number, size: number, color: string, opacity: number) {
+      this.x = x;
+      this.y = y;
+      this.vx = vx;
+      this.vy = vy;
+      this.size = size;
+      this.color = color;
+      this.opacity = opacity;
+    }
+    reset() {
+      this.opacity = 0;
       this.finished = true;
     }
 
-    this.update = function () {
+    update() {
       // if a particle has faded to nothing we can reset it to the starting position
-      if (opacity - 0.005 > 0) opacity -= 0.005;
-      else reset();
+      if (this.opacity - 0.005 > 0) this.opacity -= 0.005;
+      else this.reset();
 
       // add gravity to vy
-      vy += gravity;
-      x += vx;
-      y += vy;
+      this.vy += gravity;
+      this.x += this.vx;
+      this.y += this.vy;
     }
 
-    this.draw = function (canvas: SkCanvas) {
+    draw(canvas: SkCanvas) {
       const paint = Skia.Paint();
       paint.setAntiAlias(false);
       paint.setColor(Skia.Color('yellow'));
-      canvas.drawCircle(x, y, 1, paint);
+      canvas.drawCircle(this.x, this.y, 1, paint);
       // canvas.drawRect(rect(x, y, size, size), paint);
     }
   }
@@ -82,20 +102,28 @@ const CanvasProvider = ({ children }) => {
     }
   }
 
-  const onDraw = useDrawCallback((canvas) => {
+  const onDraw = useDrawCallback(canvas => {
     render(canvas);
   });
 
-  const animateSparks = (x, y) => {
+  const animateSparks = (x: number, y: number) => {
     initParticles(x, y);
-  }
+  };
 
   const renderCanvas = () => {
-    return <SkiaView style={{ position: 'absolute', zIndex: -1, top: 0, left: 0, width: '100%', height: '100%' }} onDraw={onDraw} mode="continuous" />
-  }
-  return <CanvasContext.Provider value={{ animateSparks, renderCanvas }}>
-    {children}
-  </CanvasContext.Provider>
-}
+    return <StyledCanvas width={width} height={height} onDraw={onDraw} mode="continuous" />;
+  };
+  return <CanvasContext.Provider value={{animateSparks, renderCanvas}}>{children}</CanvasContext.Provider>;
+};
 
 export default CanvasProvider;
+
+const StyledCanvas = styled(SkiaView)<{width: number; height: number}>`
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  flex: 1;
+  width: ${({width}) => `${width}px`};
+  height: ${({height}) => `${height}px`};
+`;

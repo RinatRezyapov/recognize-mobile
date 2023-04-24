@@ -2,6 +2,8 @@ import React from 'react';
 import {graphql, useLazyLoadQuery} from 'react-relay';
 import {NavigationType} from '../App';
 import ProfileComponent from '../components/ProfileComponent';
+import {ProfilePageQuery as ProfilePageQueryType} from './__generated__/ProfilePageQuery.graphql';
+
 
 export const ProfilePageQuery = graphql`
   query ProfilePageQuery($id: String) {
@@ -34,7 +36,7 @@ export const ProfilePageQuery = graphql`
 interface IProps extends NavigationType<'Profile'> {}
 
 const ProfilePage: React.FC<IProps> = ({navigation, route}) => {
-  const data = useLazyLoadQuery(ProfilePageQuery, {id: route.params?.userId});
+  const data = useLazyLoadQuery<ProfilePageQueryType>(ProfilePageQuery, {id: route.params?.userId});
 
   return <ProfileComponent userId={route.params?.userId} navigation={navigation} data={data} />;
 };
