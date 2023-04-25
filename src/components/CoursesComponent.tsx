@@ -6,42 +6,14 @@ import {graphql, useLazyLoadQuery} from 'react-relay';
 import CourseCardComponent from './CourseCardComponent';
 import {CoursesComponentQuery as CoursesComponentQueryType} from './__generated__/CoursesComponentQuery.graphql';
 import {NavigationType} from '../App';
-
-const CoursesComponentQuery = graphql`
-  query CoursesComponentQuery($id: String) {
-    user(id: $id) {
-      id
-      _id
-      ...CoursePlayerComponent_user
-    }
-    courses {
-      courses(first: 2147483647) @connection(key: "Courses_courses") {
-        edges {
-          node {
-            id
-            _id
-            title
-            description
-            body
-            authorId
-            author
-            likes
-            avatar
-            ...CourseComponent_course
-            ...CoursePlayerComponent_course
-          }
-        }
-      }
-    }
-  }
-`;
+import {UserQuery} from '../queries/User';
 
 interface IProps extends NavigationType<'Profile'> {
   initialQueryRef: any;
 }
 
 const CoursesComponent: React.FC<IProps> = ({navigation, route}) => {
-  const data = useLazyLoadQuery<CoursesComponentQueryType>(CoursesComponentQuery, {id: route.params.userId});
+  const data = useLazyLoadQuery<CoursesComponentQueryType>(UserQuery, {id: route.params.userId});
 
   return (
     <Wrapper>

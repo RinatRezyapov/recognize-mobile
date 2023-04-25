@@ -1,12 +1,11 @@
 import React from 'react';
 import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {ConnectionHandler, graphql, useFragment, useLazyLoadQuery, useMutation} from 'react-relay';
+import {graphql, useFragment, useLazyLoadQuery} from 'react-relay';
 import {NavigationType} from '../App';
-import {CourseComponent_course$key} from './__generated__/CourseComponent_course.graphql';
-import {CourseComponent_user$key} from './__generated__/CourseComponent_user.graphql';
-import {CourseComponentQuery as CourseComponentQueryType} from './__generated__/CourseComponentQuery.graphql';
 import {useRemoveCourseMutation} from '../mutations/RemoveCourseMutation';
+import {CourseComponentQuery as CourseComponentQueryType} from './__generated__/CourseComponentQuery.graphql';
+import {CourseComponent_course$key} from './__generated__/CourseComponent_course.graphql';
 
 export const CourseComponentQuery = graphql`
   query CourseComponentQuery($id: String, $courseId: String) {

@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {graphql, useFragment, useMutation} from 'react-relay';
+import {graphql, useFragment} from 'react-relay';
 import {CanvasContext} from '../utils/context/CanvasProvider';
 import {NavigationType} from '../App';
 import {useAddScoreMutation} from '../mutations/AddScoreMutation';
