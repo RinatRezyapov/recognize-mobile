@@ -39,6 +39,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
             node {
               id
               username
+              courseId
               value
             }
           }
@@ -48,10 +49,31 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
     route.params.courseRef,
   );
 
-  const {user} = useLazyLoadQuery<CourseComponentQueryType>(CourseComponentQuery, {
-    id: route.params.userRef._id,
-    courseId: course?._id,
-  });
+  const user = useFragment<CourseComponent_course$key>(
+    graphql`
+      fragment CourseComponent_user on User {
+        _id
+      }
+    `,
+    route.params.userRef,
+  );
+  const scoreRef = course?.scores?.edges?.find(v => v?.node?.courseId === course._id);
+  console.log('scoreRef', scoreRef);
+  const score = useFragment(
+    graphql`
+      fragment CourseComponent_score on Score {
+        id
+        value
+      }
+    `,
+    scoreRef,
+  );
+  // console.log('score', score);
+  // console.log(user);
+  // const {user} = useLazyLoadQuery<CourseComponentQueryType>(CourseComponentQuery, {
+  //   id: route.params.userRef._id,
+  //   courseId: course?._id,
+  // });
 
   const isUserOwned = course.authorId === user?._id;
 
@@ -93,7 +115,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
       <Text style={styles.descriptionText}>{course.description}</Text>
       <View style={styles.scoreContainer}>
         <View style={styles.scoreItem}>
-          <Text style={styles.scoreValue}>{user?.score?.value || '-'}</Text>
+          {/* <Text style={styles.scoreValue}>{user?.score?.value || '-'}</Text> */}
           <Text style={styles.scoreLabel}>Reaction time</Text>
         </View>
         <View style={styles.scoreItem}>

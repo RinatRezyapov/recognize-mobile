@@ -5,28 +5,7 @@ import NewCourseForm, {IFormFields as NewCourseFormFields} from '../forms/NewCou
 import {useAddCourseMutation} from '../mutations/AddCourseMutation';
 import {FormMode} from '../types/forms';
 import {CourseCreateComponentQuery as CourseCreateComponentQueryType} from './__generated__/CourseCreateComponentQuery.graphql';
-
-export const UserQuery = graphql`
-  query CourseCreateComponentQuery($id: String) {
-    user(id: $id) {
-      id
-      _id
-      username
-      email
-      courses(first: 2147483647) @connection(key: "Courses_courses") {
-        edges {
-          node {
-            _id
-            id
-            title
-            description
-            body
-          }
-        }
-      }
-    }
-  }
-`;
+import {UserQuery} from '../queries/User';
 
 interface IProps {
   initialQueryRef: any;

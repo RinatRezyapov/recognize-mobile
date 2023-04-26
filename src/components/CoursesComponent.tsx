@@ -1,12 +1,12 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
-import {graphql, useLazyLoadQuery} from 'react-relay';
+import {ScrollView, TouchableOpacity} from 'react-native';
+import {useLazyLoadQuery} from 'react-relay';
 
-import CourseCardComponent from './CourseCardComponent';
-import {CoursesComponentQuery as CoursesComponentQueryType} from './__generated__/CoursesComponentQuery.graphql';
 import {NavigationType} from '../App';
 import {UserQuery} from '../queries/User';
+import CourseCardComponent from './CourseCardComponent';
+import {CoursesComponentQuery as CoursesComponentQueryType} from './__generated__/CoursesComponentQuery.graphql';
 
 interface IProps extends NavigationType<'Profile'> {
   initialQueryRef: any;

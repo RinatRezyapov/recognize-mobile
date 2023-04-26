@@ -3,22 +3,24 @@ import {Button} from '@react-native-material/core';
 import React from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import CourseCardComponent from './CourseCardComponent';
-import {ProfilePageQuery$data} from '../pages/__generated__/ProfilePageQuery.graphql';
+import {ProfileComponentQuery as ProfileComponentQueryType} from './__generated__/ProfileComponentQuery.graphql';
+import {useLazyLoadQuery} from 'react-relay';
+import {UserQuery} from '../queries/User';
 
 interface IProps {
-  data: ProfilePageQuery$data;
   navigation: any;
   userId: string;
 }
 
-const ProfileComponent: React.FC<IProps> = ({data, navigation, userId}) => {
+const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
+  const {user} = useLazyLoadQuery<ProfileComponentQueryType>(UserQuery, {id: userId});
   return (
     <Wrapper>
       <PersonalInfo>
         <Avatar source={require('./profile-pic.png')} />
         <View>
-          <UsernameText>{data?.user?.username}</UsernameText>
-          <EmailText>{data?.user?.email}</EmailText>
+          <UsernameText>{user?.username}</UsernameText>
+          <EmailText>{user?.email}</EmailText>
           <StyledButton
             title="Logout"
             tintColor="white"
@@ -37,12 +39,12 @@ const ProfileComponent: React.FC<IProps> = ({data, navigation, userId}) => {
           onPress={() => navigation.navigate('CourseCreate', {id: userId})}
         />
         <ScrollView>
-          {data?.user?.courses?.edges?.map(({node}) => {
+          {user?.courses?.edges?.map(({node}) => {
             return (
               <TouchableOpacity
                 key={node?.id}
-                onPress={() => navigation.navigate('Course', {id: node?._id, courseRef: node, userRef: data?.user})}>
-                <CourseCardComponent user={data.user} course={node} />
+                onPress={() => navigation.navigate('Course', {id: node?._id, courseRef: node, userRef: user})}>
+                <CourseCardComponent user={user} course={node} />
               </TouchableOpacity>
             );
           })}

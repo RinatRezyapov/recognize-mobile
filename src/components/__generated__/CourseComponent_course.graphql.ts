@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8aadba66ccc1fb4238aa37040bd3859>>
+ * @generated SignedSource<<7eb37e2c9b121e19595d1f403e9b77a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type CourseComponent_course$data = {
   readonly scores: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly courseId: string | null;
         readonly id: string;
         readonly username: string | null;
         readonly value: number | null;
@@ -119,6 +120,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "courseId",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "value",
                   "storageKey": null
                 }
@@ -137,6 +145,6 @@ return {
 };
 })();
 
-(node as any).hash = "dfbb43f8b37f6ba7534eb718a1741ca3";
+(node as any).hash = "d12c3ad88fde99190985465bbf7e318a";
 
 export default node;

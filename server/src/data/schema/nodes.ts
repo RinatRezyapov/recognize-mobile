@@ -43,6 +43,14 @@ const GraphQLScore = new GraphQLObjectType({
         return user.username;
       },
     },
+    userId: {
+      type: GraphQLString,
+      resolve: async score => score.user_id,
+    },
+    courseId: {
+      type: GraphQLString,
+      resolve: async score => score.course_id,
+    },
     value: {
       type: GraphQLFloat,
       resolve: score => score.score,

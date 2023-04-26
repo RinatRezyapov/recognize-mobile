@@ -29,6 +29,8 @@ type Score {
   """The ID of an object"""
   id: ID!
   username: String
+  userId: String
+  courseId: String
   value: Float
 }
 

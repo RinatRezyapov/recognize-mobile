@@ -23,7 +23,7 @@ function selectRandomWords(arr: string[], num: number) {
 
 interface IProps extends NavigationType<'Course'> {}
 
-const CoursePlayerComponent: React.FC<IProps> = ({navigation, route}) => {
+const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   const user = useFragment(
     graphql`
       fragment CoursePlayerComponent_user on User {
