@@ -9,7 +9,7 @@ const mutation = graphql`
   }
 `;
 
-export const useRemoveCourseMutation = (userId?: string) => {
+export const useRemoveCourseMutation = (userId: string | null) => {
   const [commit] = useMutation(mutation);
 
   return useCallback(

@@ -1,26 +1,10 @@
 import React from 'react';
 import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {graphql, useFragment, useLazyLoadQuery} from 'react-relay';
+import {graphql, useFragment} from 'react-relay';
 import {NavigationType} from '../App';
 import {useRemoveCourseMutation} from '../mutations/RemoveCourseMutation';
-import {CourseComponentQuery as CourseComponentQueryType} from './__generated__/CourseComponentQuery.graphql';
 import {CourseComponent_course$key} from './__generated__/CourseComponent_course.graphql';
-
-export const CourseComponentQuery = graphql`
-  query CourseComponentQuery($id: String, $courseId: String) {
-    user(id: $id) {
-      id
-      _id
-      username
-      score(courseId: $courseId) {
-        id
-        username
-        value
-      }
-    }
-  }
-`;
 
 interface IProps extends NavigationType<'Course'> {}
 
@@ -28,18 +12,14 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
   const course = useFragment<CourseComponent_course$key>(
     graphql`
       fragment CourseComponent_course on Course {
-        id
         _id
         title
         description
-        body
         authorId
         scores {
           edges {
             node {
-              id
               username
-              courseId
               value
             }
           }
@@ -57,27 +37,10 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
     `,
     route.params.userRef,
   );
-  const scoreRef = course?.scores?.edges?.find(v => v?.node?.courseId === course._id);
-  console.log('scoreRef', scoreRef);
-  const score = useFragment(
-    graphql`
-      fragment CourseComponent_score on Score {
-        id
-        value
-      }
-    `,
-    scoreRef,
-  );
-  // console.log('score', score);
-  // console.log(user);
-  // const {user} = useLazyLoadQuery<CourseComponentQueryType>(CourseComponentQuery, {
-  //   id: route.params.userRef._id,
-  //   courseId: course?._id,
-  // });
 
   const isUserOwned = course.authorId === user?._id;
 
-  const commitRemoveCourseMutation = useRemoveCourseMutation(user?.id);
+  const commitRemoveCourseMutation = useRemoveCourseMutation(user?._id);
 
   const onDeleteCourseClick = (courseId: string | null) => () => {
     if (!courseId) return;
@@ -137,7 +100,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
         {isUserOwned && (
           <>
             <Button title="Edit" onPress={onEditCourseClick(course._id)} />
-            <Button title="Remove" onPress={onDeleteCourseClick(course.id)} />
+            <Button title="Remove" onPress={onDeleteCourseClick(course._id)} />
           </>
         )}
       </View>

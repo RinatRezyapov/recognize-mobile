@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7eb37e2c9b121e19595d1f403e9b77a2>>
+ * @generated SignedSource<<cb44fdd222b4dbbf9ac30d21811ea2a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,14 +13,10 @@ import { FragmentRefs } from "relay-runtime";
 export type CourseComponent_course$data = {
   readonly _id: string | null;
   readonly authorId: string | null;
-  readonly body: string | null;
   readonly description: string | null;
-  readonly id: string;
   readonly scores: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly courseId: string | null;
-        readonly id: string;
         readonly username: string | null;
         readonly value: number | null;
       } | null;
@@ -34,21 +30,12 @@ export type CourseComponent_course$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_course">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "CourseComponent_course",
   "selections": [
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -68,13 +55,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "description",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "body",
       "storageKey": null
     },
     {
@@ -108,19 +88,11 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "username",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "courseId",
                   "storageKey": null
                 },
                 {
@@ -143,8 +115,7 @@ return {
   "type": "Course",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "d12c3ad88fde99190985465bbf7e318a";
+(node as any).hash = "fc79adb25634bd9d2bb20117439a1cb3";
 
 export default node;
