@@ -1,5 +1,5 @@
 import {GraphQLID, GraphQLNonNull} from 'graphql';
-import {mutationWithClientMutationId} from 'graphql-relay';
+import {fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
 import {removeCourse} from '../../database';
 
 const RemoveCourseMutation = mutationWithClientMutationId({
@@ -14,7 +14,9 @@ const RemoveCourseMutation = mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: async ({id}, {pgPool}) => {
-    await removeCourse(pgPool, id);
+    const localId = fromGlobalId(id).id;
+
+    await removeCourse(pgPool, localId);
 
     return {id};
   },

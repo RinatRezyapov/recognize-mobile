@@ -12,6 +12,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
   const course = useFragment<CourseComponent_course$key>(
     graphql`
       fragment CourseComponent_course on Course {
+        id
         _id
         title
         description
@@ -32,6 +33,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
   const user = useFragment<CourseComponent_course$key>(
     graphql`
       fragment CourseComponent_user on User {
+        id
         _id
       }
     `,
@@ -40,7 +42,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
 
   const isUserOwned = course.authorId === user?._id;
 
-  const commitRemoveCourseMutation = useRemoveCourseMutation(user?._id);
+  const commitRemoveCourseMutation = useRemoveCourseMutation(user?.id);
 
   const onDeleteCourseClick = (courseId: string | null) => () => {
     if (!courseId) return;
@@ -100,7 +102,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
         {isUserOwned && (
           <>
             <Button title="Edit" onPress={onEditCourseClick(course._id)} />
-            <Button title="Remove" onPress={onDeleteCourseClick(course._id)} />
+            <Button title="Remove" onPress={onDeleteCourseClick(course.id)} />
           </>
         )}
       </View>

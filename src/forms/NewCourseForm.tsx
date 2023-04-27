@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import React, {FC} from 'react';
 import {Controller, useFieldArray, useForm} from 'react-hook-form';
-import {Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Button, Image, ScrollView, TextInput, TouchableOpacity} from 'react-native';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {FormMode} from '../types/forms';

@@ -1,11 +1,11 @@
 import React from 'react';
-import {graphql, useLazyLoadQuery} from 'react-relay';
+import {useLazyLoadQuery} from 'react-relay';
 
 import NewCourseForm, {IFormFields as NewCourseFormFields} from '../forms/NewCourseForm';
 import {useAddCourseMutation} from '../mutations/AddCourseMutation';
+import {UserQuery} from '../queries/User';
 import {FormMode} from '../types/forms';
 import {CourseCreateComponentQuery as CourseCreateComponentQueryType} from './__generated__/CourseCreateComponentQuery.graphql';
-import {UserQuery} from '../queries/User';
 
 interface IProps {
   initialQueryRef: any;
