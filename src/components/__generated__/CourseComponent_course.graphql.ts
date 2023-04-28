@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<942e838029107f5e4d6e5860c2a1749c>>
+ * @generated SignedSource<<8c8b187a097619a41231d252a16594ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,8 @@ export type CourseComponent_course$data = {
   readonly scores: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly courseId: string | null;
+        readonly userId: string | null;
         readonly username: string | null;
         readonly value: number | null;
       } | null;
@@ -107,6 +109,20 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "userId",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "courseId",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "value",
                   "storageKey": null
                 }
@@ -124,6 +140,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f5133deb363ab640bec093f5e8daac66";
+(node as any).hash = "156d7e2265e57b7329df0f1e06e81e08";
 
 export default node;

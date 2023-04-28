@@ -1,5 +1,5 @@
 import {getAllCourses, getCourse, getCourseLikes, getCourseScores, getCourses, getScore, getUser} from '../database';
-import {GraphQLFloat, GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString} from 'graphql';
+import {GraphQLFloat, GraphQLID, GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString} from 'graphql';
 import {
   globalIdField,
   nodeDefinitions,
@@ -115,7 +115,7 @@ const GraphQLCourse = new GraphQLObjectType({
     },
     scores: {
       type: ScoresConnection,
-      args: todosArgs,
+      args: {...connectionArgs, courseId: {type: GraphQLID}},
       resolve: async (course, {after, before, first, last}, {pgPool}) => {
         try {
           const scores = await getCourseScores(course.id, pgPool);

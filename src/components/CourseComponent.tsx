@@ -21,6 +21,8 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
           edges {
             node {
               username
+              userId
+              courseId
               value
             }
           }
@@ -70,7 +72,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
       userRef: route.params.userRef,
     });
   };
-
+  const userScore = course.scores?.edges?.find(edge => edge?.node?.userId === user?._id)?.node?.value;
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
@@ -80,7 +82,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
       <Text style={styles.descriptionText}>{course.description}</Text>
       <View style={styles.scoreContainer}>
         <View style={styles.scoreItem}>
-          {/* <Text style={styles.scoreValue}>{user?.score?.value || '-'}</Text> */}
+          <Text style={styles.scoreValue}>{userScore || '-'}</Text>
           <Text style={styles.scoreLabel}>Reaction time</Text>
         </View>
         <View style={styles.scoreItem}>

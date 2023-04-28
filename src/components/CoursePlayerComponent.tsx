@@ -63,10 +63,6 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   const [timeStart, setTimeStart] = useState<number>();
   const [reactionTime, setReactionTime] = useState<number>();
 
-  const getRandomInt = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (!course) return;
