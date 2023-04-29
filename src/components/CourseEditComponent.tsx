@@ -1,5 +1,4 @@
 import React from 'react';
-import {ActivityIndicator} from 'react-native';
 import {graphql, useFragment} from 'react-relay';
 import {NavigationType} from '../App';
 import NewCourseForm, {IFormFields as NewCourseFormFields} from '../forms/NewCourseForm';
@@ -29,8 +28,6 @@ const CourseEditComponent: React.FC<IProps> = ({navigation, route}) => {
     commitUpdateCourseMutation(fields);
     navigation.navigate('Profile');
   };
-
-  if (!course) return <ActivityIndicator size="large" />;
 
   const title = course.title;
   const description = course.description;

@@ -43,6 +43,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
   );
 
   const isUserOwned = course.authorId === user?._id;
+  const userScore = course.scores?.edges?.find(edge => edge?.node?.userId === user?._id)?.node?.value;
 
   const commitRemoveCourseMutation = useRemoveCourseMutation(user?.id);
 
@@ -57,11 +58,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
 
   const onEditCourseClick = (courseId: string | null) => async () => {
     if (!courseId) return;
-    navigation.navigate('CourseEdit', {
-      courseId,
-      courseRef: route.params.courseRef,
-      userRef: route.params.userRef,
-    });
+    navigation.navigate('CourseEdit', {courseRef: route.params.courseRef});
   };
 
   const onStartCourseClick = (courseId: string | null) => async () => {
@@ -72,7 +69,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
       userRef: route.params.userRef,
     });
   };
-  const userScore = course.scores?.edges?.find(edge => edge?.node?.userId === user?._id)?.node?.value;
+
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>

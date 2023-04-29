@@ -18,8 +18,8 @@ type RootStackParamList = {
   Profile: {userId: string};
   Home: {userId: string};
   Course: {userRef: any; courseRef: any};
-  CourseCreate: undefined;
-  CourseEdit: {courseId: string; courseRef: any; userRef: any};
+  CourseCreate: {userId: string};
+  CourseEdit: {courseRef: any};
   CoursePlayer: {courseId: string; courseRef: any; userRef: any};
   Courses: {userId: string};
 };

@@ -36,15 +36,15 @@ const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
           color="#35baf6"
           title="New course"
           disableElevation
-          onPress={() => navigation.navigate('CourseCreate', {id: userId})}
+          onPress={() => navigation.navigate('CourseCreate', {userId})}
         />
         <ScrollView>
-          {user?.courses?.edges?.map(({node}) => {
+          {user?.courses?.edges?.map(edge => {
             return (
               <TouchableOpacity
-                key={node?.id}
-                onPress={() => navigation.navigate('Course', {id: node?._id, courseRef: node, userRef: user})}>
-                <CourseCardComponent user={user} course={node} />
+                key={edge?.node?.id}
+                onPress={() => navigation.navigate('Course', {courseRef: edge?.node, userRef: user})}>
+                <CourseCardComponent user={user} course={edge?.node} />
               </TouchableOpacity>
             );
           })}
