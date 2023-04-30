@@ -54,14 +54,14 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
 
   const avatar = getValues().avatar;
 
-  const avatarUri = 'data:image/png;base64,' + avatar;
+  const avatarUri = avatar ? 'data:image/png;base64,' + avatar : null;
 
   return (
     <ScrollView>
       <Wrapper>
         <ImageWithDetailsWrapper>
           <ImageWrapper>
-            {image || avatar ? (
+            {image || avatarUri ? (
               <StyledImage source={{uri: avatarUri || image.uri}} />
             ) : (
               <ImagePlaceholder>

@@ -80,7 +80,7 @@ type Course implements Node {
   createdAt: Int
   updatedAt: Int
   likes: [String]
-  scores(status: String = "any", after: String, first: Int, before: String, last: Int): ScoreConnection
+  scores(after: String, first: Int, before: String, last: Int, courseId: ID): ScoreConnection
 }
 
 """A connection to a list of items."""
@@ -114,7 +114,8 @@ type Mutation {
 }
 
 type AddCoursePayload {
-  courseEdge: CourseEdge!
+  courseEdge: CourseEdge
+  error: String
   user: User!
   clientMutationId: String
 }

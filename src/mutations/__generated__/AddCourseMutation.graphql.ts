@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7983871723b5a0a207adf20bbfd0fbea>>
+ * @generated SignedSource<<9e48f70d77c3f2538dd14c4828a20f81>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,7 +35,8 @@ export type AddCourseMutation$data = {
         readonly title: string | null;
         readonly updatedAt: number | null;
       } | null;
-    };
+    } | null;
+    readonly error: string | null;
   } | null;
 };
 export type AddCourseMutation = {
@@ -143,6 +144,13 @@ v1 = [
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "error",
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -166,16 +174,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "d0db29bc7a7c609b38603adc345527be",
+    "cacheID": "bf191af7c30d4b0951a571fba5899338",
     "id": null,
     "metadata": {},
     "name": "AddCourseMutation",
     "operationKind": "mutation",
-    "text": "mutation AddCourseMutation(\n  $input: AddCourseInput!\n) {\n  addCourse(input: $input) {\n    courseEdge {\n      node {\n        id\n        _id\n        title\n        body\n        description\n        authorId\n        createdAt\n        updatedAt\n      }\n    }\n  }\n}\n"
+    "text": "mutation AddCourseMutation(\n  $input: AddCourseInput!\n) {\n  addCourse(input: $input) {\n    courseEdge {\n      node {\n        id\n        _id\n        title\n        body\n        description\n        authorId\n        createdAt\n        updatedAt\n      }\n    }\n    error\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5080a5cad1b79fb136a6c690337430c7";
+(node as any).hash = "fe57b4c226a4fa397187239f9c726652";
 
 export default node;

@@ -17,6 +17,7 @@ const mutation = graphql`
           updatedAt
         }
       }
+      error
     }
   }
 `;
@@ -49,6 +50,12 @@ export const useAddCourseMutation = (userId?: string) => {
           const connection = ConnectionHandler.getConnection(payload, 'Courses_courses');
           if (!connection) return;
           ConnectionHandler.insertEdgeAfter(connection, newEdge, null);
+        },
+        onCompleted: (res, errors) => {
+          console.log('onCompleted', res, errors);
+        },
+        onError: error => {
+          console.log('Mutation failed with error:', error);
         },
       });
     },
