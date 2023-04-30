@@ -115,7 +115,7 @@ type Mutation {
 
 type AddCoursePayload {
   courseEdge: CourseEdge
-  error: String
+  errors: [String]
   user: User!
   clientMutationId: String
 }

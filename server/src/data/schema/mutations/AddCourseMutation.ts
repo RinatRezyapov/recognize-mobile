@@ -1,6 +1,6 @@
 import {mutationWithClientMutationId, cursorForObjectInConnection, fromGlobalId} from 'graphql-relay';
 
-import {GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString} from 'graphql';
+import {GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLString} from 'graphql';
 import {GraphQLCourseEdge, GraphQLUser} from '../nodes';
 
 import {addCourse, getCourse, getCourses, getUser} from '../../database';
@@ -29,9 +29,9 @@ const AddCourseMutation = mutationWithClientMutationId({
         };
       },
     },
-    error: {
-      type: GraphQLString,
-      resolve: ({error}) => error,
+    errors: {
+      type: GraphQLList(GraphQLString),
+      resolve: ({errors}) => errors,
     },
     user: {
       type: new GraphQLNonNull(GraphQLUser),
@@ -46,7 +46,7 @@ const AddCourseMutation = mutationWithClientMutationId({
     if (courses.length >= 2) {
       return {
         authorId: localAuthorId,
-        error: 'You cannot create more that 2 courses',
+        errors: ['You cannot create more that 2 courses'],
       };
     }
 

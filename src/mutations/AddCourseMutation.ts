@@ -17,7 +17,7 @@ const mutation = graphql`
           updatedAt
         }
       }
-      error
+      errors
     }
   }
 `;
