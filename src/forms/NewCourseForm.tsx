@@ -64,11 +64,11 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
             {image || avatarUri ? (
               <StyledImage source={{uri: avatarUri || image.uri}} />
             ) : (
-              <ImagePlaceholder>
-                <TouchableOpacity onPress={onChooseImageClick}>
+              <TouchableOpacity onPress={onChooseImageClick}>
+                <ImagePlaceholder>
                   <Icon name="add-photo-alternate" size={30} />
-                </TouchableOpacity>
-              </ImagePlaceholder>
+                </ImagePlaceholder>
+              </TouchableOpacity>
             )}
           </ImageWrapper>
           <DetailsWrapper>

@@ -36,7 +36,7 @@ const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
           color="#35baf6"
           title="New course"
           disableElevation
-          // disabled={(user?.courses?.edges?.length || 0) >= 2}
+          disabled={(user?.courses?.edges?.length || 0) >= 2}
           onPress={() => navigation.navigate('CourseCreate', {userId})}
         />
         <ScrollView>

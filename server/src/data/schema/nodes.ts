@@ -180,7 +180,7 @@ var GraphQLUser = new GraphQLObjectType({
 const GraphQLCourses = new GraphQLObjectType({
   name: 'Courses',
   fields: {
-    courses: {
+    data: {
       type: CoursesConnection,
       args: todosArgs,
       resolve: async (user, {after, before, first, last}, {pgPool}) => {

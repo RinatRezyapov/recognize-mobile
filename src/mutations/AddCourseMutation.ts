@@ -1,6 +1,8 @@
-import {useCallback} from 'react';
+import {useCallback, useContext} from 'react';
 import {ConnectionHandler, graphql, useMutation} from 'react-relay';
 import {IFormFields as NewCourseFormFields} from '../forms/NewCourseForm';
+import {SnackbarContext} from '../utils/context/SnackbarProvider';
+import {AddCourseMutation} from './__generated__/AddCourseMutation.graphql';
 
 const mutation = graphql`
   mutation AddCourseMutation($input: AddCourseInput!) {
@@ -23,10 +25,12 @@ const mutation = graphql`
 `;
 
 export const useAddCourseMutation = (userId?: string) => {
-  const [commit] = useMutation(mutation);
+  const [commit] = useMutation<AddCourseMutation>(mutation);
+  const {openSnackbar} = useContext(SnackbarContext);
 
   return useCallback(
     (fields: NewCourseFormFields) => {
+      if (!userId) return;
       commit({
         variables: {
           input: {
@@ -51,8 +55,11 @@ export const useAddCourseMutation = (userId?: string) => {
           if (!connection) return;
           ConnectionHandler.insertEdgeAfter(connection, newEdge, null);
         },
-        onCompleted: (res, errors) => {
-          console.log('onCompleted', res, errors);
+        onCompleted: res => {
+          const errors = res?.addCourse?.errors;
+          if (Array.isArray(errors) && errors?.length > 0) {
+            openSnackbar(errors.join(', '));
+          }
         },
         onError: error => {
           console.log('Mutation failed with error:', error);

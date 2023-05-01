@@ -102,7 +102,7 @@ type ScoreEdge {
 }
 
 type Courses {
-  courses(status: String = "any", after: String, first: Int, before: String, last: Int): CourseConnection
+  data(status: String = "any", after: String, first: Int, before: String, last: Int): CourseConnection
 }
 
 type Mutation {
