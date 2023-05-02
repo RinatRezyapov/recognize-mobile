@@ -12,6 +12,7 @@ export const CoursesQuery = graphql`
             title
             description
             avatar
+            likes
           }
         }
       }

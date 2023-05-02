@@ -27,6 +27,7 @@ const AddScoreMutation = mutationWithClientMutationId({
   mutateAndGetPayload: async ({userId, courseId, score}, {pgPool}) => {
     const localUserId = fromGlobalId(userId).id;
     const localCourseId = fromGlobalId(courseId).id;
+
     const oldScoreData = await getScore(localUserId, localCourseId, pgPool);
 
     if (!oldScoreData) {

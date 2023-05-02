@@ -17,7 +17,7 @@ interface IProps extends NavigationType<'Profile'> {
 const CoursesComponent: React.FC<IProps> = ({navigation, route}) => {
   const courses = useLazyLoadQuery<CoursesQueryType>(CoursesQuery, {});
   const user = useLazyLoadQuery<UserQueryType>(UserQuery, {id: route.params.userId});
-  console.log(courses, user);
+
   return (
     <Wrapper>
       <ScrollView>

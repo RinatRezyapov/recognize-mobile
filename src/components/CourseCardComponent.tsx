@@ -10,10 +10,10 @@ interface IProps {
 }
 
 const CourseCardComponent: React.FC<IProps> = ({user, course}) => {
-  const commitLikeCourseMutation = useLikeCourseMutation(user._id, course._id);
+  const commitLikeCourseMutation = useLikeCourseMutation(user.id, course.id);
   const userOwned = course.authorId === user._id;
   const likedByUser = course.likes?.includes(user._id);
-
+  console.log(course.likes);
   const onLikePress = () => commitLikeCourseMutation(likedByUser);
 
   return (

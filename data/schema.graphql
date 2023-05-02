@@ -16,7 +16,7 @@ type User implements Node {
   username: String
   email: String
   score(courseId: String): Score
-  courses(status: String = "any", after: String, first: Int, before: String, last: Int): CourseConnection
+  courses(after: String, first: Int, before: String, last: Int): CourseConnection
 }
 
 """An object with an ID"""
@@ -102,7 +102,12 @@ type ScoreEdge {
 }
 
 type Courses {
-  data(status: String = "any", after: String, first: Int, before: String, last: Int): CourseConnection
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  data(after: String, first: Int, before: String, last: Int): CourseConnection
 }
 
 type Mutation {
@@ -160,8 +165,8 @@ type LikeCoursePayload {
 }
 
 input LikeCourseInput {
-  user_id: ID!
-  course_id: ID!
+  userId: ID!
+  courseId: ID!
   remove: Boolean
   clientMutationId: String
 }

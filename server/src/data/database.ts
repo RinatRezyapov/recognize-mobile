@@ -1,6 +1,53 @@
+export class Course {
+  id: string;
+  title: string;
+  description: string;
+  body: string;
+  created_at: string;
+  updated_at: string;
+  author_id: string;
+  avatar: string;
+
+  constructor(
+    id: string,
+    title: string,
+    description: string,
+    body: string,
+    created_at: string,
+    updated_at: string,
+    author_id: string,
+    avatar: string,
+  ) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.body = body;
+    this.created_at = created_at;
+    this.updated_at = updated_at;
+    this.author_id = author_id;
+    this.avatar = avatar;
+  }
+}
+
+export class User {
+  id: string;
+  constructor(id: string) {
+    this.id = id;
+  }
+}
+
+export class Score {
+  id: string;
+  constructor(id: string) {
+    this.id = id;
+  }
+}
+
 export const getCourses = (userId: string, pgPool) => {
   return pgPool?.query(`SELECT * FROM courses WHERE author_id = '${userId}'`).then(response => {
-    return response.rows.map(v => ({...v, id: v.id}));
+    return response.rows.map(
+      v => new Course(v.id, v.title, v.description, v.body, v.created_at, v.updated_at, v.author_id, v.avatar),
+    );
   });
 };
 

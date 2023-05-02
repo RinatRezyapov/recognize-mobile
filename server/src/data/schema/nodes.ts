@@ -1,4 +1,15 @@
-import {getAllCourses, getCourse, getCourseLikes, getCourseScores, getCourses, getScore, getUser} from '../database';
+import {
+  Course,
+  Score,
+  User,
+  getAllCourses,
+  getCourse,
+  getCourseLikes,
+  getCourseScores,
+  getCourses,
+  getScore,
+  getUser,
+} from '../database';
 import {GraphQLFloat, GraphQLID, GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString} from 'graphql';
 import {
   globalIdField,
@@ -12,23 +23,32 @@ import {
 const {nodeInterface, nodeField} = nodeDefinitions(
   (globalId, {pgPool}) => {
     const {type, id} = fromGlobalId(globalId);
+
     if (type === 'Course') {
       return getCourse(id, pgPool);
     } else if (type === 'User') {
       return getUser(id, pgPool);
+    } else if (type === 'Score') {
+      const [userId, courseId] = id.split(':');
+      return getScore(userId, courseId, pgPool);
     }
+
     return null;
   },
   obj => {
-    return GraphQLCourse;
+    if (obj instanceof Course) {
+      return GraphQLCourse;
+    } else if (obj instanceof User) {
+      return GraphQLUser;
+    } else if (obj instanceof Score) {
+      return GraphQLScore;
+    }
+
+    return null;
   },
 );
 
-const todosArgs = {
-  status: {
-    type: GraphQLString,
-    defaultValue: 'any',
-  },
+const coursesArgs = {
   ...connectionArgs,
 };
 
@@ -163,7 +183,7 @@ var GraphQLUser = new GraphQLObjectType({
     },
     courses: {
       type: CoursesConnection,
-      args: todosArgs,
+      args: coursesArgs,
       resolve: async (user, {after, before, first, last}, {pgPool}) => {
         try {
           const courses = await getCourses(user.id, pgPool);
@@ -180,13 +200,13 @@ var GraphQLUser = new GraphQLObjectType({
 const GraphQLCourses = new GraphQLObjectType({
   name: 'Courses',
   fields: {
+    node: nodeField,
     data: {
       type: CoursesConnection,
-      args: todosArgs,
-      resolve: async (user, {after, before, first, last}, {pgPool}) => {
+      args: coursesArgs,
+      resolve: async (parent, {after, before, first, last}, {pgPool}) => {
         try {
           const courses = await getAllCourses(pgPool);
-
           return connectionFromArray(courses, {after, before, first, last});
         } catch (err) {
           console.error(err);

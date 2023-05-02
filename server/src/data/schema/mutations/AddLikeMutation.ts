@@ -1,19 +1,19 @@
-import { GraphQLBoolean, GraphQLID, GraphQLNonNull } from 'graphql';
-import { cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId } from 'graphql-relay';
-import { getCourse, getCourses, likeCourse, unlikeCourse } from '../../database';
-import { GraphQLCourseEdge } from '../nodes';
+import {GraphQLBoolean, GraphQLID, GraphQLNonNull} from 'graphql';
+import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
+import {getCourse, getCourses, likeCourse, unlikeCourse} from '../../database';
+import {GraphQLCourseEdge} from '../nodes';
 
 const LikeCourseMutation = mutationWithClientMutationId({
   name: 'LikeCourse',
   inputFields: {
-    user_id: { type: new GraphQLNonNull(GraphQLID) },
-    course_id: { type: new GraphQLNonNull(GraphQLID) },
-    remove: { type: GraphQLBoolean }
+    userId: {type: new GraphQLNonNull(GraphQLID)},
+    courseId: {type: new GraphQLNonNull(GraphQLID)},
+    remove: {type: GraphQLBoolean},
   },
   outputFields: {
     courseEdge: {
       type: new GraphQLNonNull(GraphQLCourseEdge),
-      resolve: async ({ id }, { }, { pgPool }) => {
+      resolve: async ({id}, {}, {pgPool}) => {
         const course = await getCourse(id, pgPool);
         const courses = await getCourses(id, pgPool);
         return {
@@ -23,9 +23,9 @@ const LikeCourseMutation = mutationWithClientMutationId({
       },
     },
   },
-  mutateAndGetPayload: async ({ user_id, course_id, remove }, { pgPool }) => {
-    const localUserId = fromGlobalId(user_id).id;
-    const localCourseId = fromGlobalId(course_id).id;
+  mutateAndGetPayload: async ({userId, courseId, remove}, {pgPool}) => {
+    const localUserId = fromGlobalId(userId).id;
+    const localCourseId = fromGlobalId(courseId).id;
 
     if (remove) {
       await unlikeCourse(localUserId, localCourseId, pgPool);
@@ -33,9 +33,8 @@ const LikeCourseMutation = mutationWithClientMutationId({
       await likeCourse(localUserId, localCourseId, pgPool);
     }
 
-    return { id: localCourseId };
+    return {id: localCourseId};
   },
 });
 
-export { LikeCourseMutation };
-
+export {LikeCourseMutation};

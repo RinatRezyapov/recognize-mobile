@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20315ef6ad1af02ab16c1680d3b89665>>
+ * @generated SignedSource<<dfabd00e77101c48b3afc10064c32c03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type LikeCourseInput = {
   clientMutationId?: string | null;
-  course_id: string;
+  courseId: string;
   remove?: boolean | null;
-  user_id: string;
+  userId: string;
 };
 export type LikeCourseMutation$variables = {
   input: LikeCourseInput;

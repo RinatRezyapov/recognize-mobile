@@ -30,8 +30,8 @@ export const useLikeCourseMutation = (userId?: string, courseId?: string) => {
       commit({
         variables: {
           input: {
-            user_id: userId,
-            course_id: courseId,
+            userId,
+            courseId,
             remove,
           },
         },
