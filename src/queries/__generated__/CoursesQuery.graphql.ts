@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a4f209a08494b426ed182b613f0967e>>
+ * @generated SignedSource<<97cc55978d1594f4c35e2adc07563b75>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type CoursesQuery$data = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly _id: string | null;
+          readonly author: string | null;
           readonly authorId: string | null;
           readonly avatar: string | null;
           readonly description: string | null;
@@ -91,6 +92,13 @@ var v0 = [
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "author",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "title",
                     "storageKey": null
                   },
@@ -146,16 +154,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "078a43236ca3060fe875d97bf6ded0f0",
+    "cacheID": "5cd5e9036f725211b63d0f6887f8f2f3",
     "id": null,
     "metadata": {},
     "name": "CoursesQuery",
     "operationKind": "query",
-    "text": "query CoursesQuery {\n  courses {\n    data {\n      edges {\n        node {\n          id\n          _id\n          authorId\n          title\n          description\n          avatar\n          likes\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query CoursesQuery {\n  courses {\n    data {\n      edges {\n        node {\n          id\n          _id\n          authorId\n          author\n          title\n          description\n          avatar\n          likes\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d4375509b1049dadaeb41443b08f19c2";
+(node as any).hash = "6a97571471d010b386d15e547f08a2dc";
 
 export default node;

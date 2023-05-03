@@ -13,7 +13,7 @@ const CourseCardComponent: React.FC<IProps> = ({user, course}) => {
   const commitLikeCourseMutation = useLikeCourseMutation(user.id, course.id);
   const userOwned = course.authorId === user._id;
   const likedByUser = course.likes?.includes(user._id);
-  console.log(course.likes);
+  const likes = course.likes.length === 0 ? '' : course.likes.length;
   const onLikePress = () => commitLikeCourseMutation(likedByUser);
 
   return (
@@ -21,13 +21,16 @@ const CourseCardComponent: React.FC<IProps> = ({user, course}) => {
       <Avatar source={{uri: 'data:image/jpeg;base64,' + course.avatar}} />
       <Details>
         <Text style={styles.courseTitle}>{course.title}</Text>
-        <Text style={styles.courseDescription}>{course.description}</Text>
+        <Description>{course.description}</Description>
         {!userOwned && (
           <CardFooter>
             <Text>By: {course.author}</Text>
-            <TouchableOpacity onPress={() => onLikePress()}>
-              <Icon name={likedByUser ? 'heart' : 'hearto'} size={30} color="red" />
-            </TouchableOpacity>
+            <LikesWrapper>
+              <Text> {likes}</Text>
+              <TouchableOpacity onPress={() => onLikePress()}>
+                <Icon name={likedByUser ? 'heart' : 'hearto'} size={25} color="red" />
+              </TouchableOpacity>
+            </LikesWrapper>
           </CardFooter>
         )}
       </Details>
@@ -65,6 +68,19 @@ const CardFooter = styled.View`
   align-items: center;
 `;
 
+const LikesWrapper = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+`;
+
+const Description = styled.Text`
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 400;
+`;
+
 const styles = StyleSheet.create({
   courseContainer: {
     marginBottom: 16,
@@ -77,10 +93,5 @@ const styles = StyleSheet.create({
   courseTitle: {
     fontSize: 24,
     fontWeight: '600',
-  },
-  courseDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
   },
 });

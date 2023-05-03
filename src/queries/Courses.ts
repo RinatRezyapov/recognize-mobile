@@ -9,6 +9,7 @@ export const CoursesQuery = graphql`
             id
             _id
             authorId
+            author
             title
             description
             avatar

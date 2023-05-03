@@ -6,6 +6,7 @@ import {NavigationType} from '../App';
 const USERS: {[key: string]: string} = {
   Rinat: 'ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce',
   Brandon: 'a7fe332f-bb07-4c4e-a9ea-cc320d0e3514',
+  John: 'e5caede3-2784-422a-8c75-b8ff5fa9031d',
 };
 
 interface IProps extends NavigationType<'Login'> {}
