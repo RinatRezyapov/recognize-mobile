@@ -17,14 +17,12 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
         title
         description
         authorId
-        scores {
+        scores(first: 2147483647) @connection(key: "Scores_scores") {
           edges {
             node {
               id
-              _id
-              username
               userId
-              courseId
+              username
               value
             }
           }
@@ -46,7 +44,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
 
   const isUserOwned = course.authorId === user?._id;
   const userScore = course.scores?.edges?.find(edge => edge?.node?.userId === user?._id)?.node?.value;
-  console.log(course, user?._id);
+
   const commitRemoveCourseMutation = useRemoveCourseMutation(user?.id);
 
   const onDeleteCourseClick = (courseId: string | null) => () => {

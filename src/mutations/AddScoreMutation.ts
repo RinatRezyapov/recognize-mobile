@@ -1,5 +1,5 @@
 import {useCallback} from 'react';
-import {graphql, useMutation} from 'react-relay';
+import {ConnectionHandler, graphql, useMutation} from 'react-relay';
 
 const mutation = graphql`
   mutation AddScoreMutation($input: AddScoreInput!) {
@@ -30,6 +30,16 @@ export const useAddScoreMutation = (userId?: string, courseId?: string) => {
             courseId,
             score,
           },
+        },
+        updater: store => {
+          if (!courseId) return;
+          const payload = store.get(courseId);
+          if (payload == null) return;
+          const newEdge = store.getRootField('addScore')?.getLinkedRecord('scoreEdge');
+          if (!newEdge) return;
+          const connection = ConnectionHandler.getConnection(payload, 'Scores_scores');
+          if (!connection) return;
+          ConnectionHandler.insertEdgeAfter(connection, newEdge, null);
         },
       });
     },

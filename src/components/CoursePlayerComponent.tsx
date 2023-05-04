@@ -42,18 +42,6 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
         title
         description
         body
-        scores {
-          edges {
-            node {
-              id
-              _id
-              username
-              userId
-              courseId
-              value
-            }
-          }
-        }
       }
     `,
     route.params.courseRef,

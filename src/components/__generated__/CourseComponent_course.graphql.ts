@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2204e130690beb2b4fcfd09d70f1597>>
+ * @generated SignedSource<<991eda839638cf120e130bd01cf2e35e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,6 @@ export type CourseComponent_course$data = {
   readonly scores: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly _id: string | null;
-        readonly courseId: string | null;
         readonly id: string;
         readonly userId: string | null;
         readonly username: string | null;
@@ -42,22 +40,32 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "_id",
-  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "forward",
+        "path": [
+          "scores"
+        ]
+      }
+    ]
+  },
   "name": "CourseComponent_course",
   "selections": [
     (v0/*: any*/),
-    (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "_id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -80,11 +88,11 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "scores",
       "args": null,
       "concreteType": "ScoreConnection",
       "kind": "LinkedField",
-      "name": "scores",
+      "name": "__Scores_scores_connection",
       "plural": false,
       "selections": [
         {
@@ -104,14 +112,6 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
-                (v1/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "username",
-                  "storageKey": null
-                },
                 {
                   "alias": null,
                   "args": null,
@@ -123,7 +123,7 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "courseId",
+                  "name": "username",
                   "storageKey": null
                 },
                 {
@@ -132,8 +132,47 @@ return {
                   "kind": "ScalarField",
                   "name": "value",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
                 }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             }
           ],
@@ -148,6 +187,6 @@ return {
 };
 })();
 
-(node as any).hash = "bd13ea58e08e7e28dd96db82d7323a9c";
+(node as any).hash = "48b4155ba75e38aa686888b5fb4e1efe";
 
 export default node;
