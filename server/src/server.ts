@@ -2,11 +2,17 @@ import * as express from 'express';
 import * as cors from 'cors';
 import {schema} from './data/schema';
 import {graphqlHTTP} from 'express-graphql';
-import {db} from './models/db';
+const {Pool} = require('pg');
 
 const SERVER_PORT = 3000;
 
-db.connect();
+const pgPool = new Pool({
+  user: 'postgres',
+  host: 'host.docker.internal',
+  database: 'recognize',
+  password: 'newPassword',
+  port: 5432,
+});
 
 express()
   .use(cors())
@@ -15,7 +21,7 @@ express()
     graphqlHTTP({
       schema,
       graphiql: true,
-      context: {pgPool: db},
+      context: {pgPool},
     }),
   )
   .listen(SERVER_PORT, console.log(`Server is listenig to ${SERVER_PORT} port`));

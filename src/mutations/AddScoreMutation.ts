@@ -7,6 +7,9 @@ const mutation = graphql`
       scoreEdge {
         node {
           id
+          _id
+          userId
+          courseId
           username
           value
         }

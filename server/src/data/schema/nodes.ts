@@ -56,6 +56,10 @@ const GraphQLScore = new GraphQLObjectType({
   name: 'Score',
   fields: {
     id: globalIdField('Score', score => score.user_id + ':' + score.course_id),
+    _id: {
+      type: GraphQLString,
+      resolve: score => score.user_id + ':' + score.course_id,
+    },
     username: {
       type: GraphQLString,
       resolve: async (score, {}, {pgPool}) => {

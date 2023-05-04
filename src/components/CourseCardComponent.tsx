@@ -13,7 +13,7 @@ const CourseCardComponent: React.FC<IProps> = ({user, course}) => {
   const commitLikeCourseMutation = useLikeCourseMutation(user.id, course.id);
   const userOwned = course.authorId === user._id;
   const likedByUser = course.likes?.includes(user._id);
-  const likes = course.likes.length === 0 ? '' : course.likes.length;
+  const likes = course?.likes?.length === 0 ? '' : course?.likes?.length;
   const onLikePress = () => commitLikeCourseMutation(likedByUser);
 
   return (

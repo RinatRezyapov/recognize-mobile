@@ -87,7 +87,7 @@ export const updateCourse = (pgPool, id, data) => {
     .then(response => response.rows?.[0]);
 };
 
-export const removeCourse = (pgPool, courseId) => {
+export const removeCourse = (courseId, pgPool) => {
   return pgPool?.query(`DELETE FROM courses WHERE id = '${courseId}'`).then(response => response.rows?.[0]);
 };
 
@@ -111,6 +111,10 @@ export const unlikeCourse = (userId, courseId, pgPool) => {
   return pgPool
     ?.query(`DELETE FROM likes WHERE course_id='${courseId}' AND user_id='${userId}'`)
     .then(response => response.rows?.[0]);
+};
+
+export const deleteCourseLikes = (courseId, pgPool) => {
+  return pgPool?.query(`DELETE FROM likes WHERE course_id='${courseId}'`).then(response => response.rows?.[0]);
 };
 
 export const getCourseLikes = (id, pgPool) => {
@@ -137,6 +141,12 @@ export const addScore = (userId, courseId, score, pgPool) => {
     .then(response => {
       return response.rows;
     });
+};
+
+export const deleteCourseScores = (courseId, pgPool) => {
+  return pgPool?.query(`DELETE FROM scores WHERE course_id='${courseId}'`).then(response => {
+    return response.rows;
+  });
 };
 
 export const updateScore = (userId, courseId, score, pgPool) => {

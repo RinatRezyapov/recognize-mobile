@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c8b187a097619a41231d252a16594ff>>
+ * @generated SignedSource<<e2204e130690beb2b4fcfd09d70f1597>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,9 @@ export type CourseComponent_course$data = {
   readonly scores: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly _id: string | null;
         readonly courseId: string | null;
+        readonly id: string;
         readonly userId: string | null;
         readonly username: string | null;
         readonly value: number | null;
@@ -33,26 +35,29 @@ export type CourseComponent_course$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_course">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "_id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "CourseComponent_course",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "_id",
-      "storageKey": null
-    },
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -98,6 +103,8 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -139,7 +146,8 @@ const node: ReaderFragment = {
   "type": "Course",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "156d7e2265e57b7329df0f1e06e81e08";
+(node as any).hash = "bd13ea58e08e7e28dd96db82d7323a9c";
 
 export default node;
