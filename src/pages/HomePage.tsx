@@ -11,18 +11,18 @@ const Tab = createBottomTabNavigator();
 
 const HomePage: React.FC<IProps> = ({route}) => {
   return (
-    <Tab.Navigator initialRouteName="Profile" screenOptions={{headerShown: false}}>
+    <Tab.Navigator initialRouteName="Profile" screenOptions={{headerShown: false, tabBarStyle: {height: 70}}}>
       <Tab.Screen
         name="Profile"
         initialParams={{userId: route.params?.userId}}
         component={ProfilePage}
-        options={{tabBarIcon: ({focused}) => <Icon name="user" size={30} color={focused ? 'lightblue' : 'grey'} />}}
+        options={{tabBarIcon: ({focused}) => <Icon name="user-o" size={30} color={focused ? 'lightblue' : 'grey'} />}}
       />
       <Tab.Screen
         name="Courses"
         initialParams={{userId: route.params?.userId}}
         component={CoursesComponent}
-        options={{tabBarIcon: ({focused}) => <Icon name="th-list" size={30} color={focused ? 'lightblue' : 'grey'} />}}
+        options={{tabBarIcon: ({focused}) => <Icon name="list" size={30} color={focused ? 'lightblue' : 'grey'} />}}
       />
     </Tab.Navigator>
   );

@@ -15,6 +15,7 @@ const mutation = graphql`
           body
           description
           authorId
+          avatar
           createdAt
           updatedAt
         }

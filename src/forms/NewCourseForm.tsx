@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import React, {FC} from 'react';
 import {Controller, useFieldArray, useForm} from 'react-hook-form';
 import {Button, Image, ScrollView, TextInput, TouchableOpacity} from 'react-native';
-import {Asset, launchImageLibrary} from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {FormMode} from '../types/forms';
 
@@ -20,7 +20,7 @@ interface IProps {
 }
 
 const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
-  const [image, setImage] = React.useState<Asset | null>(null);
+  const [image, setImage] = React.useState<string | null>(null);
 
   const {
     control,
@@ -43,11 +43,16 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
   });
 
   const onChooseImageClick = () => {
-    launchImageLibrary({mediaType: 'photo', includeBase64: true}, response => {
-      const img = response.assets?.[0];
-      if (img?.base64) {
-        setImage(img);
-        setValue('avatar', img.base64);
+    ImagePicker.openPicker({
+      width: 135,
+      height: 135,
+      cropping: true,
+      includeBase64: true,
+      mediaType: 'photo',
+    }).then(image => {
+      if (image?.data) {
+        setImage(image.path);
+        setValue('avatar', image?.data);
       }
     });
   };
@@ -62,7 +67,7 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
         <ImageWithDetailsWrapper>
           <ImageWrapper>
             {image || avatarUri ? (
-              <StyledImage source={{uri: avatarUri || image.uri}} />
+              <StyledImage source={{uri: avatarUri || image}} />
             ) : (
               <TouchableOpacity onPress={onChooseImageClick}>
                 <ImagePlaceholder>
