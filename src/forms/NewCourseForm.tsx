@@ -61,6 +61,18 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
 
   const avatarUri = avatar ? 'data:image/png;base64,' + avatar : null;
 
+  const generateRandomNumber = (n: number) => {
+    const min = Math.pow(10, n - 1);
+    const max = Math.pow(10, n) - 1;
+
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  const onGenerateWords = () => {
+    const arr = new Array(30).fill(0).map(() => ({value: generateRandomNumber(3).toString()}));
+    setValue('words', arr);
+  };
+
   return (
     <ScrollView>
       <Wrapper>
@@ -111,26 +123,28 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
             </FieldWithHelper>
           </DetailsWrapper>
         </ImageWithDetailsWrapper>
+        <Button title="Generate words" onPress={onGenerateWords} />
         {fields.map((field, idx) => (
           <FieldRowContainer key={field.id}>
-            <Controller
-              key={field.id}
-              name={`words.${idx}.value`}
-              rules={{required: {value: true, message: 'Required'}}}
-              control={control}
-              render={({field: {value, onChange, onBlur}}) => (
-                <FieldWithHelper>
-                  <TextInputNeo
-                    placeholder="Word"
-                    value={value}
-                    onChangeText={value => onChange(value)}
-                    onBlur={onBlur}
-                  />
-                  {errors.words?.[idx] && <ErrorText>{errors.words?.[idx]?.value?.message}</ErrorText>}
-                </FieldWithHelper>
-              )}
-            />
-
+            <WordWrapper>
+              <Controller
+                key={field.id}
+                name={`words.${idx}.value`}
+                rules={{required: {value: true, message: 'Required'}}}
+                control={control}
+                render={({field: {value, onChange, onBlur}}) => (
+                  <FieldWithHelper>
+                    <TextInputNeo
+                      placeholder="Word"
+                      value={value}
+                      onChangeText={value => onChange(value)}
+                      onBlur={onBlur}
+                    />
+                    {errors.words?.[idx] && <ErrorText>{errors.words?.[idx]?.value?.message}</ErrorText>}
+                  </FieldWithHelper>
+                )}
+              />
+            </WordWrapper>
             <TouchableOpacity onPress={() => remove(idx)}>
               <Icon name="remove" size={30} />
             </TouchableOpacity>
@@ -147,12 +161,15 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
 
 export default NewCourseForm;
 
+const WordWrapper = styled.View`
+  flex: 1;
+`;
+
 const Wrapper = styled.View`
   display: flex;
   gap: 16px;
   padding: 16px;
   height: 100%;
-  background-color: white;
 `;
 
 const TextInputNeo = styled(TextInput)`
@@ -162,7 +179,7 @@ const TextInputNeo = styled(TextInput)`
   border-width: 0;
   text-align-vertical: ${({multiline}) => (multiline ? 'top' : 'center')};
   padding: 16px;
-  width: 200px;
+  flex: 2;
 `;
 
 const FieldRowContainer = styled.View`
