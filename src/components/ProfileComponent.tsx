@@ -1,11 +1,11 @@
 import styled from '@emotion/native';
 import {Button} from '@react-native-material/core';
 import React from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import CourseCardComponent from './CourseCardComponent';
-import {ProfileComponentQuery as ProfileComponentQueryType} from './__generated__/ProfileComponentQuery.graphql';
+import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {useLazyLoadQuery} from 'react-relay';
 import {UserQuery} from '../queries/User';
+import CourseCardComponent from './CourseCardComponent';
+import {ProfileComponentQuery as ProfileComponentQueryType} from './__generated__/ProfileComponentQuery.graphql';
 
 interface IProps {
   navigation: any;
@@ -88,9 +88,3 @@ const Avatar = styled.Image`
   border-radius: 16px;
   border-width: 4px;
 `;
-
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 50,
-  },
-});

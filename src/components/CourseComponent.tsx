@@ -5,6 +5,7 @@ import {graphql, useFragment} from 'react-relay';
 import {NavigationType} from '../App';
 import {useRemoveCourseMutation} from '../mutations/RemoveCourseMutation';
 import {CourseComponent_course$key} from './__generated__/CourseComponent_course.graphql';
+import styled from '@emotion/native';
 
 interface IProps extends NavigationType<'Course'> {}
 
@@ -71,13 +72,13 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Wrapper>
       <View style={styles.iconContainer}>
         <Icon name="eye" size={120} />
       </View>
-      <Text style={styles.nameText}>{course.title}</Text>
-      <Text style={styles.descriptionText}>{course.description}</Text>
-      <View style={styles.scoreContainer}>
+      <CourseTitle>{course.title}</CourseTitle>
+      <CourseDescription>{course.description}</CourseDescription>
+      <ScoreContainer>
         <View style={styles.scoreItem}>
           <Text style={styles.scoreValue}>{userScore || '-'}</Text>
           <Text style={styles.scoreLabel}>Reaction time</Text>
@@ -86,7 +87,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
           <Text style={styles.scoreValue}>300/2500</Text>
           <Text style={styles.scoreLabel}>Recognized</Text>
         </View>
-      </View>
+      </ScoreContainer>
       <ScrollView>
         {course.scores?.edges?.map((v, idx) => {
           return (
@@ -96,7 +97,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
           );
         })}
       </ScrollView>
-      <View style={styles.buttonsContainer}>
+      <ButtonsContainer>
         <Button title="Start" onPress={onStartCourseClick(course._id)} />
         {isUserOwned && (
           <>
@@ -104,53 +105,56 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
             <Button title="Remove" onPress={onDeleteCourseClick(course.id)} />
           </>
         )}
-      </View>
-    </View>
+      </ButtonsContainer>
+    </Wrapper>
   );
 };
 
 export default CourseComponent;
 
+const Wrapper = styled.View`
+  display: flex;
+  gap: 16;
+  padding: 16;
+  height: 100%;
+  background-color: white;
+`;
+
+const CourseTitle = styled.Text`
+  font-size: 36px;
+  text-align: center;
+`;
+
+const CourseDescription = styled.Text`
+  font-size: 18px;
+  text-align: center;
+`;
+
+const ScoreContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+  padding: 16px;
+`;
+
+const ButtonsContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32p;x
+`;
+
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    gap: 16,
-    padding: 16,
-    height: '100%',
-    backgroundColor: 'white',
-  },
-  nameText: {
-    fontSize: 36,
-    textAlign: 'center',
-  },
-  descriptionText: {
-    fontSize: 18,
-    textAlign: 'center',
-  },
   bodyText: {
     fontSize: 12,
-  },
-  buttonsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 8,
-    marginTop: 32,
   },
   iconContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 72,
-  },
-  scoreContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 32,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    padding: 16,
   },
   scoreItem: {
     flex: 1,
