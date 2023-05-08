@@ -114,10 +114,9 @@ export default CourseComponent;
 
 const Wrapper = styled.View`
   display: flex;
-  gap: 16;
-  padding: 16;
+  gap: 16px;
+  padding: 16px;
   height: 100%;
-  background-color: white;
 `;
 
 const CourseTitle = styled.Text`
@@ -143,7 +142,7 @@ const ButtonsContainer = styled.View`
   flex-direction: row;
   justify-content: center;
   gap: 8px;
-  margin-top: 32p;x
+  margin-top: 32px;
 `;
 
 const styles = StyleSheet.create({

@@ -32,6 +32,5 @@ export default LoginPage;
 
 const Wrapper = styled.View`
   padding: 16px;
-  height: 100%
-  background-color: white;
+  height: 100%;
 `;

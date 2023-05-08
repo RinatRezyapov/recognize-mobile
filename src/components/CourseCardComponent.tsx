@@ -52,8 +52,8 @@ const Wrapper = styled.View`
   margin: 8px;
   padding: 8px;
   border-radius: 16px;
-  background-color: white;
   border: 1px solid lightgrey;
+  background-color: white;
 `;
 
 const Avatar = styled.Image`

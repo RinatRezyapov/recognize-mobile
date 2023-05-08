@@ -38,7 +38,7 @@ export const useAddCourseMutation = (userId?: string) => {
             authorId: userId,
             title: fields.title,
             description: fields.description,
-            body: fields.words.map(v => v.value).join(' '),
+            body: fields.text,
             avatar: fields.avatar,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),

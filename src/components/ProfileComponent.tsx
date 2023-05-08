@@ -59,7 +59,6 @@ export default ProfileComponent;
 
 const Wrapper = styled.View`
   padding: 16px;
-  background-color: white;
   height: 100%;
 `;
 

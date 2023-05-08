@@ -5,12 +5,14 @@ import {Button, Image, ScrollView, TextInput, TouchableOpacity} from 'react-nati
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {FormMode} from '../types/forms';
+import {Switch} from '@react-native-material/core';
 
 export interface IFormFields {
   title: string;
   description: string;
   avatar: string;
   words: {value: string}[];
+  text: string;
 }
 
 interface IProps {
@@ -19,8 +21,14 @@ interface IProps {
   onSubmit: (value: IFormFields) => void;
 }
 
+enum WordsInput {
+  oneInput = 'oneInput',
+  multiInput = 'multiInput',
+}
+
 const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
   const [image, setImage] = React.useState<string | null>(null);
+  const [wordsInput, setWordsInput] = React.useState<WordsInput>(WordsInput.oneInput);
 
   const {
     control,
@@ -34,6 +42,7 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
       description: defaultValues?.description,
       avatar: defaultValues?.avatar,
       words: defaultValues?.words || new Array(5).fill(null).map(() => ({value: ''})),
+      text: defaultValues?.words?.map(v => v.value)?.join(' ') || '',
     },
   });
 
@@ -71,6 +80,19 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
   const onGenerateWords = () => {
     const arr = new Array(30).fill(0).map(() => ({value: generateRandomNumber(3).toString()}));
     setValue('words', arr);
+  };
+
+  const onCustomSubmit = (values: any) => {
+    if (wordsInput === WordsInput.oneInput) {
+      onSubmit(values);
+    } else {
+      onSubmit({
+        ...values,
+        text: getValues()
+          .words.map(v => v.value)
+          .join(' '),
+      });
+    }
   };
 
   return (
@@ -124,36 +146,63 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
           </DetailsWrapper>
         </ImageWithDetailsWrapper>
         <Button title="Generate words" onPress={onGenerateWords} />
-        {fields.map((field, idx) => (
-          <FieldRowContainer key={field.id}>
-            <WordWrapper>
-              <Controller
-                key={field.id}
-                name={`words.${idx}.value`}
-                rules={{required: {value: true, message: 'Required'}}}
-                control={control}
-                render={({field: {value, onChange, onBlur}}) => (
-                  <FieldWithHelper>
-                    <TextInputNeo
-                      placeholder="Word"
-                      value={value}
-                      onChangeText={value => onChange(value)}
-                      onBlur={onBlur}
-                    />
-                    {errors.words?.[idx] && <ErrorText>{errors.words?.[idx]?.value?.message}</ErrorText>}
-                  </FieldWithHelper>
-                )}
-              />
-            </WordWrapper>
-            <TouchableOpacity onPress={() => remove(idx)}>
-              <Icon name="remove" size={30} />
-            </TouchableOpacity>
-          </FieldRowContainer>
-        ))}
+        <Switch
+          value={wordsInput === WordsInput.oneInput}
+          onValueChange={() =>
+            setWordsInput(wordsInput === WordsInput.oneInput ? WordsInput.multiInput : WordsInput.oneInput)
+          }
+        />
+        {wordsInput === WordsInput.oneInput ? (
+          <FieldWithHelper>
+            <Controller
+              name="text"
+              rules={{required: {value: true, message: 'Required'}}}
+              control={control}
+              render={({field: {value, onChange, onBlur}}) => (
+                <TextInputNeo
+                  placeholder="Words"
+                  multiline
+                  numberOfLines={8}
+                  value={value}
+                  onChangeText={value => onChange(value)}
+                  onBlur={onBlur}
+                />
+              )}
+            />
+            {errors.description && <ErrorText>{errors.description.message}</ErrorText>}
+          </FieldWithHelper>
+        ) : (
+          fields.map((field, idx) => (
+            <FieldRowContainer key={field.id}>
+              <WordWrapper>
+                <Controller
+                  key={field.id}
+                  name={`words.${idx}.value`}
+                  rules={{required: {value: true, message: 'Required'}}}
+                  control={control}
+                  render={({field: {value, onChange, onBlur}}) => (
+                    <FieldWithHelper>
+                      <TextInputNeo
+                        placeholder="Word"
+                        value={value}
+                        onChangeText={value => onChange(value)}
+                        onBlur={onBlur}
+                      />
+                      {errors.words?.[idx] && <ErrorText>{errors.words?.[idx]?.value?.message}</ErrorText>}
+                    </FieldWithHelper>
+                  )}
+                />
+              </WordWrapper>
+              <TouchableOpacity onPress={() => remove(idx)}>
+                <Icon name="remove" size={30} />
+              </TouchableOpacity>
+            </FieldRowContainer>
+          ))
+        )}
         <AddTouchableWrapper onPress={() => append({value: ''})}>
           <Icon name="add" size={30} />
         </AddTouchableWrapper>
-        <Button title={mode === FormMode.update ? 'Update' : 'Create'} onPress={handleSubmit(onSubmit)} />
+        <Button title={mode === FormMode.update ? 'Update' : 'Create'} onPress={handleSubmit(onCustomSubmit)} />
       </Wrapper>
     </ScrollView>
   );
@@ -204,6 +253,7 @@ const ImagePlaceholder = styled.View`
   border-width: 1px;
   border-radius: 16px;
   border-color: lightgrey;
+  background-color: white;
 `;
 
 const AddTouchableWrapper = styled.TouchableOpacity`

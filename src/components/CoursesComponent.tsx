@@ -41,6 +41,5 @@ export default CoursesComponent;
 
 const Wrapper = styled.View`
   padding: 32px 16px;
-  background-color: white;
   height: 100%;
 `;
