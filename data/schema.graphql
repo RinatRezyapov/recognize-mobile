@@ -33,6 +33,7 @@ type Score {
   userId: String
   courseId: String
   value: Float
+  sequence: String
 }
 
 """A connection to a list of items."""

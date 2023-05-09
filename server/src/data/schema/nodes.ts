@@ -79,6 +79,10 @@ const GraphQLScore = new GraphQLObjectType({
       type: GraphQLFloat,
       resolve: score => score.score,
     },
+    sequence: {
+      type: GraphQLString,
+      resolve: score => score.sequence,
+    },
   },
 });
 

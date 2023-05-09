@@ -95,7 +95,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       setBackground('#03a9f4');
       const newReactionTime = (Date.now() - timeStart) / 1000;
       setReactionTime(newReactionTime);
-      commitAddScoreMutation(newReactionTime);
+      commitAddScoreMutation(newReactionTime, userInput);
       setPause(false);
 
       resultRef?.current?.measure((width, height, px, py, fx, fy) => {

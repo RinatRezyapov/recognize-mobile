@@ -135,9 +135,11 @@ export const getScore = (userId, courseId, pgPool) => {
   });
 };
 
-export const addScore = (userId, courseId, score, pgPool) => {
+export const addScore = (userId, courseId, score, sequence, pgPool) => {
   return pgPool
-    ?.query(`INSERT into scores (user_id, course_id, score) VALUES ('${userId}', '${courseId}', ${score});`)
+    ?.query(
+      `INSERT into scores (user_id, course_id, score, sequence) VALUES ('${userId}', '${courseId}', ${score}, '${sequence}');`,
+    )
     .then(response => {
       return response.rows;
     });
@@ -149,9 +151,11 @@ export const deleteCourseScores = (courseId, pgPool) => {
   });
 };
 
-export const updateScore = (userId, courseId, score, pgPool) => {
+export const updateScore = (userId, courseId, score, sequence, pgPool) => {
   return pgPool
-    ?.query(`UPDATE scores SET score=${score} where user_id='${userId}' AND course_id='${courseId}';`)
+    ?.query(
+      `UPDATE scores SET score=${score}, sequence='${sequence}' where user_id='${userId}' AND course_id='${courseId}';`,
+    )
     .then(response => {
       return response.rows;
     });

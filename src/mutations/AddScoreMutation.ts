@@ -12,6 +12,7 @@ const mutation = graphql`
           courseId
           username
           value
+          sequence
         }
       }
     }
@@ -22,13 +23,14 @@ export const useAddScoreMutation = (userId?: string, courseId?: string) => {
   const [commit] = useMutation(mutation);
 
   return useCallback(
-    (score: number) => {
+    (score: number, sequence: string) => {
       commit({
         variables: {
           input: {
             userId,
             courseId,
             score,
+            sequence,
           },
         },
         updater: store => {

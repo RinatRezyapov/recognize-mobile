@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4f4c7b191d968f8e3ed5e4b5063582f9>>
+ * @generated SignedSource<<cb9628c9c1c0b9de77042b1621c6ee84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type AddScoreMutation$data = {
         readonly _id: string | null;
         readonly courseId: string | null;
         readonly id: string;
+        readonly sequence: string | null;
         readonly userId: string | null;
         readonly username: string | null;
         readonly value: number | null;
@@ -117,6 +118,13 @@ v1 = [
                 "kind": "ScalarField",
                 "name": "value",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "sequence",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -146,16 +154,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "a6658d26469143c5c0ae759027af5143",
+    "cacheID": "864f3290097d57249d375f57670f10e1",
     "id": null,
     "metadata": {},
     "name": "AddScoreMutation",
     "operationKind": "mutation",
-    "text": "mutation AddScoreMutation(\n  $input: AddScoreInput!\n) {\n  addScore(input: $input) {\n    scoreEdge {\n      node {\n        id\n        _id\n        userId\n        courseId\n        username\n        value\n      }\n    }\n  }\n}\n"
+    "text": "mutation AddScoreMutation(\n  $input: AddScoreInput!\n) {\n  addScore(input: $input) {\n    scoreEdge {\n      node {\n        id\n        _id\n        userId\n        courseId\n        username\n        value\n        sequence\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cfd229928aa89edceb0545fc7ff8c77e";
+(node as any).hash = "abcaadb78bc8e71298dd485b3664535f";
 
 export default node;

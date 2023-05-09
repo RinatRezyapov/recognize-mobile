@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<138f2ccf20010780b2d5375853e07dd2>>
+ * @generated SignedSource<<9a27530f284173a9e64756dddddeaee5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -368,6 +368,13 @@ return {
                                     "name": "value",
                                     "storageKey": null
                                   },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "sequence",
+                                    "storageKey": null
+                                  },
                                   (v13/*: any*/)
                                 ],
                                 "storageKey": null
@@ -416,7 +423,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "542b187bfe705837350e364b2c39bb95",
+    "cacheID": "94b3e40ec724ee47d53de26aced24942",
     "id": null,
     "metadata": {
       "connection": [
@@ -433,7 +440,7 @@ return {
     },
     "name": "UserQuery",
     "operationKind": "query",
-    "text": "query UserQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CoursePlayerComponent_user\n    ...CourseComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          author\n          avatar\n          likes\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        userId\n        username\n        value\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n}\n\nfragment CourseEditComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  avatar\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_user on User {\n  id\n  _id\n  username\n}\n"
+    "text": "query UserQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CoursePlayerComponent_user\n    ...CourseComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          author\n          avatar\n          likes\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        userId\n        username\n        value\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n}\n\nfragment CourseEditComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  avatar\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_user on User {\n  id\n  _id\n  username\n}\n"
   }
 };
 })();

@@ -25,6 +25,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
               userId
               username
               value
+              sequence
             }
           }
         }
@@ -91,9 +92,10 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
       <ScrollView>
         {course.scores?.edges?.map((v, idx) => {
           return (
-            <Text key={idx}>
-              {v?.node?.username}: {v?.node?.value}
-            </Text>
+            <ScoreRow key={idx}>
+              <Text>{`${v?.node?.username}: ${v?.node?.value} ms`}</Text>
+              <Text>{v?.node?.sequence}</Text>
+            </ScoreRow>
           );
         })}
       </ScrollView>
@@ -135,6 +137,8 @@ const ScoreContainer = styled.View`
   align-items: center;
   gap: 32px;
   padding: 16px;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
 `;
 
 const ButtonsContainer = styled.View`
@@ -143,6 +147,12 @@ const ButtonsContainer = styled.View`
   justify-content: center;
   gap: 8px;
   margin-top: 32px;
+`;
+
+const ScoreRow = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const styles = StyleSheet.create({
