@@ -1,5 +1,5 @@
+import {Dialog, DialogContent, DialogHeader, Provider} from '@react-native-material/core';
 import {FC, ReactNode, createContext, useContext, useState} from 'react';
-import {Button, Provider, Dialog, DialogHeader, DialogContent, DialogActions, Text} from '@react-native-material/core';
 
 export const DialogContext = createContext({
   openDialog: (title: string, component: JSX.Element) => {},
@@ -43,10 +43,6 @@ const DialogProvider: FC<IProps> = ({children}) => {
           <Dialog visible={state.open} onDismiss={closeDialog}>
             <DialogHeader title={state.title} />
             <DialogContent>{state.component}</DialogContent>
-            {/* <DialogActions>
-              <Button title="Cancel" compact variant="text" onPress={closeDialog} />
-              <Button title="Ok" compact variant="text" onPress={closeDialog} />
-            </DialogActions> */}
           </Dialog>
         )}
       </Provider>
