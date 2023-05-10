@@ -1,11 +1,13 @@
 import styled from '@emotion/native';
 import React, {FC} from 'react';
 import {Controller, useFieldArray, useForm} from 'react-hook-form';
-import {Button, Image, ScrollView, TextInput, TouchableOpacity} from 'react-native';
+import {Button, Image, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {FormMode} from '../types/forms';
-import {Switch} from '@react-native-material/core';
+import {ListItem, Switch} from '@react-native-material/core';
+import {useDialog} from '../utils/context/DialogProvider';
+import WordsGeneratorComponent from '../components/WordsGeneratorComponent';
 
 export interface IFormFields {
   title: string;
@@ -29,6 +31,7 @@ enum WordsInput {
 const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
   const [image, setImage] = React.useState<string | null>(null);
   const [wordsInput, setWordsInput] = React.useState<WordsInput>(WordsInput.oneInput);
+  const {openDialog, closeDialog} = useDialog();
 
   const {
     control,
@@ -70,16 +73,16 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
 
   const avatarUri = avatar ? 'data:image/png;base64,' + avatar : null;
 
-  const generateRandomNumber = (n: number) => {
-    const min = Math.pow(10, n - 1);
-    const max = Math.pow(10, n) - 1;
-
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  const onWordsGeneratorSubmit = (words: string[]) => {
+    setValue(
+      'words',
+      words.map(word => ({value: word})),
+    );
+    setValue('text', words.join(' '));
   };
 
   const onGenerateWords = () => {
-    const arr = new Array(30).fill(0).map(() => ({value: generateRandomNumber(3).toString()}));
-    setValue('words', arr);
+    openDialog('Generate words', <WordsGeneratorComponent onSubmit={onWordsGeneratorSubmit} onClose={closeDialog} />);
   };
 
   const onCustomSubmit = (values: any) => {
@@ -145,13 +148,18 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
             </FieldWithHelper>
           </DetailsWrapper>
         </ImageWithDetailsWrapper>
-        <Button title="Generate words" onPress={onGenerateWords} />
-        <Switch
-          value={wordsInput === WordsInput.oneInput}
-          onValueChange={() =>
-            setWordsInput(wordsInput === WordsInput.oneInput ? WordsInput.multiInput : WordsInput.oneInput)
-          }
-        />
+        <Settings>
+          <Button title="Generate words" onPress={onGenerateWords} />
+          <SwitchWithLabel>
+            <Text>Change input type</Text>
+            <Switch
+              value={wordsInput === WordsInput.oneInput}
+              onValueChange={() =>
+                setWordsInput(wordsInput === WordsInput.oneInput ? WordsInput.multiInput : WordsInput.oneInput)
+              }
+            />
+          </SwitchWithLabel>
+        </Settings>
         {wordsInput === WordsInput.oneInput ? (
           <FieldWithHelper>
             <Controller
@@ -289,4 +297,17 @@ const ErrorText = styled.Text`
   color: red;
   font-size: 10px;
   margin: 8px 0 0 16px;
+`;
+
+const Settings = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const SwitchWithLabel = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
