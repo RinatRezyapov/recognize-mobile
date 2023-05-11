@@ -1,6 +1,7 @@
 type Query {
   user(id: String): User
   courses: Courses
+  scores: Scores
 
   """Fetches an object given its ID"""
   node(
@@ -112,6 +113,15 @@ type Courses {
   data(after: String, first: Int, before: String, last: Int): CourseConnection
 }
 
+type Scores {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  data(after: String, first: Int, before: String, last: Int): ScoreConnection
+}
+
 type Mutation {
   addCourse(input: AddCourseInput!): AddCoursePayload
   updateCourse(input: UpdateCourseInput!): UpdateCoursePayload
@@ -182,5 +192,6 @@ input AddScoreInput {
   userId: ID!
   courseId: ID!
   score: Float!
+  sequence: String!
   clientMutationId: String
 }

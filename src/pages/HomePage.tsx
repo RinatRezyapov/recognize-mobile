@@ -4,6 +4,7 @@ import {NavigationType} from '../App';
 import CoursesComponent from '../components/CoursesComponent';
 import ProfilePage from './ProfilePage';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ScoresComponent from '../components/ScoresComponent';
 
 interface IProps extends NavigationType<'Home'> {}
 
@@ -22,6 +23,12 @@ const HomePage: React.FC<IProps> = ({route}) => {
         name="Courses"
         initialParams={{userId: route.params?.userId}}
         component={CoursesComponent}
+        options={{tabBarIcon: ({focused}) => <Icon name="list" size={30} color={focused ? 'lightblue' : 'grey'} />}}
+      />
+      <Tab.Screen
+        name="Scores"
+        initialParams={{userId: route.params?.userId}}
+        component={ScoresComponent}
         options={{tabBarIcon: ({focused}) => <Icon name="list" size={30} color={focused ? 'lightblue' : 'grey'} />}}
       />
     </Tab.Navigator>

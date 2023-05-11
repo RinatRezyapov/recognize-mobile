@@ -160,4 +160,10 @@ export const updateScore = (userId, courseId, score, sequence, pgPool) => {
       return response.rows;
     });
 };
+
+export const getAllScores = pgPool => {
+  return pgPool?.query(`SELECT * FROM scores ORDER BY score asc;`).then(response => {
+    return response.rows;
+  });
+};
 //UPDATE courses SET title='${data.title}', description='${data.description}', body='${data.body}' WHERE id='${id}' RETURNING *;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cb9628c9c1c0b9de77042b1621c6ee84>>
+ * @generated SignedSource<<50d490a87c3d1ffd35989d8445de449d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type AddScoreInput = {
   clientMutationId?: string | null;
   courseId: string;
   score: number;
+  sequence: string;
   userId: string;
 };
 export type AddScoreMutation$variables = {

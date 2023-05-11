@@ -3,6 +3,7 @@ import {
   Score,
   User,
   getAllCourses,
+  getAllScores,
   getCourse,
   getCourseLikes,
   getCourseScores,
@@ -224,4 +225,23 @@ const GraphQLCourses = new GraphQLObjectType({
   },
 });
 
-export {GraphQLUser, GraphQLCourse, GraphQLCourses, GraphQLCourseEdge, GraphQLScoreEdge, nodeField};
+const GraphQLScores = new GraphQLObjectType({
+  name: 'Scores',
+  fields: {
+    node: nodeField,
+    data: {
+      type: ScoresConnection,
+      args: coursesArgs,
+      resolve: async (parent, {after, before, first, last}, {pgPool}) => {
+        try {
+          const scores = await getAllScores(pgPool);
+          return connectionFromArray(scores, {after, before, first, last});
+        } catch (err) {
+          console.error(err);
+        }
+      },
+    },
+  },
+});
+
+export {GraphQLUser, GraphQLCourse, GraphQLCourses, GraphQLCourseEdge, GraphQLScoreEdge, GraphQLScores, nodeField};

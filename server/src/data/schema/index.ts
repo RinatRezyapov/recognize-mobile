@@ -7,12 +7,14 @@ import {nodeField} from './nodes';
 import {CoursesQuery} from './queries/CoursesQuery';
 import {UserQuery} from './queries/UserQuery';
 import {AddScoreMutation} from './mutations/AddScoreMutation';
+import {ScoresQuery} from './queries/ScoresQuery';
 
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: {
     user: UserQuery,
     courses: CoursesQuery,
+    scores: ScoresQuery,
     node: nodeField,
   },
 });
