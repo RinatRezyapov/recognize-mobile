@@ -30,11 +30,12 @@ type Score {
   """The ID of an object"""
   id: ID!
   _id: String
-  username: String
   userId: String
+  username: String
   courseId: String
   value: Float
   sequence: String
+  course: String
 }
 
 """A connection to a list of items."""

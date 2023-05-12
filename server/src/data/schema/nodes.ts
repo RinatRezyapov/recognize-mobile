@@ -61,16 +61,16 @@ const GraphQLScore = new GraphQLObjectType({
       type: GraphQLString,
       resolve: score => score.user_id + ':' + score.course_id,
     },
+    userId: {
+      type: GraphQLString,
+      resolve: async score => score.user_id,
+    },
     username: {
       type: GraphQLString,
       resolve: async (score, {}, {pgPool}) => {
         const user = await getUser(score.user_id, pgPool);
         return user.username;
       },
-    },
-    userId: {
-      type: GraphQLString,
-      resolve: async score => score.user_id,
     },
     courseId: {
       type: GraphQLString,
@@ -84,6 +84,13 @@ const GraphQLScore = new GraphQLObjectType({
       type: GraphQLString,
       resolve: score => score.sequence,
     },
+    course: {
+      type: GraphQLString,
+      resolve: async (score, {}, {pgPool}) => {
+        const course = await getCourse(score.course_id, pgPool);
+        return course.title;
+      },
+    },
   },
 });
 
@@ -92,7 +99,7 @@ const {connectionType: ScoresConnection, edgeType: GraphQLScoreEdge} = connectio
   nodeType: GraphQLScore,
 });
 
-const GraphQLCourse = new GraphQLObjectType({
+var GraphQLCourse = new GraphQLObjectType({
   name: 'Course',
   fields: {
     id: globalIdField('Course'),

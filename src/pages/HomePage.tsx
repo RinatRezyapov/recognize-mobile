@@ -29,7 +29,9 @@ const HomePage: React.FC<IProps> = ({route}) => {
         name="Scores"
         initialParams={{userId: route.params?.userId}}
         component={ScoresComponent}
-        options={{tabBarIcon: ({focused}) => <Icon name="list" size={30} color={focused ? 'lightblue' : 'grey'} />}}
+        options={{
+          tabBarIcon: ({focused}) => <Icon name="star-half-empty" size={30} color={focused ? 'lightblue' : 'grey'} />,
+        }}
       />
     </Tab.Navigator>
   );

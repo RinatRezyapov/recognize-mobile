@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<467634f891ae614cdd2b87b636e90689>>
+ * @generated SignedSource<<13407daf534580c89a32e02fdc6b0ccb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type ScoresQuery$data = {
     readonly data: {
       readonly edges: ReadonlyArray<{
         readonly node: {
+          readonly course: string | null;
           readonly username: string | null;
           readonly value: number | null;
         } | null;
@@ -40,6 +41,13 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "value",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "course",
   "storageKey": null
 };
 return {
@@ -82,7 +90,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v0/*: any*/),
-                      (v1/*: any*/)
+                      (v1/*: any*/),
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -139,6 +148,7 @@ return {
                     "selections": [
                       (v0/*: any*/),
                       (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -161,16 +171,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9148be853b73598ef13098c560639f7a",
+    "cacheID": "9780c83ea02356bcd5e17401586f2033",
     "id": null,
     "metadata": {},
     "name": "ScoresQuery",
     "operationKind": "query",
-    "text": "query ScoresQuery {\n  scores {\n    data {\n      edges {\n        node {\n          username\n          value\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ScoresQuery {\n  scores {\n    data {\n      edges {\n        node {\n          username\n          value\n          course\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7b6a71c71a607becf82bce680a4cec08";
+(node as any).hash = "c0e60be2fc79aeca13dfe28154cd1ce2";
 
 export default node;

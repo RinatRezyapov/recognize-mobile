@@ -8,6 +8,7 @@ export const ScoresQuery = graphql`
           node {
             username
             value
+            course
           }
         }
       }
