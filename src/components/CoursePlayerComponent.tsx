@@ -6,6 +6,8 @@ import {CanvasContext} from '../utils/context/CanvasProvider';
 import {NavigationType} from '../App';
 import {useAddScoreMutation} from '../mutations/AddScoreMutation';
 import Icon from 'react-native-vector-icons/Entypo';
+import MenuDrawer from 'react-native-side-drawer';
+import {TextInput} from '@react-native-material/core';
 
 function selectRandomWords(arr: string[], num: number) {
   if (arr.length <= num) {
@@ -62,6 +64,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   const [phraseVisibility, setPhraseVisibility] = useState(true);
   const [timeStart, setTimeStart] = useState<number>();
   const [reactionTime, setReactionTime] = useState<number>();
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -115,6 +118,14 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
     }
   };
 
+  const drawerContent = () => {
+    return (
+      <TouchableOpacity onPress={() => setDrawerOpen(true)}>
+        <Text>Close</Text>
+      </TouchableOpacity>
+    );
+  };
+
   if (!course) return <ActivityIndicator size="large" />;
 
   return (
@@ -136,6 +147,18 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
           </TouchableOpacity>
         ))}
       </View>
+      <MenuDrawer
+        open={drawerOpen}
+        position={'left'}
+        drawerContent={drawerContent()}
+        drawerPercentage={45}
+        animationTime={250}
+        overlay={true}
+        opacity={0.4}>
+        <TouchableOpacity onPress={() => setDrawerOpen(true)}>
+          <TextInput label="Count" value={wordsCount} onChangeText={v => setWordsCount(v)} />
+        </TouchableOpacity>
+      </MenuDrawer>
     </Container>
   );
 };
