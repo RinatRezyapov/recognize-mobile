@@ -7,7 +7,7 @@ import {NavigationType} from '../App';
 import {useAddScoreMutation} from '../mutations/AddScoreMutation';
 import Icon from 'react-native-vector-icons/Entypo';
 import MenuDrawer from 'react-native-side-drawer';
-import {TextInput} from '@react-native-material/core';
+import {Button, TextInput} from '@react-native-material/core';
 
 function selectRandomWords(arr: string[], num: number) {
   if (arr.length <= num) {
@@ -58,7 +58,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   const [answer, setAnswer] = useState<string[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [intervalMs, setIntervalMs] = useState(1000);
-  const [wordsCount, setWordsCount] = useState(2);
+  const [wordsCount, setWordsCount] = useState('2');
   const [answersCount, setAnswersCount] = useState(7);
   const [background, setBackground] = useState<string>('#4615b2');
   const [phraseVisibility, setPhraseVisibility] = useState(true);
@@ -80,7 +80,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       setAnswer([]);
       setBackground('#4615b2');
 
-      const words = selectRandomWords(data, wordsCount);
+      const words = selectRandomWords(data, parseInt(wordsCount));
       const answers = selectRandomWords(data, answersCount);
       setAnswers([...words, ...answers].sort(() => Math.random() - 0.5));
       setCurrentPhrase(words);
@@ -113,16 +113,17 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   const onAnswerSelect = (ans: string) => () => {
     const newAnswer = [...answer, ans];
     setAnswer(newAnswer);
-    if (newAnswer.length === wordsCount) {
+    if (newAnswer.length === parseInt(wordsCount)) {
       setTimeout(() => onUserInputSubmit(newAnswer.join(' ')), 1000);
     }
   };
 
   const drawerContent = () => {
     return (
-      <TouchableOpacity onPress={() => setDrawerOpen(true)}>
-        <Text>Close</Text>
-      </TouchableOpacity>
+      <DrawerWrapper>
+        <TextInput keyboardType="numeric" label="Count" value={wordsCount} onChangeText={setWordsCount} />
+        <Button title="Close" onPress={() => setDrawerOpen(false)} />
+      </DrawerWrapper>
     );
   };
 
@@ -147,18 +148,18 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
           </TouchableOpacity>
         ))}
       </View>
+      <DrawerButtonWrapper onPress={() => setDrawerOpen(true)}>
+        <Icon name="chevron-up" size={40} color="white" />
+      </DrawerButtonWrapper>
       <MenuDrawer
         open={drawerOpen}
-        position={'left'}
+        position="right"
         drawerContent={drawerContent()}
-        drawerPercentage={45}
+        drawerPercentage={77}
         animationTime={250}
         overlay={true}
-        opacity={0.4}>
-        <TouchableOpacity onPress={() => setDrawerOpen(true)}>
-          <TextInput label="Count" value={wordsCount} onChangeText={v => setWordsCount(v)} />
-        </TouchableOpacity>
-      </MenuDrawer>
+        opacity={0.4}
+      />
     </Container>
   );
 };
@@ -179,6 +180,17 @@ const StopWatchResult = styled.View`
   padding: 8px;
   align-items: center;
   width: 100px;
+`;
+
+const DrawerWrapper = styled.View`
+  height: 100%;
+  padding: 16px;
+  background-color: white;
+`;
+
+const DrawerButtonWrapper = styled.TouchableOpacity`
+  display: flex;
+  align-items: center;
 `;
 
 const styles = StyleSheet.create({
