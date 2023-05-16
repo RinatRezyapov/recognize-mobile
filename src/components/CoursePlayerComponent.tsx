@@ -57,7 +57,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   const [currentPhrase, setCurrentPhrase] = useState<string[]>([]);
   const [answer, setAnswer] = useState<string[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
-  const [intervalMs, setIntervalMs] = useState(1000);
+  const [intervalMs, setIntervalMs] = useState('1000');
   const [wordsCount, setWordsCount] = useState('2');
   const [answersCount, setAnswersCount] = useState(7);
   const [background, setBackground] = useState<string>('#4615b2');
@@ -122,6 +122,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
     return (
       <DrawerWrapper>
         <TextInput keyboardType="numeric" label="Count" value={wordsCount} onChangeText={setWordsCount} />
+        <TextInput keyboardType="numeric" label="Interval" value={intervalMs} onChangeText={setIntervalMs} />
         <Button title="Close" onPress={() => setDrawerOpen(false)} />
       </DrawerWrapper>
     );
