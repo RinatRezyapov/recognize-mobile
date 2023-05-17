@@ -28,7 +28,7 @@ const CanvasProvider: FC<IProps> = ({children}) => {
 
   function initParticles(x: number, y: number) {
     for (var i = 0; i < 20; i++) {
-      setTimeout(() => createParticle(i, x, y), i);
+      createParticle(i, x, y);
     }
   }
 

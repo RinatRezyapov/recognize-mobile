@@ -66,6 +66,17 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   const [reactionTime, setReactionTime] = useState<number>();
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
+  const [showCounter, setShowCounter] = useState(true);
+  const [counterValue, setCounterValue] = useState(3);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCounterValue(v => v - 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [showCounter]);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (!course) return;
@@ -84,11 +95,12 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       const answers = selectRandomWords(data, answersCount);
       setAnswers([...words, ...answers].sort(() => Math.random() - 0.5));
       setCurrentPhrase(words);
+      setShowCounter(false);
       setPhraseVisibility(true);
-      setTimeout(() => setPhraseVisibility(false), intervalMs);
+      setTimeout(() => setPhraseVisibility(false), parseInt(intervalMs));
       setPause(true);
       setTimeStart(Date.now());
-    }, 1000);
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, [pause, course]);
@@ -100,19 +112,22 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       setReactionTime(newReactionTime);
       commitAddScoreMutation(newReactionTime, userInput);
       setPause(false);
-
+      setShowCounter(true);
+      setCounterValue(3);
       resultRef?.current?.measure((width, height, px, py, fx, fy) => {
         animateSparks(fx, fy);
       });
     } else {
       setBackground('#ff4569');
       setPause(false);
+      setShowCounter(true);
+      setCounterValue(3);
     }
   };
 
   const onAnswerSelect = (ans: string) => () => {
     const newAnswer = [...answer, ans];
-    setAnswer(newAnswer);
+    setAnswer(prevAnswer => [...prevAnswer, ans]);
     if (newAnswer.length === parseInt(wordsCount)) {
       setTimeout(() => onUserInputSubmit(newAnswer.join(' ')), 1000);
     }
@@ -133,19 +148,24 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   return (
     <Container backgroundColor={background}>
       <StopWatchResult>
-        <Icon name="stopwatch" size={70} color="white" />
+        <Icon name="stopwatch" size={40} color="white" />
         <Text ref={resultRef} style={styles.reactionTime}>
           {reactionTime ? reactionTime : '-'}
         </Text>
         {renderCanvas()}
       </StopWatchResult>
       <View style={styles.viewer}>
+        {showCounter && <Text>{counterValue}</Text>}
         <Text style={styles.phrase}>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</Text>
       </View>
       <View style={styles.answersContainer}>
-        {answers.map((answer, idx) => (
-          <TouchableOpacity key={idx} style={styles.answerButton} onPress={onAnswerSelect(answer)}>
-            <Text style={styles.answerButtonText}>{answer}</Text>
+        {answers.map((answerArg, idx) => (
+          <TouchableOpacity
+            key={idx}
+            disabled={answer.length === parseInt(wordsCount)}
+            style={styles.answerButton}
+            onPress={onAnswerSelect(answerArg)}>
+            <Text style={styles.answerButtonText}>{answerArg}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -178,9 +198,9 @@ const Container = styled.View<{backgroundColor: string}>`
 const StopWatchResult = styled.View`
   display: flex;
   position: absolute;
-  padding: 8px;
+  padding-top: 8px;
   align-items: center;
-  width: 100px;
+  width: 60px;
 `;
 
 const DrawerWrapper = styled.View`
