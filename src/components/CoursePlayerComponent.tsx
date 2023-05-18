@@ -8,20 +8,7 @@ import {useAddScoreMutation} from '../mutations/AddScoreMutation';
 import Icon from 'react-native-vector-icons/Entypo';
 import MenuDrawer from 'react-native-side-drawer';
 import {Button, TextInput} from '@react-native-material/core';
-
-function selectRandomWords(arr: string[], num: number) {
-  if (arr.length <= num) {
-    return arr;
-  }
-
-  const selected = new Set();
-  while (selected.size < num) {
-    const index = Math.floor(Math.random() * arr.length);
-    selected.add(arr[index]);
-  }
-
-  return Array.from(selected);
-}
+import {getWordsFromString, selectRandomWords} from '../utils/wordsPlayer';
 
 interface IProps extends NavigationType<'Course'> {}
 
@@ -62,7 +49,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   const [answersCount, setAnswersCount] = useState(7);
   const [background, setBackground] = useState<string>('#4615b2');
   const [phraseVisibility, setPhraseVisibility] = useState(true);
-  const [timeStart, setTimeStart] = useState<number>();
+  const [timeStart, setTimeStart] = useState<number>(0);
   const [reactionTime, setReactionTime] = useState<number>();
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
@@ -82,11 +69,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       if (!course) return;
       if (pause) return;
 
-      const data = course.body
-        .replace(/[^\w\s]|_/g, '')
-        .replace(/\s+/g, ' ')
-        .toLowerCase()
-        .split(' ');
+      const data = getWordsFromString(course.body);
 
       setAnswer([]);
       setBackground('#4615b2');
