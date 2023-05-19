@@ -1,13 +1,13 @@
 import styled from '@emotion/native';
+import {Button, TextInput} from '@react-native-material/core';
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, Text} from 'react-native';
+import MenuDrawer from 'react-native-side-drawer';
+import Icon from 'react-native-vector-icons/Entypo';
 import {graphql, useFragment} from 'react-relay';
-import {CanvasContext} from '../utils/context/CanvasProvider';
 import {NavigationType} from '../App';
 import {useAddScoreMutation} from '../mutations/AddScoreMutation';
-import Icon from 'react-native-vector-icons/Entypo';
-import MenuDrawer from 'react-native-side-drawer';
-import {Button, TextInput} from '@react-native-material/core';
+import {CanvasContext} from '../utils/context/CanvasProvider';
 import {getWordsFromString, selectRandomWords} from '../utils/wordsPlayer';
 
 interface IProps extends NavigationType<'Course'> {}
@@ -132,26 +132,20 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
     <Container backgroundColor={background}>
       <StopWatchResult>
         <Icon name="stopwatch" size={40} color="white" />
-        <Text ref={resultRef} style={styles.reactionTime}>
-          {reactionTime ? reactionTime : '-'}
-        </Text>
+        <ReactionTime ref={resultRef}>{reactionTime ? reactionTime : '-'}</ReactionTime>
         {renderCanvas()}
       </StopWatchResult>
-      <View style={styles.viewer}>
+      <WordsDisplay>
         {showCounter && <Text>{counterValue}</Text>}
-        <Text style={styles.phrase}>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</Text>
-      </View>
-      <View style={styles.answersContainer}>
+        <WordsDisplayPhrase>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</WordsDisplayPhrase>
+      </WordsDisplay>
+      <Answers>
         {answers.map((answerArg, idx) => (
-          <TouchableOpacity
-            key={idx}
-            disabled={answer.length === parseInt(wordsCount)}
-            style={styles.answerButton}
-            onPress={onAnswerSelect(answerArg)}>
-            <Text style={styles.answerButtonText}>{answerArg}</Text>
-          </TouchableOpacity>
+          <Answer key={idx} disabled={answer.length === parseInt(wordsCount)} onPress={onAnswerSelect(answerArg)}>
+            <AnswerText>{answerArg}</AnswerText>
+          </Answer>
         ))}
-      </View>
+      </Answers>
       <DrawerButtonWrapper onPress={() => setDrawerOpen(true)}>
         <Icon name="chevron-up" size={40} color="white" />
       </DrawerButtonWrapper>
@@ -197,61 +191,47 @@ const DrawerButtonWrapper = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const styles = StyleSheet.create({
-  viewer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 300,
-  },
-  phrase: {
-    color: 'white',
-    fontSize: 36,
-  },
-  buttonsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 8,
-  },
-  input: {
-    borderColor: 'grey',
-    borderWidth: 1,
-    borderRadius: 4,
-    backgroundColor: 'white',
-  },
-  answersContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 300,
-    gap: 9,
-  },
-  answerButton: {
-    display: 'flex',
-    borderWidth: 1,
-    padding: 8,
-    minWidth: 70,
-    borderRadius: 4,
-    borderColor: 'white',
-    backgroundColor: 'transparent',
-  },
-  answerButtonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 24,
-    fontWeight: '700',
-  },
-  selectedAnswers: {
-    color: 'white',
-    fontSize: 36,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  reactionTime: {
-    color: 'white',
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-});
+const WordsDisplay = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+`;
+
+const WordsDisplayPhrase = styled.Text`
+  color: white;
+  font-size: 36px;
+`;
+
+const Answers = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  gap: 9px;
+`;
+
+const Answer = styled.TouchableOpacity`
+  display: flex;
+  border-width: 1px;
+  padding: 8px
+  min-width: 70px;
+  border-radius: 4px;
+  border-color: white;
+  background-color: transparent;
+`;
+
+const AnswerText = styled.Text`
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+`;
+
+const ReactionTime = styled.Text`
+  color: white;
+  text-align: center;
+  font-weight: 700;
+`;
