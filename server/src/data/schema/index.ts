@@ -8,6 +8,7 @@ import {CoursesQuery} from './queries/CoursesQuery';
 import {UserQuery} from './queries/UserQuery';
 import {AddScoreMutation} from './mutations/AddScoreMutation';
 import {ScoresQuery} from './queries/ScoresQuery';
+import {AddStreakMutation} from './mutations/AddStreakMutation';
 
 const Query = new GraphQLObjectType({
   name: 'Query',
@@ -27,6 +28,7 @@ const Mutation = new GraphQLObjectType({
     removeCourse: RemoveCourseMutation,
     likeCourse: LikeCourseMutation,
     addScore: AddScoreMutation,
+    addStreak: AddStreakMutation,
   },
 });
 

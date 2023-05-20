@@ -166,4 +166,25 @@ export const getAllScores = pgPool => {
     return response.rows;
   });
 };
-//UPDATE courses SET title='${data.title}', description='${data.description}', body='${data.body}' WHERE id='${id}' RETURNING *;
+
+export const addStreak = (userId, courseId, streak, pgPool) => {
+  return pgPool
+    ?.query(`INSERT into streaks (user_id, course_id, streak) VALUES ('${userId}', '${courseId}', ${streak});`)
+    .then(response => {
+      return response.rows;
+    });
+};
+
+export const deleteCourseStreak = (courseId, pgPool) => {
+  return pgPool?.query(`DELETE FROM streaks WHERE course_id='${courseId}'`).then(response => {
+    return response.rows;
+  });
+};
+
+export const updateStreak = (userId, courseId, streak, pgPool) => {
+  return pgPool
+    ?.query(`UPDATE streaks SET streak=${streak} where user_id='${userId}' AND course_id='${courseId}';`)
+    .then(response => {
+      return response.rows;
+    });
+};
