@@ -9,6 +9,7 @@ import {NavigationType} from '../App';
 import {useAddScoreMutation} from '../mutations/AddScoreMutation';
 import {CanvasContext} from '../utils/context/CanvasProvider';
 import {getWordsFromString, selectRandomWords} from '../utils/wordsPlayer';
+import {useAddStreakMutation} from '../mutations/AddStreakMutation';
 
 interface IProps extends NavigationType<'Course'> {}
 
@@ -37,6 +38,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
   );
 
   const commitAddScoreMutation = useAddScoreMutation(user.id, course.id);
+  const commitAddStreakMutation = useAddStreakMutation(user.id, course.id);
 
   const resultRef = useRef<Text>(null);
   const {animateSparks, renderCanvas} = useContext(CanvasContext);
@@ -55,6 +57,8 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
 
   const [showCounter, setShowCounter] = useState(true);
   const [counterValue, setCounterValue] = useState(3);
+
+  const [streak, setStreak] = useState(0);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -97,6 +101,12 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       setPause(false);
       setShowCounter(true);
       setCounterValue(3);
+      setStreak(prevStreak => {
+        const newStreak = prevStreak + 1;
+        commitAddStreakMutation(newStreak);
+
+        return newStreak;
+      });
       resultRef?.current?.measure((width, height, px, py, fx, fy) => {
         animateSparks(fx, fy);
       });
@@ -105,6 +115,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       setPause(false);
       setShowCounter(true);
       setCounterValue(3);
+      setStreak(0);
     }
   };
 
@@ -133,6 +144,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       <StopWatchResult>
         <Icon name="stopwatch" size={40} color="white" />
         <ReactionTime ref={resultRef}>{reactionTime ? reactionTime : '-'}</ReactionTime>
+        <ReactionTime>{streak}</ReactionTime>
         {renderCanvas()}
       </StopWatchResult>
       <WordsDisplay>
