@@ -1,6 +1,6 @@
 import {GraphQLID, GraphQLInt, GraphQLNonNull} from 'graphql';
 import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
-import {addStreak, getCourseScores, getScore, updateStreak} from '../../database';
+import {addStreak, getCourseScores, getCourseStreaks, getScore, getStreak, updateStreak} from '../../database';
 import {GraphQLScoreEdge} from '../nodes';
 
 const AddStreakMutation = mutationWithClientMutationId({
@@ -11,15 +11,15 @@ const AddStreakMutation = mutationWithClientMutationId({
     streak: {type: new GraphQLNonNull(GraphQLInt)},
   },
   outputFields: {
-    scoreEdge: {
+    streakEdge: {
       type: new GraphQLNonNull(GraphQLScoreEdge),
       resolve: async ({userId, courseId}, {}, {pgPool}) => {
-        const score = await getScore(userId, courseId, pgPool);
-        const scores = await getCourseScores(courseId, pgPool);
+        const streak = await getStreak(userId, courseId, pgPool);
+        const streaks = await getCourseStreaks(courseId, pgPool);
 
         return {
-          cursor: cursorForObjectInConnection([...scores], score),
-          node: score,
+          cursor: cursorForObjectInConnection([...streaks], streak),
+          node: streak,
         };
       },
     },
@@ -28,7 +28,7 @@ const AddStreakMutation = mutationWithClientMutationId({
     const localUserId = fromGlobalId(userId).id;
     const localCourseId = fromGlobalId(courseId).id;
 
-    const oldScoreData = await getScore(localUserId, localCourseId, pgPool);
+    const oldScoreData = await getStreak(localUserId, localCourseId, pgPool);
 
     if (!oldScoreData) {
       await addStreak(localUserId, localCourseId, streak, pgPool);

@@ -9,6 +9,7 @@ import {UserQuery} from './queries/UserQuery';
 import {AddScoreMutation} from './mutations/AddScoreMutation';
 import {ScoresQuery} from './queries/ScoresQuery';
 import {AddStreakMutation} from './mutations/AddStreakMutation';
+import {StreaksQuery} from './queries/StreaksQuery';
 
 const Query = new GraphQLObjectType({
   name: 'Query',
@@ -16,6 +17,7 @@ const Query = new GraphQLObjectType({
     user: UserQuery,
     courses: CoursesQuery,
     scores: ScoresQuery,
+    streaks: StreaksQuery,
     node: nodeField,
   },
 });

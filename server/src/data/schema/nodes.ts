@@ -4,6 +4,7 @@ import {
   User,
   getAllCourses,
   getAllScores,
+  getAllStreaks,
   getCourse,
   getCourseLikes,
   getCourseScores,
@@ -94,9 +95,51 @@ const GraphQLScore = new GraphQLObjectType({
   },
 });
 
+const GraphQLStreak = new GraphQLObjectType({
+  name: 'Streak',
+  fields: {
+    id: globalIdField('Streak', streak => streak.user_id + ':' + streak.course_id),
+    _id: {
+      type: GraphQLString,
+      resolve: streak => streak.user_id + ':' + streak.course_id,
+    },
+    userId: {
+      type: GraphQLString,
+      resolve: async streak => streak.user_id,
+    },
+    username: {
+      type: GraphQLString,
+      resolve: async (streak, {}, {pgPool}) => {
+        const user = await getUser(streak.user_id, pgPool);
+        return user.username;
+      },
+    },
+    courseId: {
+      type: GraphQLString,
+      resolve: async streak => streak.course_id,
+    },
+    value: {
+      type: GraphQLFloat,
+      resolve: streak => streak.streak,
+    },
+    course: {
+      type: GraphQLString,
+      resolve: async (streak, {}, {pgPool}) => {
+        const course = await getCourse(streak.course_id, pgPool);
+        return course.title;
+      },
+    },
+  },
+});
+
 const {connectionType: ScoresConnection, edgeType: GraphQLScoreEdge} = connectionDefinitions({
   name: 'Score',
   nodeType: GraphQLScore,
+});
+
+const {connectionType: StreaksConnection, edgeType: GraphQLStreakEdge} = connectionDefinitions({
+  name: 'Streak',
+  nodeType: GraphQLStreak,
 });
 
 var GraphQLCourse = new GraphQLObjectType({
@@ -251,4 +294,33 @@ const GraphQLScores = new GraphQLObjectType({
   },
 });
 
-export {GraphQLUser, GraphQLCourse, GraphQLCourses, GraphQLCourseEdge, GraphQLScoreEdge, GraphQLScores, nodeField};
+const GraphQLStreaks = new GraphQLObjectType({
+  name: 'Streaks',
+  fields: {
+    node: nodeField,
+    data: {
+      type: StreaksConnection,
+      args: coursesArgs,
+      resolve: async (parent, {after, before, first, last}, {pgPool}) => {
+        try {
+          const streaks = await getAllStreaks(pgPool);
+          return connectionFromArray(streaks, {after, before, first, last});
+        } catch (err) {
+          console.error(err);
+        }
+      },
+    },
+  },
+});
+
+export {
+  GraphQLUser,
+  GraphQLCourse,
+  GraphQLCourses,
+  GraphQLCourseEdge,
+  GraphQLScoreEdge,
+  GraphQLScores,
+  GraphQLStreakEdge,
+  GraphQLStreaks,
+  nodeField,
+};

@@ -167,6 +167,26 @@ export const getAllScores = pgPool => {
   });
 };
 
+export const getCourseStreaks = (id, pgPool) => {
+  return pgPool?.query(`SELECT * FROM streaks where course_id='${id}';`).then(response => {
+    return response.rows;
+  });
+};
+
+export const getAllStreaks = pgPool => {
+  return pgPool?.query(`SELECT * FROM streaks ORDER BY streak asc;`).then(response => {
+    return response.rows;
+  });
+};
+
+export const getStreak = (userId, courseId, pgPool) => {
+  return pgPool
+    ?.query(`SELECT * FROM streaks where user_id='${userId}' AND course_id='${courseId}';`)
+    .then(response => {
+      return response.rows?.[0];
+    });
+};
+
 export const addStreak = (userId, courseId, streak, pgPool) => {
   return pgPool
     ?.query(`INSERT into streaks (user_id, course_id, streak) VALUES ('${userId}', '${courseId}', ${streak});`)
