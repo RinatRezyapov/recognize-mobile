@@ -2,6 +2,7 @@ type Query {
   user(id: String): User
   courses: Courses
   scores: Scores
+  streaks: Streaks
 
   """Fetches an object given its ID"""
   node(
@@ -123,12 +124,51 @@ type Scores {
   data(after: String, first: Int, before: String, last: Int): ScoreConnection
 }
 
+type Streaks {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  data(after: String, first: Int, before: String, last: Int): StreakConnection
+}
+
+"""A connection to a list of items."""
+type StreakConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [StreakEdge]
+}
+
+"""An edge in a connection."""
+type StreakEdge {
+  """The item at the end of the edge"""
+  node: Streak
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Streak {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  userId: String
+  username: String
+  courseId: String
+  value: Float
+  course: String
+}
+
 type Mutation {
   addCourse(input: AddCourseInput!): AddCoursePayload
   updateCourse(input: UpdateCourseInput!): UpdateCoursePayload
   removeCourse(input: RemoveCourseInput!): RemoveCoursePayload
   likeCourse(input: LikeCourseInput!): LikeCoursePayload
   addScore(input: AddScoreInput!): AddScorePayload
+  addStreak(input: AddStreakInput!): AddStreakPayload
 }
 
 type AddCoursePayload {
@@ -194,5 +234,17 @@ input AddScoreInput {
   courseId: ID!
   score: Float!
   sequence: String!
+  clientMutationId: String
+}
+
+type AddStreakPayload {
+  streakEdge: ScoreEdge!
+  clientMutationId: String
+}
+
+input AddStreakInput {
+  userId: ID!
+  courseId: ID!
+  streak: Int!
   clientMutationId: String
 }

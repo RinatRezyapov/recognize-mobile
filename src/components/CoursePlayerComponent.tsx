@@ -148,8 +148,9 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
         {renderCanvas()}
       </StopWatchResult>
       <WordsDisplay>
-        {showCounter && <Text>{counterValue}</Text>}
-        <WordsDisplayPhrase>{phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}</WordsDisplayPhrase>
+        <WordsDisplayPhrase>
+          {showCounter ? counterValue : phraseVisibility ? currentPhrase.join(' ') : answer.join(' ')}
+        </WordsDisplayPhrase>
       </WordsDisplay>
       <Answers>
         {answers.map((answerArg, idx) => (
@@ -228,7 +229,7 @@ const Answers = styled.View`
 const Answer = styled.TouchableOpacity`
   display: flex;
   border-width: 1px;
-  padding: 8px
+  padding: 12px;
   min-width: 70px;
   border-radius: 4px;
   border-color: white;

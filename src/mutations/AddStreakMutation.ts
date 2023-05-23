@@ -22,20 +22,20 @@ export const useAddStreakMutation = (userId?: string, courseId?: string) => {
   const [commit] = useMutation(mutation);
 
   return useCallback(
-    (score: number) => {
+    (streak: number) => {
       commit({
         variables: {
           input: {
             userId,
             courseId,
-            score,
+            streak,
           },
         },
         updater: store => {
           if (!courseId) return;
           const payload = store.get(courseId);
           if (payload == null) return;
-          const newEdge = store.getRootField('addSstreak')?.getLinkedRecord('streakEdge');
+          const newEdge = store.getRootField('addStreak')?.getLinkedRecord('streakEdge');
           if (!newEdge) return;
           const connection = ConnectionHandler.getConnection(payload, 'Streaks_streaks');
           if (!connection) return;
