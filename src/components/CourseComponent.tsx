@@ -22,9 +22,10 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
           edges {
             node {
               id
+              _id
               userId
               username
-              value
+              score
               sequence
             }
           }
@@ -45,7 +46,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
   );
 
   const isUserOwned = course.authorId === user?._id;
-  const userScore = course.scores?.edges?.find(edge => edge?.node?.userId === user?._id)?.node?.value;
+  const userScore = course.scores?.edges?.find(edge => edge?.node?.userId === user?._id)?.node?.score;
 
   const commitRemoveCourseMutation = useRemoveCourseMutation(user?.id);
 
@@ -93,7 +94,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
         {course.scores?.edges?.map((v, idx) => {
           return (
             <ScoreRow key={idx}>
-              <Text>{`${v?.node?.username}: ${v?.node?.value} ms`}</Text>
+              <Text>{`${v?.node?.username}: ${v?.node?.score} ms`}</Text>
               <Text>{v?.node?.sequence}</Text>
             </ScoreRow>
           );

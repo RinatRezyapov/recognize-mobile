@@ -11,7 +11,7 @@ const mutation = graphql`
           userId
           courseId
           username
-          value
+          score
           sequence
         }
       }

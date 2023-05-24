@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ad583e543b34a089adec11d50fefe74e>>
+ * @generated SignedSource<<d894104fc38c59be3e7a41485ed46c27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,9 +25,9 @@ export type AddStreakMutation$data = {
         readonly _id: string | null;
         readonly courseId: string | null;
         readonly id: string;
+        readonly streak: number | null;
         readonly userId: string | null;
         readonly username: string | null;
-        readonly value: number | null;
       } | null;
     };
   } | null;
@@ -63,7 +63,7 @@ v1 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "ScoreEdge",
+        "concreteType": "StreakEdge",
         "kind": "LinkedField",
         "name": "streakEdge",
         "plural": false,
@@ -71,7 +71,7 @@ v1 = [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Score",
+            "concreteType": "Streak",
             "kind": "LinkedField",
             "name": "node",
             "plural": false,
@@ -115,7 +115,7 @@ v1 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "value",
+                "name": "streak",
                 "storageKey": null
               }
             ],
@@ -146,16 +146,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "075c7370cca9a64f193b134b1e7f29f6",
+    "cacheID": "28f7ee5c1ce87ba604c366569a639cf1",
     "id": null,
     "metadata": {},
     "name": "AddStreakMutation",
     "operationKind": "mutation",
-    "text": "mutation AddStreakMutation(\n  $input: AddStreakInput!\n) {\n  addStreak(input: $input) {\n    streakEdge {\n      node {\n        id\n        _id\n        userId\n        courseId\n        username\n        value\n      }\n    }\n  }\n}\n"
+    "text": "mutation AddStreakMutation(\n  $input: AddStreakInput!\n) {\n  addStreak(input: $input) {\n    streakEdge {\n      node {\n        id\n        _id\n        userId\n        courseId\n        username\n        streak\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "eaa7569387dcc42aed4e6d24b0405a5c";
+(node as any).hash = "008b78fc7826dc0317f9f32cc5e4d603";
 
 export default node;

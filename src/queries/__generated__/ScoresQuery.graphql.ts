@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<13407daf534580c89a32e02fdc6b0ccb>>
+ * @generated SignedSource<<9eedcd6394aa28ba67df242881e54540>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,12 @@ export type ScoresQuery$data = {
     readonly data: {
       readonly edges: ReadonlyArray<{
         readonly node: {
+          readonly _id: string | null;
           readonly course: string | null;
+          readonly id: string;
+          readonly score: number | null;
+          readonly sequence: string | null;
           readonly username: string | null;
-          readonly value: number | null;
         } | null;
       } | null> | null;
     } | null;
@@ -29,70 +32,79 @@ export type ScoresQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "username",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "value",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "course",
-  "storageKey": null
-};
-return {
-  "fragment": {
-    "argumentDefinitions": [],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "ScoresQuery",
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "Scores",
+    "kind": "LinkedField",
+    "name": "scores",
+    "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "Scores",
+        "concreteType": "ScoreConnection",
         "kind": "LinkedField",
-        "name": "scores",
+        "name": "data",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "ScoreConnection",
+            "concreteType": "ScoreEdge",
             "kind": "LinkedField",
-            "name": "data",
-            "plural": false,
+            "name": "edges",
+            "plural": true,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ScoreEdge",
+                "concreteType": "Score",
                 "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
+                "name": "node",
+                "plural": false,
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Score",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v0/*: any*/),
-                      (v1/*: any*/),
-                      (v2/*: any*/)
-                    ],
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "_id",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "username",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "score",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "sequence",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "course",
                     "storageKey": null
                   }
                 ],
@@ -105,6 +117,16 @@ return {
         "storageKey": null
       }
     ],
+    "storageKey": null
+  }
+];
+return {
+  "fragment": {
+    "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "ScoresQuery",
+    "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
@@ -113,74 +135,19 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ScoresQuery",
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Scores",
-        "kind": "LinkedField",
-        "name": "scores",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ScoreConnection",
-            "kind": "LinkedField",
-            "name": "data",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ScoreEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Score",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v0/*: any*/),
-                      (v1/*: any*/),
-                      (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ]
+    "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "9780c83ea02356bcd5e17401586f2033",
+    "cacheID": "cc25618f5500e7a50fdd525761f75f85",
     "id": null,
     "metadata": {},
     "name": "ScoresQuery",
     "operationKind": "query",
-    "text": "query ScoresQuery {\n  scores {\n    data {\n      edges {\n        node {\n          username\n          value\n          course\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ScoresQuery {\n  scores {\n    data {\n      edges {\n        node {\n          id\n          _id\n          username\n          score\n          sequence\n          course\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c0e60be2fc79aeca13dfe28154cd1ce2";
+(node as any).hash = "248629bdabd4443bebf7f10c86bbcba6";
 
 export default node;

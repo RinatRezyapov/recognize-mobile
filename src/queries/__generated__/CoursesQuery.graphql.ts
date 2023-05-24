@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<54a8d20f0aaa155341f7e5204d10d60e>>
+ * @generated SignedSource<<9d14006bb0dc9c2d5c66fe35c61d0c31>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -243,6 +243,7 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v0/*: any*/),
+                                  (v1/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -261,7 +262,7 @@ return {
                                     "alias": null,
                                     "args": null,
                                     "kind": "ScalarField",
-                                    "name": "value",
+                                    "name": "score",
                                     "storageKey": null
                                   },
                                   {
@@ -350,12 +351,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3b84da9b2124eb64a5738b624b3529f1",
+    "cacheID": "4973ad0a37f249664cdc37aa67bcd6ef",
     "id": null,
     "metadata": {},
     "name": "CoursesQuery",
     "operationKind": "query",
-    "text": "query CoursesQuery {\n  courses {\n    data {\n      edges {\n        node {\n          id\n          _id\n          authorId\n          author\n          title\n          description\n          avatar\n          likes\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n        }\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        userId\n        username\n        value\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n"
+    "text": "query CoursesQuery {\n  courses {\n    data {\n      edges {\n        node {\n          id\n          _id\n          authorId\n          author\n          title\n          description\n          avatar\n          likes\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n        }\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        _id\n        userId\n        username\n        score\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n"
   }
 };
 })();

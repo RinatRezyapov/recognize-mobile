@@ -77,9 +77,12 @@ const GraphQLScore = new GraphQLObjectType({
       type: GraphQLString,
       resolve: async score => score.course_id,
     },
-    value: {
+    score: {
       type: GraphQLFloat,
-      resolve: score => score.score,
+      resolve: score => {
+        console.log('----------------------------------------', score, score.score);
+        return score.score;
+      },
     },
     sequence: {
       type: GraphQLString,
@@ -118,7 +121,7 @@ const GraphQLStreak = new GraphQLObjectType({
       type: GraphQLString,
       resolve: async streak => streak.course_id,
     },
-    value: {
+    streak: {
       type: GraphQLFloat,
       resolve: streak => streak.streak,
     },

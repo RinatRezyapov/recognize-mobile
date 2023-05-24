@@ -34,7 +34,7 @@ type Score {
   userId: String
   username: String
   courseId: String
-  value: Float
+  score: Float
   sequence: String
   course: String
 }
@@ -158,7 +158,7 @@ type Streak {
   userId: String
   username: String
   courseId: String
-  value: Float
+  streak: Float
   course: String
 }
 
@@ -238,7 +238,7 @@ input AddScoreInput {
 }
 
 type AddStreakPayload {
-  streakEdge: ScoreEdge!
+  streakEdge: StreakEdge!
   clientMutationId: String
 }
 

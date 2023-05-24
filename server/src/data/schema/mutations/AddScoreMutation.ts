@@ -17,7 +17,7 @@ const AddScoreMutation = mutationWithClientMutationId({
       resolve: async ({userId, courseId}, {}, {pgPool}) => {
         const score = await getScore(userId, courseId, pgPool);
         const scores = await getCourseScores(courseId, pgPool);
-
+        console.log('score + scores', score, scores);
         return {
           cursor: cursorForObjectInConnection([...scores], score),
           node: score,

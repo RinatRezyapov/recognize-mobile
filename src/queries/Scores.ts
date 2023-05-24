@@ -6,8 +6,11 @@ export const ScoresQuery = graphql`
       data {
         edges {
           node {
+            id
+            _id
             username
-            value
+            score
+            sequence
             course
           }
         }
