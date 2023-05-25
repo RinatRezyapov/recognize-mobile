@@ -23,7 +23,7 @@ export const useAddScoreMutation = (userId?: string, courseId?: string) => {
   const [commit] = useMutation(mutation);
 
   return useCallback(
-    (score: number, sequence: string) => {
+    (score: number, sequence: string, interval: number, wordsCount: number) => {
       commit({
         variables: {
           input: {
@@ -31,6 +31,8 @@ export const useAddScoreMutation = (userId?: string, courseId?: string) => {
             courseId,
             score,
             sequence,
+            interval,
+            wordsCount,
           },
         },
         updater: store => {
