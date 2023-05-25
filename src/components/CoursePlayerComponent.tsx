@@ -97,13 +97,13 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       setBackground('#03a9f4');
       const newReactionTime = (Date.now() - timeStart) / 1000;
       setReactionTime(newReactionTime);
-      commitAddScoreMutation(newReactionTime, userInput);
+      commitAddScoreMutation(newReactionTime, userInput, parseInt(intervalMs), parseInt(wordsCount));
       setPause(false);
       setShowCounter(true);
       setCounterValue(3);
       setStreak(prevStreak => {
         const newStreak = prevStreak + 1;
-        commitAddStreakMutation(newStreak);
+        commitAddStreakMutation(newStreak, parseInt(intervalMs), parseInt(wordsCount));
 
         return newStreak;
       });

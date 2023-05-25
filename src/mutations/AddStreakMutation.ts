@@ -22,13 +22,15 @@ export const useAddStreakMutation = (userId?: string, courseId?: string) => {
   const [commit] = useMutation(mutation);
 
   return useCallback(
-    (streak: number) => {
+    (streak: number, interval: number, wordsCount: number) => {
       commit({
         variables: {
           input: {
             userId,
             courseId,
             streak,
+            interval,
+            wordsCount,
           },
         },
         updater: store => {

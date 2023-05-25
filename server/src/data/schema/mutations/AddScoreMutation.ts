@@ -1,4 +1,4 @@
-import {GraphQLFloat, GraphQLID, GraphQLNonNull, GraphQLString} from 'graphql';
+import {GraphQLFloat, GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString} from 'graphql';
 import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
 import {addScore, getCourseScores, getScore, updateScore} from '../../database';
 import {GraphQLScoreEdge} from '../nodes';
@@ -10,6 +10,8 @@ const AddScoreMutation = mutationWithClientMutationId({
     courseId: {type: new GraphQLNonNull(GraphQLID)},
     score: {type: new GraphQLNonNull(GraphQLFloat)},
     sequence: {type: new GraphQLNonNull(GraphQLString)},
+    interval: {type: new GraphQLNonNull(GraphQLInt)},
+    wordsCount: {type: new GraphQLNonNull(GraphQLInt)},
   },
   outputFields: {
     scoreEdge: {
@@ -25,16 +27,16 @@ const AddScoreMutation = mutationWithClientMutationId({
       },
     },
   },
-  mutateAndGetPayload: async ({userId, courseId, score, sequence}, {pgPool}) => {
+  mutateAndGetPayload: async ({userId, courseId, score, sequence, interval, wordsCount}, {pgPool}) => {
     const localUserId = fromGlobalId(userId).id;
     const localCourseId = fromGlobalId(courseId).id;
 
     const oldScoreData = await getScore(localUserId, localCourseId, pgPool);
 
     if (!oldScoreData) {
-      await addScore(localUserId, localCourseId, score, sequence, pgPool);
+      await addScore(localUserId, localCourseId, score, sequence, interval, wordsCount, pgPool);
     } else if (oldScoreData.score > score) {
-      await updateScore(localUserId, localCourseId, score, sequence, pgPool);
+      await updateScore(localUserId, localCourseId, score, sequence, interval, wordsCount, pgPool);
     }
 
     return {userId: localUserId, courseId: localCourseId};
