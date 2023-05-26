@@ -138,7 +138,7 @@ export const getScore = (userId, courseId, pgPool) => {
 export const addScore = (userId, courseId, score, sequence, interval, wordsCount, pgPool) => {
   return pgPool
     ?.query(
-      `INSERT into scores (user_id, course_id, score, sequence, interval, wordsCount) VALUES ('${userId}', '${courseId}', ${score}, '${sequence}', ${interval}, ${wordsCount});`,
+      `INSERT into scores (user_id, course_id, score, sequence, interval, words_count) VALUES ('${userId}', '${courseId}', ${score}, '${sequence}', ${interval}, ${wordsCount});`,
     )
     .then(response => {
       return response.rows;
@@ -154,7 +154,7 @@ export const deleteCourseScores = (courseId, pgPool) => {
 export const updateScore = (userId, courseId, score, sequence, interval, wordsCount, pgPool) => {
   return pgPool
     ?.query(
-      `UPDATE scores SET score=${score}, sequence='${sequence}', interval=${interval}, wordsCount=${wordsCount}  where user_id='${userId}' AND course_id='${courseId}';`,
+      `UPDATE scores SET score=${score}, sequence='${sequence}', interval=${interval}, words_count=${wordsCount}  where user_id='${userId}' AND course_id='${courseId}';`,
     )
     .then(response => {
       return response.rows;
@@ -165,6 +165,15 @@ export const getAllScores = pgPool => {
   return pgPool?.query(`SELECT * FROM scores ORDER BY score asc;`).then(response => {
     return response.rows;
   });
+};
+
+export const getAllScoresWhere = (wordsCount: number, interval: number, pgPool) => {
+  return pgPool
+    ?.query(`SELECT * FROM scores where words_count=${wordsCount} AND interval=${interval} ORDER BY score asc;`)
+    .then(response => {
+      console.log(response.rows);
+      return response.rows;
+    });
 };
 
 export const getCourseStreaks = (id, pgPool) => {
@@ -190,7 +199,7 @@ export const getStreak = (userId, courseId, pgPool) => {
 export const addStreak = (userId, courseId, streak, interval, wordsCount, pgPool) => {
   return pgPool
     ?.query(
-      `INSERT into streaks (user_id, course_id, streak, interval, wordsCount) VALUES ('${userId}', '${courseId}', ${streak}, ${interval}, ${wordsCount});`,
+      `INSERT into streaks (user_id, course_id, streak, interval, words_count) VALUES ('${userId}', '${courseId}', ${streak}, ${interval}, ${wordsCount});`,
     )
     .then(response => {
       return response.rows;
@@ -206,7 +215,7 @@ export const deleteCourseStreak = (courseId, pgPool) => {
 export const updateStreak = (userId, courseId, streak, interval, wordsCount, pgPool) => {
   return pgPool
     ?.query(
-      `UPDATE streaks SET streak=${streak}, interval=${interval}, wordsCount=${wordsCount} where user_id='${userId}' AND course_id='${courseId}';`,
+      `UPDATE streaks SET streak=${streak}, interval=${interval}, words_count=${wordsCount} where user_id='${userId}' AND course_id='${courseId}';`,
     )
     .then(response => {
       return response.rows;

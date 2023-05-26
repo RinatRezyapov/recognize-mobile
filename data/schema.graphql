@@ -1,7 +1,7 @@
 type Query {
   user(id: String): User
   courses: Courses
-  scores: Scores
+  scores(interval: Int, wordsCount: Int): Scores
   streaks: Streaks
 
   """Fetches an object given its ID"""
@@ -121,7 +121,7 @@ type Scores {
     """The ID of an object"""
     id: ID!
   ): Node
-  data(after: String, first: Int, before: String, last: Int): ScoreConnection
+  data(interval: Int, wordsCount: Int, after: String, first: Int, before: String, last: Int): ScoreConnection
 }
 
 type Streaks {
@@ -234,6 +234,8 @@ input AddScoreInput {
   courseId: ID!
   score: Float!
   sequence: String!
+  interval: Int!
+  wordsCount: Int!
   clientMutationId: String
 }
 
@@ -246,5 +248,7 @@ input AddStreakInput {
   userId: ID!
   courseId: ID!
   streak: Int!
+  interval: Int!
+  wordsCount: Int!
   clientMutationId: String
 }

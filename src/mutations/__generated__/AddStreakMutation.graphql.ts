@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d894104fc38c59be3e7a41485ed46c27>>
+ * @generated SignedSource<<7fe6173f2c0bb6ab57a85b3807979724>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,10 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AddStreakInput = {
   clientMutationId?: string | null;
   courseId: string;
+  interval: number;
   streak: number;
   userId: string;
+  wordsCount: number;
 };
 export type AddStreakMutation$variables = {
   input: AddStreakInput;

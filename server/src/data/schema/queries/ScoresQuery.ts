@@ -1,10 +1,15 @@
-import {getAllScores} from '../../database';
+import {GraphQLInt} from 'graphql';
+import {getAllScores, getAllScoresWhere} from '../../database';
 import {GraphQLScores} from '../nodes';
 
 const ScoresQuery = {
   type: GraphQLScores,
-  resolve: (root, {id}, {pgPool}) => {
-    return getAllScores(pgPool);
+  args: {
+    interval: {type: GraphQLInt},
+    wordsCount: {type: GraphQLInt},
+  },
+  resolve: (root, {interval, wordsCount}, {pgPool}) => {
+    return {interval, wordsCount};
   },
 };
 

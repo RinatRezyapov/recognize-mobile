@@ -4,6 +4,7 @@ import {
   User,
   getAllCourses,
   getAllScores,
+  getAllScoresWhere,
   getAllStreaks,
   getCourse,
   getCourseLikes,
@@ -79,10 +80,7 @@ const GraphQLScore = new GraphQLObjectType({
     },
     score: {
       type: GraphQLFloat,
-      resolve: score => {
-        console.log('----------------------------------------', score, score.score);
-        return score.score;
-      },
+      resolve: score => score.score,
     },
     sequence: {
       type: GraphQLString,
@@ -284,10 +282,20 @@ const GraphQLScores = new GraphQLObjectType({
     node: nodeField,
     data: {
       type: ScoresConnection,
-      args: coursesArgs,
-      resolve: async (parent, {after, before, first, last}, {pgPool}) => {
+      args: {
+        ...connectionArgs,
+        wordsCount: {type: GraphQLInt},
+        interval: {type: GraphQLInt},
+      },
+      resolve: async ({wordsCount, interval}, {after, before, first, last}, {pgPool}) => {
         try {
-          const scores = await getAllScores(pgPool);
+          let scores;
+          console.log();
+          if (wordsCount !== undefined && interval !== undefined) {
+            scores = await getAllScoresWhere(wordsCount, interval, pgPool);
+          } else {
+            scores = await getAllScores(pgPool);
+          }
           return connectionFromArray(scores, {after, before, first, last});
         } catch (err) {
           console.error(err);

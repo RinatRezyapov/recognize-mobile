@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6923cfd5d9ea16231db9d6b5e7769eea>>
+ * @generated SignedSource<<dfa91a54315abcd00b02d83b83e6b4d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,11 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AddScoreInput = {
   clientMutationId?: string | null;
   courseId: string;
+  interval: number;
   score: number;
   sequence: string;
   userId: string;
+  wordsCount: number;
 };
 export type AddScoreMutation$variables = {
   input: AddScoreInput;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9eedcd6394aa28ba67df242881e54540>>
+ * @generated SignedSource<<1eca8ef70b091e5e8a99c55a0992cdd1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type ScoresQuery$variables = {};
+export type ScoresQuery$variables = {
+  interval?: number | null;
+  wordsCount?: number | null;
+};
 export type ScoresQuery$data = {
   readonly scores: {
     readonly data: {
@@ -32,10 +35,31 @@ export type ScoresQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "interval"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "wordsCount"
+},
+v2 = [
   {
     "alias": null,
-    "args": null,
+    "args": [
+      {
+        "kind": "Variable",
+        "name": "interval",
+        "variableName": "interval"
+      },
+      {
+        "kind": "Variable",
+        "name": "wordsCount",
+        "variableName": "wordsCount"
+      }
+    ],
     "concreteType": "Scores",
     "kind": "LinkedField",
     "name": "scores",
@@ -122,32 +146,38 @@ var v0 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "ScoresQuery",
-    "selections": (v0/*: any*/),
+    "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "ScoresQuery",
-    "selections": (v0/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "cc25618f5500e7a50fdd525761f75f85",
+    "cacheID": "204be0486f7c5045153c6ee24cd9151e",
     "id": null,
     "metadata": {},
     "name": "ScoresQuery",
     "operationKind": "query",
-    "text": "query ScoresQuery {\n  scores {\n    data {\n      edges {\n        node {\n          id\n          _id\n          username\n          score\n          sequence\n          course\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ScoresQuery(\n  $wordsCount: Int\n  $interval: Int\n) {\n  scores(wordsCount: $wordsCount, interval: $interval) {\n    data {\n      edges {\n        node {\n          id\n          _id\n          username\n          score\n          sequence\n          course\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "248629bdabd4443bebf7f10c86bbcba6";
+(node as any).hash = "bb7fe8a031b121eea96b316ae2cb372c";
 
 export default node;
