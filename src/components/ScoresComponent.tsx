@@ -1,11 +1,8 @@
 import styled from '@emotion/native';
-import {Divider, Text, TextInput} from '@react-native-material/core';
+import {Divider, TextInput} from '@react-native-material/core';
 import React, {useCallback, useState} from 'react';
-import {ScrollView} from 'react-native';
-import {useLazyLoadQuery} from 'react-relay';
 import {NavigationType} from '../App';
-import {ScoresQuery} from '../queries/Scores';
-import {ScoresQuery as ScoresQueryType} from '../queries/__generated__/ScoresQuery.graphql';
+import ScoresComponentInputs from './ScoresComponentInputs';
 
 interface IProps extends NavigationType<'Profile'> {
   initialQueryRef: any;
@@ -14,18 +11,20 @@ interface IProps extends NavigationType<'Profile'> {
 const ScoresComponent: React.FC<IProps> = ({navigation, route}) => {
   const [wordsCount, setWordsCount] = useState('2');
   const [interval, setInterval] = useState('1000');
-  const scores = useLazyLoadQuery<ScoresQueryType>(ScoresQuery, {
-    wordsCount: parseInt(wordsCount),
-    interval: parseInt(interval),
+
+  const [queryArgs, setQueryArgs] = useState({
+    options: {fetchKey: 0},
+    variables: {wordsCount: 2, interval: 1000},
   });
 
-  const handleWordsCountChange = useCallback(event => {
-    setWordsCount(event.target.value);
-  }, []);
-
-  const handleIntervalChange = useCallback(event => {
-    setInterval(event.target.value);
-  }, []);
+  const refetch = useCallback(() => {
+    setQueryArgs(prev => ({
+      options: {
+        fetchKey: (prev?.options.fetchKey ?? 0) + 1,
+      },
+      variables: {wordsCount: parseInt(wordsCount), interval: parseInt(interval)},
+    }));
+  }, [wordsCount, interval]);
 
   return (
     <Wrapper>
@@ -35,28 +34,17 @@ const ScoresComponent: React.FC<IProps> = ({navigation, route}) => {
           variant="outlined"
           label="Count"
           value={wordsCount}
-          onChangeText={handleWordsCountChange}
+          onChangeText={setWordsCount}
         />
         <TextInputStyled
           keyboardType="numeric"
           variant="outlined"
           label="Interval"
           value={interval}
-          onChangeText={handleIntervalChange}
+          onChangeText={setInterval}
         />
       </Filters>
-      <ScrollView>
-        {scores?.scores?.data?.edges?.map((edge, idx) => (
-          <React.Fragment key={idx}>
-            <ScoreWrapper>
-              <Text>{edge?.node?.username}</Text>
-              <Text>{`${edge?.node?.course} (${edge?.node?.sequence})`}</Text>
-              <Text>{edge?.node?.score}</Text>
-            </ScoreWrapper>
-            <StyledDivider />
-          </React.Fragment>
-        ))}
-      </ScrollView>
+      <ScoresComponentInputs refetch={refetch} queryArgs={queryArgs} />
     </Wrapper>
   );
 };
@@ -78,15 +66,4 @@ const Filters = styled.View`
 
 const TextInputStyled = styled(TextInput)`
   flex: 1;
-`;
-
-const ScoreWrapper = styled.View`
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  justify-content: space-between;
-`;
-
-const StyledDivider = styled(Divider)`
-  margin-top: 16px;
 `;
