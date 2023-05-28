@@ -1,16 +1,14 @@
 import styled from '@emotion/native';
-import {Divider, TextInput} from '@react-native-material/core';
+import {TextInput} from '@react-native-material/core';
 import React, {useCallback, useState} from 'react';
 import {NavigationType} from '../App';
-import ScoresComponentInputs from './ScoresComponentInputs';
+import ScoresTableComponent from './ScoresTableComponent';
 
-interface IProps extends NavigationType<'Profile'> {
-  initialQueryRef: any;
-}
+interface IProps extends NavigationType<'Scores'> {}
 
-const ScoresComponent: React.FC<IProps> = ({navigation, route}) => {
-  const [wordsCount, setWordsCount] = useState('2');
-  const [interval, setInterval] = useState('1000');
+const ScoresFilterComponent: React.FC<IProps> = () => {
+  const [wordsCount, setWordsCount] = useState(2);
+  const [interval, setInterval] = useState(1000);
 
   const [queryArgs, setQueryArgs] = useState({
     options: {fetchKey: 0},
@@ -19,10 +17,8 @@ const ScoresComponent: React.FC<IProps> = ({navigation, route}) => {
 
   const refetch = useCallback(() => {
     setQueryArgs(prev => ({
-      options: {
-        fetchKey: (prev?.options.fetchKey ?? 0) + 1,
-      },
-      variables: {wordsCount: parseInt(wordsCount), interval: parseInt(interval)},
+      options: {fetchKey: (prev?.options.fetchKey ?? 0) + 1},
+      variables: {wordsCount, interval},
     }));
   }, [wordsCount, interval]);
 
@@ -33,23 +29,23 @@ const ScoresComponent: React.FC<IProps> = ({navigation, route}) => {
           keyboardType="numeric"
           variant="outlined"
           label="Count"
-          value={wordsCount}
-          onChangeText={setWordsCount}
+          value={wordsCount.toString()}
+          onChangeText={text => setWordsCount(parseInt(text))}
         />
         <TextInputStyled
           keyboardType="numeric"
           variant="outlined"
           label="Interval"
-          value={interval}
-          onChangeText={setInterval}
+          value={interval.toString()}
+          onChangeText={text => setInterval(parseInt(text))}
         />
       </Filters>
-      <ScoresComponentInputs refetch={refetch} queryArgs={queryArgs} />
+      <ScoresTableComponent refetch={refetch} queryArgs={queryArgs} />
     </Wrapper>
   );
 };
 
-export default ScoresComponent;
+export default ScoresFilterComponent;
 
 const Wrapper = styled.View`
   padding: 32px 16px;

@@ -10,9 +10,7 @@ import {UserQuery} from '../queries/User';
 import {CoursesQuery as CoursesQueryType} from '../queries/__generated__/CoursesQuery.graphql';
 import {UserQuery as UserQueryType} from '../queries/__generated__/UserQuery.graphql';
 
-interface IProps extends NavigationType<'Profile'> {
-  initialQueryRef: any;
-}
+interface IProps extends NavigationType<'Courses'> {}
 
 const CoursesComponent: React.FC<IProps> = ({navigation, route}) => {
   const courses = useLazyLoadQuery<CoursesQueryType>(CoursesQuery, {});

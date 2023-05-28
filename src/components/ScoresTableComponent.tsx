@@ -8,10 +8,13 @@ import {ScoresQuery as ScoresQueryType} from '../queries/__generated__/ScoresQue
 
 interface IProps {
   refetch: () => void;
-  queryArgs: any;
+  queryArgs: {
+    options: {fetchKey: number};
+    variables: {wordsCount: number; interval: number};
+  };
 }
 
-const ScoresComponentInputs: React.FC<IProps> = ({refetch, queryArgs}) => {
+const ScoresTableComponent: React.FC<IProps> = ({refetch, queryArgs}) => {
   const scores = useLazyLoadQuery<ScoresQueryType>(ScoresQuery, queryArgs.variables, queryArgs.options);
 
   return (
@@ -33,7 +36,7 @@ const ScoresComponentInputs: React.FC<IProps> = ({refetch, queryArgs}) => {
   );
 };
 
-export default ScoresComponentInputs;
+export default ScoresTableComponent;
 
 const Wrapper = styled.View`
   height: 100%;

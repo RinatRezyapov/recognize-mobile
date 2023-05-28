@@ -27,7 +27,6 @@ const HomePage: React.FC<IProps> = ({route}) => {
       />
       <Tab.Screen
         name="Scores"
-        initialParams={{userId: route.params?.userId}}
         component={ScoresComponent}
         options={{
           tabBarIcon: ({focused}) => <Icon name="star-half-empty" size={30} color={focused ? 'lightblue' : 'grey'} />,
