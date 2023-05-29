@@ -6,6 +6,7 @@ import {useLazyLoadQuery} from 'react-relay';
 import {UserQuery} from '../queries/User';
 import CourseCardComponent from './CourseCardComponent';
 import {ProfileComponentQuery as ProfileComponentQueryType} from './__generated__/ProfileComponentQuery.graphql';
+import {useAuth0} from 'react-native-auth0';
 
 interface IProps {
   navigation: any;
@@ -14,6 +15,16 @@ interface IProps {
 
 const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
   const {user} = useLazyLoadQuery<ProfileComponentQueryType>(UserQuery, {id: userId});
+  const {clearSession} = useAuth0();
+
+  const onLogoutPress = async () => {
+    try {
+      await clearSession();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Wrapper>
       <PersonalInfo>
@@ -21,13 +32,7 @@ const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
         <View>
           <UsernameText>{user?.username}</UsernameText>
           <EmailText>{user?.email}</EmailText>
-          <StyledButton
-            title="Logout"
-            tintColor="white"
-            color="#f73378"
-            disableElevation
-            onPress={() => navigation.navigate('Login')}
-          />
+          <StyledButton title="Logout" tintColor="white" color="#f73378" disableElevation onPress={onLogoutPress} />
         </View>
       </PersonalInfo>
       <View>
