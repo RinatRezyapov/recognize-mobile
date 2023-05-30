@@ -31,7 +31,7 @@ export type NavigationType<T> = NativeStackScreenProps<RootStackParamList, T>;
 
 const App = () => {
   return (
-    <Auth0Provider domain='dev-ew17ess3quvi8rin.us.auth0.com' clientId='4GHelQdAAX8zaczV53XJKFP107AqPYWI'>
+    <Auth0Provider domain="dev-ew17ess3quvi8rin.us.auth0.com" clientId="DnuRcPZasmhMZwVZZgOaMm8lOntZgBR6">
       <DialogProvider>
         <SnackbarProvider>
           <CanvasProvider>
@@ -54,7 +54,7 @@ const App = () => {
           </CanvasProvider>
         </SnackbarProvider>
       </DialogProvider>
-    </Auth0Provider>ы
+    </Auth0Provider>
   );
 };
 
