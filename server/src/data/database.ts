@@ -221,3 +221,13 @@ export const updateStreak = (userId, courseId, streak, interval, wordsCount, pgP
       return response.rows;
     });
 };
+
+export const getUserByEmail = (email: string, pgPool) => {
+  return pgPool?.query(`SELECT * FROM users WHERE email = '${email}'`).then(response => response.rows?.[0]);
+};
+
+export const addUser = (email: string, username: string, pgPool) => {
+  return pgPool
+    ?.query(`INSERT INTO users (email, username) VALUES ('${email}', '${username}');`)
+    .then(response => response.rows?.[0]);
+};

@@ -15,7 +15,7 @@ interface IProps {
 
 const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
   const {user} = useLazyLoadQuery<ProfileComponentQueryType>(UserQuery, {id: userId});
-  const {clearSession} = useAuth0();
+  const {user: userProfile, clearSession} = useAuth0();
 
   const onLogoutPress = async () => {
     try {
@@ -28,10 +28,10 @@ const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
   return (
     <Wrapper>
       <PersonalInfo>
-        <Avatar source={require('./profile-pic.png')} />
+        <Avatar source={{uri: userProfile.picture}} />
         <View>
-          <UsernameText>{user?.username}</UsernameText>
-          <EmailText>{user?.email}</EmailText>
+          <UsernameText>{userProfile.nickname}</UsernameText>
+          <EmailText>{userProfile?.email}</EmailText>
           <StyledButton title="Logout" tintColor="white" color="#f73378" disableElevation onPress={onLogoutPress} />
         </View>
       </PersonalInfo>

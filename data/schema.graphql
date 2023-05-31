@@ -121,7 +121,7 @@ type Scores {
     """The ID of an object"""
     id: ID!
   ): Node
-  data(interval: Int, wordsCount: Int, after: String, first: Int, before: String, last: Int): ScoreConnection
+  data(after: String, first: Int, before: String, last: Int, wordsCount: Int, interval: Int): ScoreConnection
 }
 
 type Streaks {
@@ -169,6 +169,7 @@ type Mutation {
   likeCourse(input: LikeCourseInput!): LikeCoursePayload
   addScore(input: AddScoreInput!): AddScorePayload
   addStreak(input: AddStreakInput!): AddStreakPayload
+  addUser(input: AddUserInput!): AddUserPayload
 }
 
 type AddCoursePayload {
@@ -250,5 +251,16 @@ input AddStreakInput {
   streak: Int!
   interval: Int!
   wordsCount: Int!
+  clientMutationId: String
+}
+
+type AddUserPayload {
+  addedUserId: ID!
+  clientMutationId: String
+}
+
+input AddUserInput {
+  email: String!
+  username: String!
   clientMutationId: String
 }
