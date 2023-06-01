@@ -4,19 +4,25 @@ import React, {useEffect} from 'react';
 import {useAuth0} from 'react-native-auth0';
 import {NavigationType} from '../App';
 import {useAddUserMutation} from '../mutations/AddUserMutation';
+import jwt_decode from 'jwt-decode';
 
 interface IProps extends NavigationType<'Login'> {}
 
 const LoginPage: React.FC<IProps> = ({navigation}) => {
-  const {authorize, user} = useAuth0();
+  const {isLoading, authorize, user, getCredentials} = useAuth0();
   const commitAddUserMutation = useAddUserMutation();
 
   const onLoginPress = async () => {
     try {
-      const res = await authorize();
-      console.log('authorize', res);
-      commitAddUserMutation(user.email, user.name);
-      navigation.navigate('Home', {userId: 'ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce'});
+      await authorize();
+      const credentials = await getCredentials();
+      if (credentials?.idToken) {
+        const usserInfo = jwt_decode(credentials.idToken) as {email: string; name: string};
+        await commitAddUserMutation(usserInfo.email, usserInfo.name, userId => {
+          console.log('User ID', userId);
+          navigation.navigate('Home', {userId});
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -27,6 +33,8 @@ const LoginPage: React.FC<IProps> = ({navigation}) => {
       navigation.navigate('Home', {userId: 'ad40f3e7-7a79-4d6b-9ffe-f85a8e0658ce'});
     }
   }, [user]);
+
+  if (isLoading) return <Text>Loading...</Text>;
 
   return (
     <Wrapper>

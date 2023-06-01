@@ -9,20 +9,19 @@ const AddUserMutation = mutationWithClientMutationId({
     username: {type: new GraphQLNonNull(GraphQLString)},
   },
   outputFields: {
-    addedUserId: {
-      type: new GraphQLNonNull(GraphQLID),
-      resolve: ({addedUser}, {}, {pgPool}): string => addedUser.id,
+    id: {
+      type: new GraphQLNonNull(GraphQLString),
+      resolve: ({user}): string => user.id,
     },
   },
   mutateAndGetPayload: async ({email, username}, {pgPool}) => {
-    const user = getUserByEmail(email, pgPool);
-    console.log('AddUserMutation', user);
-    if (!user) {
-      const addedUser = await addUser(email, username, pgPool);
-      return {addedUser};
+    const user = await getUserByEmail(email, pgPool);
+    if (user) {
+      return {user};
+    } else {
+      const user = await addUser(email, username, pgPool);
+      return {user};
     }
-
-    return {};
   },
 });
 

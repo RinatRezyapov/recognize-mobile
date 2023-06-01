@@ -1,5 +1,5 @@
 async function fetchGraphQL(text: string, variables: any) {
-  return fetch('http://192.168.1.165:3000/graphql', {
+  return fetch('http://192.168.71.196:3000/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

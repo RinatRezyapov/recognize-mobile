@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6364734ae121e464e50a333c8f445ebb>>
+ * @generated SignedSource<<7bbe3a1dd3cd60c9bd958ba162b45816>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type AddUserMutation$variables = {
 };
 export type AddUserMutation$data = {
   readonly addUser: {
-    readonly addedUserId: string;
+    readonly id: string;
   } | null;
 };
 export type AddUserMutation = {
@@ -54,7 +54,7 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "addedUserId",
+        "name": "id",
         "storageKey": null
       }
     ],
@@ -79,16 +79,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "e725650c41b1b8fe5dfbedf0f587d97a",
+    "cacheID": "6464bd52660875eb607ae4992b7fcd66",
     "id": null,
     "metadata": {},
     "name": "AddUserMutation",
     "operationKind": "mutation",
-    "text": "mutation AddUserMutation(\n  $input: AddUserInput!\n) {\n  addUser(input: $input) {\n    addedUserId\n  }\n}\n"
+    "text": "mutation AddUserMutation(\n  $input: AddUserInput!\n) {\n  addUser(input: $input) {\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "88b43e9d0a727f9670b6b076ae2943f6";
+(node as any).hash = "953b475ffbc231a8cd40e4ff3ce58727";
 
 export default node;

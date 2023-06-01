@@ -4,7 +4,7 @@ import {graphql, useMutation} from 'react-relay';
 const mutation = graphql`
   mutation AddUserMutation($input: AddUserInput!) {
     addUser(input: $input) {
-      addedUserId
+      id
     }
   }
 `;
@@ -13,14 +13,17 @@ export const useAddUserMutation = () => {
   const [commit] = useMutation(mutation);
 
   return useCallback(
-    (email?: string, username?: string) => {
-      console.log('useAddUserMutation', email, username);
+    async (email?: string, username?: string, callback?: (userId: string) => void) => {
       commit({
         variables: {
           input: {
             email,
             username,
           },
+        },
+        onCompleted: response => {
+          console.log('onCompleted', response);
+          callback?.(response?.addUser?.id);
         },
       });
     },
