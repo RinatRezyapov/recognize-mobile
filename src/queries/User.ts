@@ -1,8 +1,8 @@
 import {graphql} from 'react-relay';
 
 export const UserQuery = graphql`
-  query UserQuery($id: String) {
-    user(id: $id) {
+  query UserQuery($id: String, $email: String) {
+    user(id: $id, email: $email) {
       id
       _id
       username

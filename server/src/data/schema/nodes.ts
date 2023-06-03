@@ -290,7 +290,6 @@ const GraphQLScores = new GraphQLObjectType({
       resolve: async ({wordsCount, interval}, {after, before, first, last}, {pgPool}) => {
         try {
           let scores;
-          console.log();
           if (wordsCount !== undefined && interval !== undefined) {
             scores = await getAllScoresWhere(wordsCount, interval, pgPool);
           } else {

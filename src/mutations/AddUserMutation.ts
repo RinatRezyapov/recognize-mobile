@@ -22,7 +22,6 @@ export const useAddUserMutation = () => {
           },
         },
         onCompleted: response => {
-          console.log('onCompleted', response);
           callback?.(response?.addUser?.id);
         },
       });

@@ -95,6 +95,10 @@ export const getUser = (userId: number, pgPool) => {
   return pgPool?.query(`SELECT * FROM users WHERE id='${userId}'`).then(response => response.rows?.[0]);
 };
 
+export const getByEmail = (email: number, pgPool) => {
+  return pgPool?.query(`SELECT * FROM users WHERE email='${email}'`).then(response => response.rows?.[0]);
+};
+
 export const getAllCourses = pgPool => {
   return pgPool?.query(`SELECT * FROM courses;`).then(response => {
     return response.rows.map(v => ({...v, id: v.id}));
@@ -170,10 +174,7 @@ export const getAllScores = pgPool => {
 export const getAllScoresWhere = (wordsCount: number, interval: number, pgPool) => {
   return pgPool
     ?.query(`SELECT * FROM scores where words_count=${wordsCount} AND interval=${interval} ORDER BY score asc;`)
-    .then(response => {
-      console.log(response.rows);
-      return response.rows;
-    });
+    .then(response => response.rows);
 };
 
 export const getCourseStreaks = (id, pgPool) => {

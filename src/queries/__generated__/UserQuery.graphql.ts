@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<817cac68d117b2b26da2c6e557c46f87>>
+ * @generated SignedSource<<eab7a8b4c8d0f4b53d23f3c031b28ebb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UserQuery$variables = {
+  email?: string | null;
   id?: string | null;
 };
 export type UserQuery$data = {
@@ -44,112 +45,120 @@ export type UserQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "email"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "id"
+},
+v2 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = [
+    "kind": "Variable",
+    "name": "email",
+    "variableName": "email"
+  },
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "_id",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "username",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "email",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "description",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "body",
   "storageKey": null
 },
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "authorId",
   "storageKey": null
 },
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "author",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "avatar",
   "storageKey": null
 },
-v12 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "likes",
   "storageKey": null
 },
-v13 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v14 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v15 = {
+v16 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -174,7 +183,7 @@ v15 = {
   ],
   "storageKey": null
 },
-v16 = [
+v17 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -183,23 +192,26 @@ v16 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "UserQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "User",
         "kind": "LinkedField",
         "name": "user",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
+          (v6/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -234,15 +246,15 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
                       (v3/*: any*/),
-                      (v6/*: any*/),
+                      (v4/*: any*/),
                       (v7/*: any*/),
                       (v8/*: any*/),
                       (v9/*: any*/),
                       (v10/*: any*/),
                       (v11/*: any*/),
                       (v12/*: any*/),
+                      (v13/*: any*/),
                       {
                         "args": null,
                         "kind": "FragmentSpread",
@@ -258,15 +270,15 @@ return {
                         "kind": "FragmentSpread",
                         "name": "CourseEditComponent_course"
                       },
-                      (v13/*: any*/)
+                      (v14/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v14/*: any*/)
+                  (v15/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v15/*: any*/)
+              (v16/*: any*/)
             ],
             "storageKey": null
           }
@@ -279,25 +291,28 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "UserQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "User",
         "kind": "LinkedField",
         "name": "user",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
-            "args": (v16/*: any*/),
+            "args": (v17/*: any*/),
             "concreteType": "CourseConnection",
             "kind": "LinkedField",
             "name": "courses",
@@ -319,18 +334,18 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
                       (v3/*: any*/),
-                      (v6/*: any*/),
+                      (v4/*: any*/),
                       (v7/*: any*/),
                       (v8/*: any*/),
                       (v9/*: any*/),
                       (v10/*: any*/),
                       (v11/*: any*/),
                       (v12/*: any*/),
+                      (v13/*: any*/),
                       {
                         "alias": null,
-                        "args": (v16/*: any*/),
+                        "args": (v17/*: any*/),
                         "concreteType": "ScoreConnection",
                         "kind": "LinkedField",
                         "name": "scores",
@@ -352,8 +367,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v2/*: any*/),
                                   (v3/*: any*/),
+                                  (v4/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -361,7 +376,7 @@ return {
                                     "name": "userId",
                                     "storageKey": null
                                   },
-                                  (v4/*: any*/),
+                                  (v5/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -376,42 +391,42 @@ return {
                                     "name": "sequence",
                                     "storageKey": null
                                   },
-                                  (v13/*: any*/)
+                                  (v14/*: any*/)
                                 ],
                                 "storageKey": null
                               },
-                              (v14/*: any*/)
+                              (v15/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v15/*: any*/)
+                          (v16/*: any*/)
                         ],
                         "storageKey": "scores(first:2147483647)"
                       },
                       {
                         "alias": null,
-                        "args": (v16/*: any*/),
+                        "args": (v17/*: any*/),
                         "filters": null,
                         "handle": "connection",
                         "key": "Scores_scores",
                         "kind": "LinkedHandle",
                         "name": "scores"
                       },
-                      (v13/*: any*/)
+                      (v14/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v14/*: any*/)
+                  (v15/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v15/*: any*/)
+              (v16/*: any*/)
             ],
             "storageKey": "courses(first:2147483647)"
           },
           {
             "alias": null,
-            "args": (v16/*: any*/),
+            "args": (v17/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "Courses_courses",
@@ -424,7 +439,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c92fa8c725981f8a235582560a6f9c2a",
+    "cacheID": "90455910ffa2f65696bb37d7ec7ecd26",
     "id": null,
     "metadata": {
       "connection": [
@@ -441,11 +456,11 @@ return {
     },
     "name": "UserQuery",
     "operationKind": "query",
-    "text": "query UserQuery(\n  $id: String\n) {\n  user(id: $id) {\n    id\n    _id\n    username\n    email\n    ...CoursePlayerComponent_user\n    ...CourseComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          author\n          avatar\n          likes\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        _id\n        userId\n        username\n        score\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n}\n\nfragment CourseEditComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  avatar\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_user on User {\n  id\n  _id\n  username\n}\n"
+    "text": "query UserQuery(\n  $id: String\n  $email: String\n) {\n  user(id: $id, email: $email) {\n    id\n    _id\n    username\n    email\n    ...CoursePlayerComponent_user\n    ...CourseComponent_user\n    courses(first: 2147483647) {\n      edges {\n        node {\n          id\n          _id\n          title\n          description\n          body\n          authorId\n          author\n          avatar\n          likes\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n          ...CourseEditComponent_course\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        _id\n        userId\n        username\n        score\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CourseComponent_user on User {\n  id\n  _id\n}\n\nfragment CourseEditComponent_course on Course {\n  id\n  _id\n  title\n  description\n  body\n  avatar\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n}\n\nfragment CoursePlayerComponent_user on User {\n  id\n  _id\n  username\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ddbefb38da194d4d7b630311d46fa746";
+(node as any).hash = "96bf087222e13d8145309578c7605525";
 
 export default node;
