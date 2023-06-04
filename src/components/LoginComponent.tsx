@@ -20,7 +20,7 @@ const LoginComponent: React.FC<IProps> = ({navigation, userInfo}) => {
   const {user} = useLazyLoadQuery<UserQueryType>(UserQuery, {email: userInfo?.email});
 
   useEffect(() => {
-    if (user?.id) navigation.navigate('Home', {userId: user?.id});
+    if (user?._id) navigation.navigate('Home', {userId: user?._id});
   }, [user]);
 
   const getUserInfo = async (): Promise<IIDToken | null> => {

@@ -10,6 +10,7 @@ import {useAddScoreMutation} from '../mutations/AddScoreMutation';
 import {CanvasContext} from '../utils/context/CanvasProvider';
 import {getWordsFromString, selectRandomWords} from '../utils/wordsPlayer';
 import {useAddStreakMutation} from '../mutations/AddStreakMutation';
+import DrawerComponent from './DrawerComponent';
 
 interface IProps extends NavigationType<'Course'> {}
 
@@ -162,15 +163,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       <DrawerButtonWrapper onPress={() => setDrawerOpen(true)}>
         <Icon name="chevron-up" size={40} color="white" />
       </DrawerButtonWrapper>
-      <MenuDrawer
-        open={drawerOpen}
-        position="right"
-        drawerContent={drawerContent()}
-        drawerPercentage={77}
-        animationTime={250}
-        overlay={true}
-        opacity={0.4}
-      />
+      <DrawerComponent open={drawerOpen} content={drawerContent()} position="bottom" width={200} />
     </Container>
   );
 };
@@ -181,7 +174,6 @@ const Container = styled.View<{backgroundColor: string}>`
   display: flex;
   height: 100%;
   gap: 16px;
-  padding: 16px;
   background-color: ${props => props.backgroundColor};
 `;
 
