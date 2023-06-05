@@ -4,7 +4,7 @@ import {NavigationType} from '../App';
 import CoursesComponent from '../components/CoursesComponent';
 import ProfilePage from './ProfilePage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ScoresComponent from '../components/ScoresComponent';
+import ScoresFilterComponent from '../components/ScoresFilterComponent';
 
 interface IProps extends NavigationType<'Home'> {}
 
@@ -17,19 +17,31 @@ const HomePage: React.FC<IProps> = ({route}) => {
         name="Profile"
         initialParams={{userId: route.params?.userId}}
         component={ProfilePage}
-        options={{tabBarIcon: ({focused}) => <Icon name="user-o" size={30} color={focused ? 'lightblue' : 'grey'} />}}
+        options={{
+          tabBarActiveTintColor: '#fc4445',
+          tabBarInactiveTintColor: '#lightgrey',
+          tabBarIcon: ({focused}) => <Icon name="user-o" size={30} color={focused ? '#fc4445' : 'grey'} />,
+        }}
       />
       <Tab.Screen
         name="Courses"
         initialParams={{userId: route.params?.userId}}
         component={CoursesComponent}
-        options={{tabBarIcon: ({focused}) => <Icon name="list" size={30} color={focused ? 'lightblue' : 'grey'} />}}
+        options={{
+          tabBarActiveTintColor: '#659dbd',
+          tabBarInactiveTintColor: '#lightgrey',
+          tabBarIcon: ({focused}) => <Icon name="list" size={30} color={focused ? '#659dbd' : 'lightgrey'} />,
+        }}
       />
       <Tab.Screen
         name="Scores"
-        component={ScoresComponent}
+        component={ScoresFilterComponent}
         options={{
-          tabBarIcon: ({focused}) => <Icon name="star-half-empty" size={30} color={focused ? 'lightblue' : 'grey'} />,
+          tabBarActiveTintColor: '#f7da00',
+          tabBarInactiveTintColor: '#lightgrey',
+          tabBarIcon: ({focused}) => (
+            <Icon name="star-half-empty" size={30} color={focused ? '#f7da00' : 'lightgrey'} />
+          ),
         }}
       />
     </Tab.Navigator>

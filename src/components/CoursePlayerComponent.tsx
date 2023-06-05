@@ -11,6 +11,7 @@ import {CanvasContext} from '../utils/context/CanvasProvider';
 import {getWordsFromString, selectRandomWords} from '../utils/wordsPlayer';
 import {useAddStreakMutation} from '../mutations/AddStreakMutation';
 import DrawerComponent from './DrawerComponent';
+import {CoursePlayerComponent_course$key} from './__generated__/CoursePlayerComponent_course.graphql';
 
 interface IProps extends NavigationType<'Course'> {}
 
@@ -26,17 +27,26 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
     route.params.userRef,
   );
 
-  const course = useFragment(
+  const course = useFragment<CoursePlayerComponent_course$key>(
     graphql`
       fragment CoursePlayerComponent_course on Course {
         id
         title
         description
         body
+        scores(first: 2147483647) @connection(key: "Scores_scores") {
+          edges {
+            node {
+              score
+            }
+          }
+        }
       }
     `,
     route.params.courseRef,
   );
+
+  const userScore = course.scores?.edges?.find(edge => edge?.node?.userId === user?._id)?.node?.score;
 
   const commitAddScoreMutation = useAddScoreMutation(user.id, course.id);
   const commitAddStreakMutation = useAddStreakMutation(user.id, course.id);
@@ -98,7 +108,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
       setBackground('#03a9f4');
       const newReactionTime = (Date.now() - timeStart) / 1000;
       setReactionTime(newReactionTime);
-      commitAddScoreMutation(newReactionTime, userInput, parseInt(intervalMs), parseInt(wordsCount));
+      commitAddScoreMutation(newReactionTime, userInput, parseInt(intervalMs), parseInt(wordsCount), !!userScore);
       setPause(false);
       setShowCounter(true);
       setCounterValue(3);

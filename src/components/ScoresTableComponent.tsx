@@ -7,19 +7,17 @@ import {ScoresQuery} from '../queries/Scores';
 import {ScoresQuery as ScoresQueryType} from '../queries/__generated__/ScoresQuery.graphql';
 
 interface IProps {
-  refetch: () => void;
   queryArgs: {
     options: {fetchKey: number};
     variables: {wordsCount: number; interval: number};
   };
 }
 
-const ScoresTableComponent: React.FC<IProps> = ({refetch, queryArgs}) => {
+const ScoresTableComponent: React.FC<IProps> = ({queryArgs}) => {
   const scores = useLazyLoadQuery<ScoresQueryType>(ScoresQuery, queryArgs.variables, queryArgs.options);
 
   return (
     <Wrapper>
-      <StyledButton title="Apply Filter" onPress={() => refetch()} />
       <ScrollView>
         {scores?.scores?.data?.edges?.map((edge, idx) => (
           <React.Fragment key={idx}>
