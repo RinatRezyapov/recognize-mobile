@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4e21af6a553cc75196d2769503c6018>>
+ * @generated SignedSource<<6599e3c6c903a13a622f20add1f358d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,12 +17,8 @@ export type CoursePlayerComponent_course$data = {
   readonly scores: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly _id: string | null;
-        readonly id: string;
         readonly score: number | null;
-        readonly sequence: string | null;
         readonly userId: string | null;
-        readonly username: string | null;
       } | null;
     } | null> | null;
   } | null;
@@ -34,15 +30,7 @@ export type CoursePlayerComponent_course$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CoursePlayerComponent_course">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": {
@@ -59,7 +47,13 @@ return {
   },
   "name": "CoursePlayerComponent_course",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -105,14 +99,6 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "_id",
-                  "storageKey": null
-                },
                 {
                   "alias": null,
                   "args": null,
@@ -124,21 +110,7 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "username",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "score",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "sequence",
                   "storageKey": null
                 },
                 {
@@ -193,8 +165,7 @@ return {
   "type": "Course",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "13fcae45e597422e9b40965a6982b0c4";
+(node as any).hash = "a350947bb30a68fca1a14481d3e47cea";
 
 export default node;

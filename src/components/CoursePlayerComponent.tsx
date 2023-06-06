@@ -37,6 +37,7 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
         scores(first: 2147483647) @connection(key: "Scores_scores") {
           edges {
             node {
+              userId
               score
             }
           }
@@ -103,29 +104,35 @@ const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
     return () => clearInterval(intervalId);
   }, [pause, course]);
 
+  const resetCounter = () => {
+    setPause(false);
+    setShowCounter(true);
+    setCounterValue(3);
+  };
+
   const onUserInputSubmit = (userInput: string) => {
     if (userInput === currentPhrase.join(' ')) {
       setBackground('#03a9f4');
       const newReactionTime = (Date.now() - timeStart) / 1000;
       setReactionTime(newReactionTime);
-      commitAddScoreMutation(newReactionTime, userInput, parseInt(intervalMs), parseInt(wordsCount), !!userScore);
-      setPause(false);
-      setShowCounter(true);
-      setCounterValue(3);
+
+      resetCounter();
       setStreak(prevStreak => {
         const newStreak = prevStreak + 1;
         commitAddStreakMutation(newStreak, parseInt(intervalMs), parseInt(wordsCount));
 
         return newStreak;
       });
-      resultRef?.current?.measure((width, height, px, py, fx, fy) => {
-        animateSparks(fx, fy);
-      });
+
+      if (userScore && newReactionTime < userScore) {
+        commitAddScoreMutation(newReactionTime, userInput, parseInt(intervalMs), parseInt(wordsCount), true);
+        resultRef?.current?.measure((width, height, px, py, fx, fy) => animateSparks(fx, fy));
+      } else {
+        commitAddScoreMutation(newReactionTime, userInput, parseInt(intervalMs), parseInt(wordsCount), false);
+      }
     } else {
       setBackground('#ff4569');
-      setPause(false);
-      setShowCounter(true);
-      setCounterValue(3);
+      resetCounter();
       setStreak(0);
     }
   };

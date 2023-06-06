@@ -19,7 +19,7 @@ const HomePage: React.FC<IProps> = ({route}) => {
         component={ProfilePage}
         options={{
           tabBarActiveTintColor: '#fc4445',
-          tabBarInactiveTintColor: '#lightgrey',
+          tabBarInactiveTintColor: 'lightgrey',
           tabBarIcon: ({focused}) => <Icon name="user-o" size={30} color={focused ? '#fc4445' : 'grey'} />,
         }}
       />
@@ -29,7 +29,7 @@ const HomePage: React.FC<IProps> = ({route}) => {
         component={CoursesComponent}
         options={{
           tabBarActiveTintColor: '#659dbd',
-          tabBarInactiveTintColor: '#lightgrey',
+          tabBarInactiveTintColor: 'lightgrey',
           tabBarIcon: ({focused}) => <Icon name="list" size={30} color={focused ? '#659dbd' : 'lightgrey'} />,
         }}
       />
@@ -38,7 +38,7 @@ const HomePage: React.FC<IProps> = ({route}) => {
         component={ScoresFilterComponent}
         options={{
           tabBarActiveTintColor: '#f7da00',
-          tabBarInactiveTintColor: '#lightgrey',
+          tabBarInactiveTintColor: 'lightgrey',
           tabBarIcon: ({focused}) => (
             <Icon name="star-half-empty" size={30} color={focused ? '#f7da00' : 'lightgrey'} />
           ),

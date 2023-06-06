@@ -1,6 +1,6 @@
 import {GraphQLID, GraphQLNonNull} from 'graphql';
 import {fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
-import {deleteCourseLikes, deleteCourseScores, removeCourse} from '../../database';
+import {deleteCourseLikes, deleteCourseScores, deleteCourseStreak, removeCourse} from '../../database';
 
 const RemoveCourseMutation = mutationWithClientMutationId({
   name: 'RemoveCourse',
@@ -17,6 +17,7 @@ const RemoveCourseMutation = mutationWithClientMutationId({
     const localId = fromGlobalId(id).id;
     await deleteCourseLikes(localId, pgPool);
     await deleteCourseScores(localId, pgPool);
+    await deleteCourseStreak(localId, pgPool);
     await removeCourse(localId, pgPool);
 
     return {id};

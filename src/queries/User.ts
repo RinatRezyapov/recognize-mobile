@@ -19,6 +19,7 @@ export const UserQuery = graphql`
             body
             authorId
             author
+            author
             avatar
             likes
             ...CourseComponent_course

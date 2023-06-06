@@ -33,6 +33,7 @@ export const useAddScoreMutation = (userId?: string, courseId?: string) => {
             sequence,
             interval,
             wordsCount,
+            update,
           },
         },
         updater: store => {

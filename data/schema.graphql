@@ -237,6 +237,7 @@ input AddScoreInput {
   sequence: String!
   interval: Int!
   wordsCount: Int!
+  update: Boolean!
   clientMutationId: String
 }
 

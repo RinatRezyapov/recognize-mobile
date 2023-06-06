@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dfa91a54315abcd00b02d83b83e6b4d7>>
+ * @generated SignedSource<<97a2f9d197d8d6a555ad0670d173ee78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type AddScoreInput = {
   interval: number;
   score: number;
   sequence: string;
+  update: boolean;
   userId: string;
   wordsCount: number;
 };
