@@ -1,9 +1,9 @@
 import {graphql} from 'react-relay';
 
 export const CoursesQuery = graphql`
-  query CoursesQuery {
+  query CoursesQuery($count: Int, $cursor: String) {
     courses {
-      data {
+      data(first: $count, after: $cursor) {
         edges {
           node {
             id
@@ -20,5 +20,6 @@ export const CoursesQuery = graphql`
         }
       }
     }
+    ...CoursesComponent
   }
 `;
