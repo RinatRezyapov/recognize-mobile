@@ -21,8 +21,3 @@ const CoursesPage: React.FC<IProps> = ({navigation, route}) => {
 };
 
 export default CoursesPage;
-
-const Wrapper = styled.View`
-  padding: 32px 16px;
-  height: 100%;
-`;

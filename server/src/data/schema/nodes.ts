@@ -263,10 +263,13 @@ const GraphQLCourses = new GraphQLObjectType({
     node: nodeField,
     data: {
       type: CoursesConnection,
-      args: coursesArgs,
+      args: {
+        ...connectionArgs,
+      },
       resolve: async (parent, {after, before, first, last}, {pgPool}) => {
         try {
-          const courses = await getAllCourses(pgPool);
+          console.log(after, before, first, last);
+          const courses = await getAllCourses(pgPool, first);
           return connectionFromArray(courses, {after, before, first, last});
         } catch (err) {
           console.error(err);

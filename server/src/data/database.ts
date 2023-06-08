@@ -99,8 +99,9 @@ export const getByEmail = (email: number, pgPool) => {
   return pgPool?.query(`SELECT * FROM users WHERE email='${email}'`).then(response => response.rows?.[0]);
 };
 
-export const getAllCourses = pgPool => {
-  return pgPool?.query(`SELECT * FROM courses;`).then(response => {
+export const getAllCourses = (pgPool, first: number) => {
+  console.log(first);
+  return pgPool?.query(`SELECT * FROM courses LIMIT ${first || 2};`).then(response => {
     return response.rows.map(v => ({...v, id: v.id}));
   });
 };

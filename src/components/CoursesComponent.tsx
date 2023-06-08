@@ -1,10 +1,14 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {Button, FlatList, TouchableOpacity} from 'react-native';
 import {graphql, usePaginationFragment} from 'react-relay';
 
-import {CoursesQuery$data as CoursesQueryType$data} from '../queries/__generated__/CoursesQuery.graphql';
+import {CoursesQuery$data as CoursesQueryDataType} from '../queries/__generated__/CoursesQuery.graphql';
 import {UserQuery$data as UserQueryType$data} from '../queries/__generated__/UserQuery.graphql';
+import {
+  CoursesPaginationQuery as CoursesPaginationQueryType,
+  CoursesPaginationQuery$data as CoursesPaginationQueryDataType,
+} from '../components/__generated__/CoursesPaginationQuery.graphql';
 import CourseCardComponent from './CourseCardComponent';
 
 const CoursesComponentFragment = graphql`
@@ -31,12 +35,19 @@ const CoursesComponentFragment = graphql`
 interface IProps {
   route: any;
   navigation: any;
-  courses: CoursesQueryType$data;
+  courses: CoursesQueryDataType;
   user: UserQueryType$data;
 }
 
 const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) => {
-  const {data: paginatedData, loadNext, hasNext} = usePaginationFragment(CoursesComponentFragment, courses);
+  const {
+    data: paginatedData,
+    loadNext,
+    hasNext,
+  } = usePaginationFragment<CoursesPaginationQueryType, CoursesPaginationQueryDataType>(
+    CoursesComponentFragment,
+    courses,
+  );
 
   const renderItem = ({item}) => {
     return (
@@ -47,19 +58,21 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
       </TouchableOpacity>
     );
   };
-
+  //?.filter(v => v?.node?.authorId !== route.params.userId)
   return (
     <Wrapper>
       <FlatList
-        data={paginatedData.courses.data.edges?.filter(v => v?.node?.authorId !== route.params.userId)}
+        data={paginatedData.courses.data.edges}
         renderItem={renderItem}
         keyExtractor={item => item.node.id}
         onEndReached={() => {
+          console.log('hm', hasNext);
           if (hasNext) {
             loadNext(1); // Load next page with count 1
           }
         }}
       />
+      <Button title="Load" onPress={() => loadNext(2)} />
     </Wrapper>
   );
 };
