@@ -1,5 +1,5 @@
 import {GraphQLString} from 'graphql';
-import {getByEmail, getUser} from '../../database';
+import {getUserByEmail, getUser} from '../../database';
 import {GraphQLUser} from '../nodes';
 
 const UserQuery = {
@@ -10,7 +10,7 @@ const UserQuery = {
   },
   resolve: (_, {id, email}, {pgPool}) => {
     if (email) {
-      return getByEmail(email, pgPool);
+      return getUserByEmail(email, pgPool);
     }
     return getUser(id, pgPool);
   },
