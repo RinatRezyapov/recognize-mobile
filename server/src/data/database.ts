@@ -33,24 +33,49 @@ export class Course {
 
 export class User {
   id: string;
-  constructor(id: string) {
+  email: string;
+  username: string;
+  firstLogin: string;
+  lastLogin: string;
+
+  constructor(id: string, email: string, username: string, firstLogin: string, lastLogin: string) {
     this.id = id;
+    this.email = email;
+    this.username = username;
+    this.firstLogin = firstLogin;
+    this.lastLogin = lastLogin;
   }
 }
 
 export class Score {
-  id: string;
-  constructor(id: string) {
-    this.id = id;
+  userId: string;
+  courseId: string;
+  score: number;
+  sequence: string;
+  interval: number;
+  wordsCount: number;
+  constructor(userId: string, courseId: string, score: number, sequence: string, interval: number, wordsCount: number) {
+    this.userId = userId;
+    this.courseId = courseId;
+    this.score = score;
+    this.sequence = sequence;
+    this.interval = interval;
+    this.wordsCount = wordsCount;
   }
 }
 
 export const getUser = (userId: number, pgPool: Pool) => {
-  return pgPool?.query(`SELECT * FROM users WHERE id='${userId}'`).then(response => response.rows?.[0]);
+  return pgPool?.query(`SELECT * FROM users WHERE id='${userId}'`).then(response => {
+    const user = response.rows?.[0];
+    return new User(user.id, user.email, user.username, user.first_login, user.last_login);
+  });
 };
 
 export const getUserByEmail = (email: string, pgPool: Pool) => {
-  return pgPool?.query(`SELECT * FROM users WHERE email = '${email}'`).then(response => response.rows?.[0]);
+  return pgPool?.query(`SELECT * FROM users WHERE email = '${email}'`).then(response => {
+    const user = response.rows?.[0];
+    return new User(user.id, user.email, user.username, user.first_login, user.last_login);
+  });
 };
 
 export const addUser = (email: string, username: string, pgPool: Pool) => {
@@ -68,7 +93,19 @@ export const getCourses = (userId: string, pgPool) => {
 };
 
 export const getCourse = (courseId: number, pgPool) => {
-  return pgPool?.query(`SELECT * FROM courses WHERE id = '${courseId}'`).then(response => response.rows?.[0]);
+  return pgPool?.query(`SELECT * FROM courses WHERE id = '${courseId}'`).then(response => {
+    const course = response.rows?.[0];
+    return new Course(
+      course.id,
+      course.title,
+      course.description,
+      course.body,
+      course.created_at,
+      course.updated_at,
+      course.author_id,
+      course.avatar,
+    );
+  });
 };
 
 export const addCourse = (pgPool, authorId, data) => {
@@ -139,13 +176,14 @@ export const getCourseLikes = (id: string, pgPool: Pool) => {
 
 export const getCourseScores = (id: string, pgPool: Pool) => {
   return pgPool?.query(`SELECT * FROM scores where course_id='${id}';`).then(response => {
-    return response.rows;
+    return response.rows.map(v => new Score(v.user_id, v.course_id, v.score, v.sequence, v.interval, v.words_count));
   });
 };
 
 export const getScore = (userId: string, courseId: string, pgPool: Pool) => {
   return pgPool?.query(`SELECT * FROM scores where user_id='${userId}' AND course_id='${courseId}';`).then(response => {
-    return response.rows?.[0];
+    const v = response.rows?.[0];
+    return new Score(v.user_id, v.course_id, v.score, v.sequence, v.interval, v.words_count);
   });
 };
 
@@ -193,14 +231,16 @@ export const updateScore = (
 
 export const getAllScores = (pgPool: Pool) => {
   return pgPool?.query(`SELECT * FROM scores ORDER BY score asc;`).then(response => {
-    return response.rows;
+    return response.rows.map(v => new Score(v.user_id, v.course_id, v.score, v.sequence, v.interval, v.words_count));
   });
 };
 
 export const getAllScoresWhere = (wordsCount: number, interval: number, pgPool: Pool) => {
   return pgPool
     ?.query(`SELECT * FROM scores where words_count=${wordsCount} AND interval=${interval} ORDER BY score asc;`)
-    .then(response => response.rows);
+    .then(response =>
+      response.rows.map(v => new Score(v.user_id, v.course_id, v.score, v.sequence, v.interval, v.words_count)),
+    );
 };
 
 export const getCourseStreaks = (id: string, pgPool: Pool) => {
