@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed4672bdfa29c3b71f13254fda274104>>
+ * @generated SignedSource<<dd1e46e1a83fda7084c6ef683544ce62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,12 +34,7 @@ export type CoursesComponent$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CoursesComponent">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  "courses",
-  "data"
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
@@ -52,23 +47,8 @@ return {
   ],
   "kind": "Fragment",
   "metadata": {
-    "connection": [
-      {
-        "count": "count",
-        "cursor": "cursor",
-        "direction": "forward",
-        "path": (v0/*: any*/)
-      }
-    ],
     "refetch": {
-      "connection": {
-        "forward": {
-          "count": "count",
-          "cursor": "cursor"
-        },
-        "backward": null,
-        "path": (v0/*: any*/)
-      },
+      "connection": null,
       "fragmentPathInResult": [],
       "operation": require('./CoursesPaginationQuery.graphql')
     }
@@ -77,18 +57,29 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "cursor"
+        },
+        {
+          "kind": "Variable",
+          "name": "first",
+          "variableName": "count"
+        }
+      ],
       "concreteType": "Courses",
       "kind": "LinkedField",
       "name": "courses",
       "plural": false,
       "selections": [
         {
-          "alias": "data",
+          "alias": null,
           "args": null,
           "concreteType": "CourseConnection",
           "kind": "LinkedField",
-          "name": "__CoursesComponent_data_connection",
+          "name": "data",
           "plural": false,
           "selections": [
             {
@@ -162,47 +153,8 @@ return {
                       "kind": "ScalarField",
                       "name": "likes",
                       "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "__typename",
-                      "storageKey": null
                     }
                   ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "cursor",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "PageInfo",
-              "kind": "LinkedField",
-              "name": "pageInfo",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "endCursor",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "hasNextPage",
                   "storageKey": null
                 }
               ],
@@ -218,8 +170,7 @@ return {
   "type": "Query",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "b97988d7f008bb3e4ce51798ac81cf48";
+(node as any).hash = "91f4ec937c39c6b27fcf6d1cbba892a9";
 
 export default node;

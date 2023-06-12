@@ -5,9 +5,9 @@ export class Course {
   title: string;
   description: string;
   body: string;
-  created_at: string;
-  updated_at: string;
-  author_id: string;
+  createdAt: string;
+  updatedAt: string;
+  authorId: string;
   avatar: string;
 
   constructor(
@@ -24,9 +24,9 @@ export class Course {
     this.title = title;
     this.description = description;
     this.body = body;
-    this.created_at = created_at;
-    this.updated_at = updated_at;
-    this.author_id = author_id;
+    this.createdAt = created_at;
+    this.updatedAt = updated_at;
+    this.authorId = author_id;
     this.avatar = avatar;
   }
 }
@@ -79,7 +79,7 @@ export class Streak {
   }
 }
 
-export const getUser = (userId: number, pgPool: Pool) =>
+export const getUser = (userId: string, pgPool: Pool) =>
   pgPool?.query(`SELECT * FROM users WHERE id='${userId}'`).then(response => {
     const user = response.rows?.[0];
     return new User(user.id, user.email, user.username, user.first_login, user.last_login);
@@ -96,7 +96,7 @@ export const addUser = (email: string, username: string, pgPool: Pool) =>
     ?.query(`INSERT INTO users (email, username) VALUES ('${email}', '${username}');`)
     .then(response => response.rows?.[0]);
 
-export const getCourses = (userId: string, pgPool) =>
+export const getCourses = (userId: string, pgPool): Promise<Course[]> =>
   pgPool
     ?.query(`SELECT * FROM courses WHERE author_id = '${userId}'`)
     .then(response =>
@@ -105,7 +105,7 @@ export const getCourses = (userId: string, pgPool) =>
       ),
     );
 
-export const getCourse = (courseId: number, pgPool) =>
+export const getCourse = (courseId: number, pgPool): Promise<Course> =>
   pgPool?.query(`SELECT * FROM courses WHERE id = '${courseId}'`).then(response => {
     const course = response.rows?.[0];
     return new Course(
@@ -155,7 +155,7 @@ export const removeCourse = (courseId: string, pgPool: Pool) =>
 
 export const getAllCourses = (pgPool: Pool, first: number) =>
   pgPool
-    ?.query(`SELECT * FROM courses LIMIT ${first || 2};`)
+    ?.query(`SELECT * FROM courses LIMIT ${first};`)
     .then(response =>
       response.rows.map(
         v => new Course(v.id, v.title, v.description, v.body, v.created_at, v.updated_at, v.author_id, v.avatar),

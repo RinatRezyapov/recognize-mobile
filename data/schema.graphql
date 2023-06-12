@@ -1,6 +1,6 @@
 type Query {
   user(id: String, email: String): User
-  courses(interval: Int, after: String, first: Int, before: String, last: Int): Courses
+  courses(after: String, first: Int, before: String, last: Int): Courses
   scores(interval: Int, wordsCount: Int): Scores
   streaks: Streaks
 
@@ -112,7 +112,7 @@ type Courses {
     """The ID of an object"""
     id: ID!
   ): Node
-  data(interval: Int, after: String, first: Int, before: String, last: Int): CourseConnection
+  data: CourseConnection
 }
 
 type Scores {

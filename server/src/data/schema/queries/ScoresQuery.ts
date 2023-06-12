@@ -8,8 +8,12 @@ const ScoresQuery = {
     interval: {type: GraphQLInt},
     wordsCount: {type: GraphQLInt},
   },
-  resolve: (root, {interval, wordsCount}, {pgPool}) => {
-    return {interval, wordsCount};
+  resolve: async (root, {interval, wordsCount}, {pgPool}) => {
+    if (wordsCount !== undefined && interval !== undefined) {
+      return await getAllScoresWhere(wordsCount, interval, pgPool);
+    } else {
+      return await getAllScores(pgPool);
+    }
   },
 };
 

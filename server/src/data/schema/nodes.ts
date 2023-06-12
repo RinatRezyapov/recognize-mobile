@@ -1,6 +1,7 @@
 import {
   Course,
   Score,
+  Streak,
   User,
   getAllCourses,
   getAllScores,
@@ -143,7 +144,7 @@ const {connectionType: StreaksConnection, edgeType: GraphQLStreakEdge} = connect
   nodeType: GraphQLStreak,
 });
 
-var GraphQLCourse = new GraphQLObjectType({
+var GraphQLCourse = new GraphQLObjectType<Course>({
   name: 'Course',
   fields: {
     id: globalIdField('Course'),
@@ -157,12 +158,12 @@ var GraphQLCourse = new GraphQLObjectType({
     },
     authorId: {
       type: GraphQLString,
-      resolve: course => course.author_id,
+      resolve: course => course.authorId,
     },
     author: {
       type: GraphQLString,
       resolve: async (course, {}, {pgPool}) => {
-        const user = await getUser(course.author_id, pgPool);
+        const user = await getUser(course.authorId, pgPool);
         return user.username;
       },
     },
@@ -180,11 +181,11 @@ var GraphQLCourse = new GraphQLObjectType({
     },
     createdAt: {
       type: GraphQLInt,
-      resolve: course => course.created_at,
+      resolve: course => course.createdAt,
     },
     updatedAt: {
       type: GraphQLInt,
-      resolve: course => course.updated_at,
+      resolve: course => course.updatedAt,
     },
     likes: {
       type: GraphQLList(GraphQLString),
@@ -214,7 +215,7 @@ const {connectionType: CoursesConnection, edgeType: GraphQLCourseEdge} = connect
   nodeType: GraphQLCourse,
 });
 
-var GraphQLUser = new GraphQLObjectType({
+var GraphQLUser = new GraphQLObjectType<User>({
   name: 'User',
   fields: {
     id: globalIdField('User'),
@@ -257,19 +258,14 @@ var GraphQLUser = new GraphQLObjectType({
   interfaces: [nodeInterface],
 });
 
-const GraphQLCourses = new GraphQLObjectType({
+const GraphQLCourses = new GraphQLObjectType<Course[]>({
   name: 'Courses',
   fields: {
     node: nodeField,
     data: {
       type: CoursesConnection,
-      args: {
-        ...connectionArgs,
-      },
-      resolve: async (parent, {after, before, first, last}, {pgPool}) => {
+      resolve: async (courses, {after, before, first, last}) => {
         try {
-          console.log(after, before, first, last);
-          const courses = await getAllCourses(pgPool, first);
           return connectionFromArray(courses, {after, before, first, last});
         } catch (err) {
           console.error(err);
@@ -279,7 +275,7 @@ const GraphQLCourses = new GraphQLObjectType({
   },
 });
 
-const GraphQLScores = new GraphQLObjectType({
+const GraphQLScores = new GraphQLObjectType<Score>({
   name: 'Scores',
   fields: {
     node: nodeField,
@@ -290,24 +286,13 @@ const GraphQLScores = new GraphQLObjectType({
         wordsCount: {type: GraphQLInt},
         interval: {type: GraphQLInt},
       },
-      resolve: async ({wordsCount, interval}, {after, before, first, last}, {pgPool}) => {
-        try {
-          let scores;
-          if (wordsCount !== undefined && interval !== undefined) {
-            scores = await getAllScoresWhere(wordsCount, interval, pgPool);
-          } else {
-            scores = await getAllScores(pgPool);
-          }
-          return connectionFromArray(scores, {after, before, first, last});
-        } catch (err) {
-          console.error(err);
-        }
-      },
+      resolve: async (scores, {after, before, first, last}) =>
+        connectionFromArray(scores, {after, before, first, last}),
     },
   },
 });
 
-const GraphQLStreaks = new GraphQLObjectType({
+const GraphQLStreaks = new GraphQLObjectType<Streak>({
   name: 'Streaks',
   fields: {
     node: nodeField,

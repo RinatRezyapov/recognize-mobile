@@ -11,10 +11,11 @@ import {
 } from '../components/__generated__/CoursesPaginationQuery.graphql';
 import CourseCardComponent from './CourseCardComponent';
 
+//  why @connection(key: "CoursesComponent_courses") ???
 const CoursesComponentFragment = graphql`
   fragment CoursesComponent on Query @refetchable(queryName: "CoursesPaginationQuery") {
-    courses {
-      data(first: $count, after: $cursor) @connection(key: "CoursesComponent_data") {
+    courses(first: $count, after: $cursor) {
+      data {
         edges {
           node {
             id

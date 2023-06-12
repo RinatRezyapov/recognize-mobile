@@ -43,12 +43,12 @@ const AddCourseMutation = mutationWithClientMutationId({
   mutateAndGetPayload: async ({authorId, ...rest}, {pgPool}) => {
     const localAuthorId = fromGlobalId(authorId).id;
     const courses = await getCourses(localAuthorId, pgPool);
-    // if (courses.length >= 2) {
-    //   return {
-    //     authorId: localAuthorId,
-    //     errors: ['You cannot create more that 2 courses'],
-    //   };
-    // }
+    if (courses.length >= 2) {
+      return {
+        authorId: localAuthorId,
+        errors: ['You cannot create more that 2 courses'],
+      };
+    }
 
     const addedCourse = await addCourse(pgPool, localAuthorId, rest);
     return {

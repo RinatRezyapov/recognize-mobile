@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 import {schema} from './data/schema';
 import {graphqlHTTP} from 'express-graphql';
-const {Pool} = require('pg');
+import {Pool} from 'pg';
 
 const SERVER_PORT = 3000;
 

@@ -5,13 +5,10 @@ import {connectionArgs} from 'graphql-relay';
 
 const CoursesQuery = {
   type: GraphQLCourses,
-  args: {
-    interval: {type: GraphQLInt},
-    ...connectionArgs,
-  },
-  resolve: (root, {id, ...rest}, {pgPool, ...test}) => {
-    console.log('!!!!!!!!!!!!', root, rest, test);
-    return getAllCourses(pgPool, 2);
+  args: {...connectionArgs},
+  resolve: (root, {after, before, first, last}, {pgPool}) => {
+    console.log('Query', after, before, first, last);
+    return getAllCourses(pgPool, first);
   },
 };
 
