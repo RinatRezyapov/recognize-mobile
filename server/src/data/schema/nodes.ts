@@ -1,11 +1,17 @@
+import {GraphQLFloat, GraphQLID, GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString} from 'graphql';
+import {
+  connectionArgs,
+  connectionDefinitions,
+  connectionFromArray,
+  fromGlobalId,
+  globalIdField,
+  nodeDefinitions,
+} from 'graphql-relay';
 import {
   Course,
   Score,
   Streak,
   User,
-  getAllCourses,
-  getAllScores,
-  getAllScoresWhere,
   getAllStreaks,
   getCourse,
   getCourseLikes,
@@ -14,15 +20,6 @@ import {
   getScore,
   getUser,
 } from '../database';
-import {GraphQLFloat, GraphQLID, GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString} from 'graphql';
-import {
-  globalIdField,
-  nodeDefinitions,
-  fromGlobalId,
-  connectionDefinitions,
-  connectionFromArray,
-  connectionArgs,
-} from 'graphql-relay';
 
 const {nodeInterface, nodeField} = nodeDefinitions(
   (globalId, {pgPool}) => {
@@ -312,13 +309,13 @@ const GraphQLStreaks = new GraphQLObjectType<Streak>({
 });
 
 export {
-  GraphQLUser,
   GraphQLCourse,
-  GraphQLCourses,
   GraphQLCourseEdge,
+  GraphQLCourses,
   GraphQLScoreEdge,
   GraphQLScores,
   GraphQLStreakEdge,
   GraphQLStreaks,
+  GraphQLUser,
   nodeField,
 };
