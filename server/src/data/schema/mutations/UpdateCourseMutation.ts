@@ -2,7 +2,6 @@ import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId}
 
 import {GraphQLID, GraphQLNonNull, GraphQLString} from 'graphql';
 import {getCourse, getCourses, updateCourse} from '../../database';
-import {GraphQLCourseEdge} from '../nodes';
 
 const UpdateCourseMutation = mutationWithClientMutationId({
   name: 'UpdateCourse',
@@ -14,7 +13,7 @@ const UpdateCourseMutation = mutationWithClientMutationId({
   },
   outputFields: {
     courseEdge: {
-      type: new GraphQLNonNull(GraphQLCourseEdge),
+      type: new GraphQLNonNull((() => require('../nodes/Course').default.edgeType)()),
       resolve: async ({id}, {}, {pgPool}) => {
         const course = await getCourse(id, pgPool);
         const courses = await getCourses(id, pgPool);

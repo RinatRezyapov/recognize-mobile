@@ -43,9 +43,7 @@ const GraphQLScore = new GraphQLObjectType({
   },
 });
 
-export const {connectionType: ScoresConnection, edgeType: GraphQLScoreEdge} = connectionDefinitions({
+export default connectionDefinitions({
   name: 'Score',
   nodeType: GraphQLScore,
 });
-
-export default GraphQLScore;

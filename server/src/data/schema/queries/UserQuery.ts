@@ -1,6 +1,6 @@
 import {GraphQLString} from 'graphql';
 import {getUserByEmail, getUser} from '../../database';
-import {GraphQLUser} from '../nodes';
+import GraphQLUser from '../nodes/User';
 
 const UserQuery = {
   type: GraphQLUser,
@@ -8,9 +8,11 @@ const UserQuery = {
     id: {type: GraphQLString},
     email: {type: GraphQLString},
   },
-  resolve: (_, {id, email}, {pgPool}) => {
+  resolve: async (_, {id, email}, {pgPool}) => {
     if (email) {
-      return getUserByEmail(email, pgPool);
+      const user = await getUserByEmail(email, pgPool);
+      console.log(user);
+      return user;
     }
     return getUser(id, pgPool);
   },

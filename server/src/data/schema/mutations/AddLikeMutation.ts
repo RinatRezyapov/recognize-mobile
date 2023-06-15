@@ -1,7 +1,6 @@
 import {GraphQLBoolean, GraphQLID, GraphQLNonNull} from 'graphql';
 import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
 import {getCourse, getCourses, likeCourse, unlikeCourse} from '../../database';
-import {GraphQLCourseEdge} from '../nodes';
 
 const LikeCourseMutation = mutationWithClientMutationId({
   name: 'LikeCourse',
@@ -12,7 +11,7 @@ const LikeCourseMutation = mutationWithClientMutationId({
   },
   outputFields: {
     courseEdge: {
-      type: new GraphQLNonNull(GraphQLCourseEdge),
+      type: (() => require('../nodes/Course').default.edgeType)(),
       resolve: async ({id}, {}, {pgPool}) => {
         const course = await getCourse(id, pgPool);
         const courses = await getCourses(id, pgPool);

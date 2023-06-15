@@ -1,6 +1,6 @@
 import {GraphQLInt} from 'graphql';
 import {getAllScores, getAllScoresWhere} from '../../database';
-import {GraphQLScores} from '../nodes';
+import GraphQLScores from '../nodes/Scores';
 
 const ScoresQuery = {
   type: GraphQLScores,

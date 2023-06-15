@@ -1,9 +1,7 @@
-import {mutationWithClientMutationId, cursorForObjectInConnection, fromGlobalId} from 'graphql-relay';
-
-import {GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLString} from 'graphql';
-import {GraphQLCourseEdge, GraphQLUser} from '../nodes';
-
+import {GraphQLID, GraphQLList, GraphQLNonNull, GraphQLString} from 'graphql';
+import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
 import {addCourse, getCourse, getCourses, getUser} from '../../database';
+import GraphQLUser from '../nodes/User';
 
 const AddCourseMutation = mutationWithClientMutationId({
   name: 'AddCourse',
@@ -18,7 +16,7 @@ const AddCourseMutation = mutationWithClientMutationId({
   },
   outputFields: {
     courseEdge: {
-      type: GraphQLCourseEdge,
+      type: (() => require('../nodes/Course').default.edgeType)(),
       resolve: async ({addedCourse, authorId}, {}, {pgPool}) => {
         if (!addedCourse) return;
         const course = await getCourse(addedCourse.id, pgPool);

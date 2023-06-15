@@ -1,7 +1,6 @@
 import {GraphQLID, GraphQLInt, GraphQLNonNull} from 'graphql';
 import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
 import {addStreak, getCourseStreaks, getStreak, updateStreak} from '../../database';
-import {GraphQLStreakEdge} from '../nodes';
 
 const AddStreakMutation = mutationWithClientMutationId({
   name: 'AddStreak',
@@ -14,7 +13,7 @@ const AddStreakMutation = mutationWithClientMutationId({
   },
   outputFields: {
     streakEdge: {
-      type: new GraphQLNonNull(GraphQLStreakEdge),
+      type: new GraphQLNonNull((() => require('../nodes/Streak').default.edgeType)()),
       resolve: async ({userId, courseId}, {}, {pgPool}) => {
         const streak = await getStreak(userId, courseId, pgPool);
         const streaks = await getCourseStreaks(courseId, pgPool);

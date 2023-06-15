@@ -2,7 +2,7 @@ import {GraphQLFloat, GraphQLObjectType, GraphQLString} from 'graphql';
 import {connectionDefinitions, globalIdField} from 'graphql-relay';
 import {getCourse, getUser} from '../../database';
 
-const GraphQLStreak = new GraphQLObjectType({
+export const GraphQLStreak = new GraphQLObjectType({
   name: 'Streak',
   fields: {
     id: globalIdField('Streak', streak => streak.user_id + ':' + streak.course_id),
@@ -39,9 +39,7 @@ const GraphQLStreak = new GraphQLObjectType({
   },
 });
 
-export const {connectionType: StreaksConnection, edgeType: GraphQLStreakEdge} = connectionDefinitions({
+export default connectionDefinitions({
   name: 'Streak',
   nodeType: GraphQLStreak,
 });
-
-export default GraphQLStreak;

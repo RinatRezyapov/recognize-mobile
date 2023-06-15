@@ -1,5 +1,5 @@
 import {getAllStreaks} from '../../database';
-import {GraphQLStreaks} from '../nodes';
+import GraphQLStreaks from '../nodes/Streaks';
 
 const StreaksQuery = {
   type: GraphQLStreaks,

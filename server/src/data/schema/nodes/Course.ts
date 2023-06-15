@@ -1,10 +1,8 @@
 import {GraphQLID, GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString} from 'graphql';
 import {connectionArgs, connectionDefinitions, connectionFromArray, globalIdField} from 'graphql-relay';
 import {Course, getCourseLikes, getCourseScores, getUser} from '../../database';
-import {ScoresConnection} from './Score';
-import {nodeInterface} from '../nodes';
 
-var GraphQLCourse = new GraphQLObjectType<Course>({
+export var GraphQLCourse = new GraphQLObjectType<Course>({
   name: 'Course',
   fields: {
     id: globalIdField('Course'),
@@ -55,7 +53,7 @@ var GraphQLCourse = new GraphQLObjectType<Course>({
       },
     },
     scores: {
-      type: ScoresConnection,
+      type: (() => require('./Score').default.connectionType)(),
       args: {...connectionArgs, courseId: {type: GraphQLID}},
       resolve: async (course, {after, before, first, last}, {pgPool}) => {
         try {
@@ -67,12 +65,10 @@ var GraphQLCourse = new GraphQLObjectType<Course>({
       },
     },
   },
-  interfaces: [nodeInterface],
+  interfaces: [(() => require('./nod').default.nodeInterface)()],
 });
 
-export const {connectionType: CoursesConnection, edgeType: GraphQLCourseEdge} = connectionDefinitions({
+export default connectionDefinitions({
   name: 'Course',
   nodeType: GraphQLCourse,
 });
-
-export default GraphQLCourse;
