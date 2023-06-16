@@ -1,7 +1,7 @@
 import {GraphQLObjectType, GraphQLString} from 'graphql';
 import {connectionArgs, connectionFromArray, globalIdField} from 'graphql-relay';
 import {User, getCourses, getScore} from '../../database';
-import GraphQLScore from './Score';
+import {GraphQLScore} from './Score';
 
 var GraphQLUser = new GraphQLObjectType<User>({
   name: 'User',

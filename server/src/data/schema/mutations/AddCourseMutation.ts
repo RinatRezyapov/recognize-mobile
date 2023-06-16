@@ -1,7 +1,6 @@
 import {GraphQLID, GraphQLList, GraphQLNonNull, GraphQLString} from 'graphql';
 import {cursorForObjectInConnection, fromGlobalId, mutationWithClientMutationId} from 'graphql-relay';
 import {addCourse, getCourse, getCourses, getUser} from '../../database';
-import GraphQLUser from '../nodes/User';
 
 const AddCourseMutation = mutationWithClientMutationId({
   name: 'AddCourse',
@@ -32,7 +31,7 @@ const AddCourseMutation = mutationWithClientMutationId({
       resolve: ({errors}) => errors,
     },
     user: {
-      type: new GraphQLNonNull(GraphQLUser),
+      type: new GraphQLNonNull((() => require('../nodes/User').default)()),
       resolve: async ({userId}, {}, {pgPool}) => {
         return await getUser(userId, pgPool);
       },

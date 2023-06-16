@@ -2,7 +2,7 @@ import {GraphQLFloat, GraphQLObjectType, GraphQLString} from 'graphql';
 import {connectionDefinitions, globalIdField} from 'graphql-relay';
 import {getCourse, getUser} from '../../database';
 
-const GraphQLScore = new GraphQLObjectType({
+export const GraphQLScore = new GraphQLObjectType({
   name: 'Score',
   fields: {
     id: globalIdField('Score', score => score.user_id + ':' + score.course_id),

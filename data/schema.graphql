@@ -1,5 +1,6 @@
 type Query {
-  courses(after: String, first: Int, before: String, last: Int): Courses
+  user(id: String, email: String): User
+  courses(after: String, first: Int, before: String, last: Int): CourseConnection
   scores(interval: Int, wordsCount: Int): Scores
   streaks: Streaks
 
@@ -10,19 +11,32 @@ type Query {
   ): Node
 }
 
-type Courses {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-  data: CourseConnection
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  username: String
+  email: String
+  score(courseId: String): Score
+  courses(after: String, first: Int, before: String, last: Int): CourseConnection
 }
 
 """An object with an ID"""
 interface Node {
   """The id of the object."""
   id: ID!
+}
+
+type Score {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  userId: String
+  username: String
+  courseId: String
+  score: Float
+  sequence: String
+  course: String
 }
 
 """A connection to a list of items."""
@@ -92,18 +106,6 @@ type ScoreEdge {
   cursor: String!
 }
 
-type Score {
-  """The ID of an object"""
-  id: ID!
-  _id: String
-  userId: String
-  username: String
-  courseId: String
-  score: Float
-  sequence: String
-  course: String
-}
-
 type Scores {
   """Fetches an object given its ID"""
   node(
@@ -151,4 +153,106 @@ type Streak {
   course: String
 }
 
-type Mutation
+type Mutation {
+  addCourse(input: AddCourseInput!): AddCoursePayload
+  updateCourse(input: UpdateCourseInput!): UpdateCoursePayload
+  removeCourse(input: RemoveCourseInput!): RemoveCoursePayload
+  likeCourse(input: LikeCourseInput!): LikeCoursePayload
+  addScore(input: AddScoreInput!): AddScorePayload
+  addStreak(input: AddStreakInput!): AddStreakPayload
+  addUser(input: AddUserInput!): AddUserPayload
+}
+
+type AddCoursePayload {
+  courseEdge: CourseEdge
+  errors: [String]
+  user: User!
+  clientMutationId: String
+}
+
+input AddCourseInput {
+  authorId: ID!
+  title: String!
+  description: String!
+  body: String!
+  avatar: String!
+  createdAt: String!
+  updatedAt: String!
+  clientMutationId: String
+}
+
+type UpdateCoursePayload {
+  courseEdge: CourseEdge!
+  clientMutationId: String
+}
+
+input UpdateCourseInput {
+  id: ID!
+  title: String!
+  description: String!
+  body: String!
+  clientMutationId: String
+}
+
+type RemoveCoursePayload {
+  deletedCourseId: ID!
+  clientMutationId: String
+}
+
+input RemoveCourseInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type LikeCoursePayload {
+  courseEdge: CourseEdge
+  clientMutationId: String
+}
+
+input LikeCourseInput {
+  userId: ID!
+  courseId: ID!
+  remove: Boolean
+  clientMutationId: String
+}
+
+type AddScorePayload {
+  scoreEdge: ScoreEdge!
+  clientMutationId: String
+}
+
+input AddScoreInput {
+  userId: ID!
+  courseId: ID!
+  score: Float!
+  sequence: String!
+  interval: Int!
+  wordsCount: Int!
+  update: Boolean!
+  clientMutationId: String
+}
+
+type AddStreakPayload {
+  streakEdge: StreakEdge!
+  clientMutationId: String
+}
+
+input AddStreakInput {
+  userId: ID!
+  courseId: ID!
+  streak: Int!
+  interval: Int!
+  wordsCount: Int!
+  clientMutationId: String
+}
+
+type AddUserPayload {
+  id: String!
+  clientMutationId: String
+}
+
+input AddUserInput {
+  email: String!
+  username: String!
+  clientMutationId: String
+}

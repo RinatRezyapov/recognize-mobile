@@ -14,19 +14,17 @@ import CourseCardComponent from './CourseCardComponent';
 //  why @connection(key: "CoursesComponent_courses") ???
 const CoursesComponentFragment = graphql`
   fragment CoursesComponent on Query @refetchable(queryName: "CoursesPaginationQuery") {
-    courses(first: $count, after: $cursor) {
-      data {
-        edges {
-          node {
-            id
-            _id
-            authorId
-            author
-            title
-            description
-            avatar
-            likes
-          }
+    courses(first: $count, after: $cursor) @connection(key: "CoursesComponent_query_courses") {
+      edges {
+        node {
+          id
+          _id
+          authorId
+          author
+          title
+          description
+          avatar
+          likes
         }
       }
     }
@@ -63,7 +61,7 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
   return (
     <Wrapper>
       <FlatList
-        data={paginatedData.courses.data.edges}
+        data={paginatedData.courses.edges}
         renderItem={renderItem}
         keyExtractor={item => item.node.id}
         onEndReached={() => {

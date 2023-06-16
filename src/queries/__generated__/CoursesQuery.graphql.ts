@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f05ab37b330a38b015b30050009b8075>>
+ * @generated SignedSource<<882eb1d0bb98024492e5ba8beed31319>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,21 +16,19 @@ export type CoursesQuery$variables = {
 };
 export type CoursesQuery$data = {
   readonly courses: {
-    readonly data: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly _id: string | null;
-          readonly author: string | null;
-          readonly authorId: string | null;
-          readonly avatar: string | null;
-          readonly description: string | null;
-          readonly id: string;
-          readonly likes: ReadonlyArray<string | null> | null;
-          readonly title: string | null;
-          readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_course" | "CoursePlayerComponent_course">;
-        } | null;
-      } | null> | null;
-    } | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly _id: string | null;
+        readonly author: string | null;
+        readonly authorId: string | null;
+        readonly avatar: string | null;
+        readonly description: string | null;
+        readonly id: string;
+        readonly likes: ReadonlyArray<string | null> | null;
+        readonly title: string | null;
+        readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_course" | "CoursePlayerComponent_course">;
+      } | null;
+    } | null> | null;
   } | null;
   readonly " $fragmentSpreads": FragmentRefs<"CoursesComponent">;
 };
@@ -126,7 +124,46 @@ v10 = [
     "name": "first",
     "value": 2147483647
   }
-];
+],
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "kind": "LinkedField",
+  "name": "pageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endCursor",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasNextPage",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -137,7 +174,7 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Courses",
+        "concreteType": "CourseConnection",
         "kind": "LinkedField",
         "name": "courses",
         "plural": false,
@@ -145,47 +182,36 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "CourseConnection",
+            "concreteType": "CourseEdge",
             "kind": "LinkedField",
-            "name": "data",
-            "plural": false,
+            "name": "edges",
+            "plural": true,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "CourseEdge",
+                "concreteType": "Course",
                 "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
+                "name": "node",
+                "plural": false,
                 "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  (v8/*: any*/),
+                  (v9/*: any*/),
                   {
-                    "alias": null,
                     "args": null,
-                    "concreteType": "Course",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/),
-                      (v3/*: any*/),
-                      (v4/*: any*/),
-                      (v5/*: any*/),
-                      (v6/*: any*/),
-                      (v7/*: any*/),
-                      (v8/*: any*/),
-                      (v9/*: any*/),
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "CourseComponent_course"
-                      },
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "CoursePlayerComponent_course"
-                      }
-                    ],
-                    "storageKey": null
+                    "kind": "FragmentSpread",
+                    "name": "CourseComponent_course"
+                  },
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "CoursePlayerComponent_course"
                   }
                 ],
                 "storageKey": null
@@ -214,7 +240,7 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Courses",
+        "concreteType": "CourseConnection",
         "kind": "LinkedField",
         "name": "courses",
         "plural": false,
@@ -222,178 +248,143 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "CourseConnection",
+            "concreteType": "CourseEdge",
             "kind": "LinkedField",
-            "name": "data",
-            "plural": false,
+            "name": "edges",
+            "plural": true,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "CourseEdge",
+                "concreteType": "Course",
                 "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
+                "name": "node",
+                "plural": false,
                 "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  (v8/*: any*/),
+                  (v9/*: any*/),
                   {
                     "alias": null,
-                    "args": null,
-                    "concreteType": "Course",
+                    "args": (v10/*: any*/),
+                    "concreteType": "ScoreConnection",
                     "kind": "LinkedField",
-                    "name": "node",
+                    "name": "scores",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v3/*: any*/),
-                      (v4/*: any*/),
-                      (v5/*: any*/),
-                      (v6/*: any*/),
-                      (v7/*: any*/),
-                      (v8/*: any*/),
-                      (v9/*: any*/),
                       {
                         "alias": null,
-                        "args": (v10/*: any*/),
-                        "concreteType": "ScoreConnection",
+                        "args": null,
+                        "concreteType": "ScoreEdge",
                         "kind": "LinkedField",
-                        "name": "scores",
-                        "plural": false,
+                        "name": "edges",
+                        "plural": true,
                         "selections": [
                           {
                             "alias": null,
                             "args": null,
-                            "concreteType": "ScoreEdge",
+                            "concreteType": "Score",
                             "kind": "LinkedField",
-                            "name": "edges",
-                            "plural": true,
+                            "name": "node",
+                            "plural": false,
                             "selections": [
+                              (v2/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
-                                "concreteType": "Score",
-                                "kind": "LinkedField",
-                                "name": "node",
-                                "plural": false,
-                                "selections": [
-                                  (v2/*: any*/),
-                                  (v3/*: any*/),
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "userId",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "username",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "score",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "sequence",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "__typename",
-                                    "storageKey": null
-                                  }
-                                ],
+                                "kind": "ScalarField",
+                                "name": "userId",
                                 "storageKey": null
                               },
                               {
                                 "alias": null,
                                 "args": null,
                                 "kind": "ScalarField",
-                                "name": "cursor",
+                                "name": "username",
                                 "storageKey": null
-                              }
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "score",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "sequence",
+                                "storageKey": null
+                              },
+                              (v11/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "PageInfo",
-                            "kind": "LinkedField",
-                            "name": "pageInfo",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "endCursor",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "hasNextPage",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          }
+                          (v12/*: any*/)
                         ],
-                        "storageKey": "scores(first:2147483647)"
-                      },
-                      {
-                        "alias": null,
-                        "args": (v10/*: any*/),
-                        "filters": null,
-                        "handle": "connection",
-                        "key": "Scores_scores",
-                        "kind": "LinkedHandle",
-                        "name": "scores"
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "body",
                         "storageKey": null
-                      }
+                      },
+                      (v13/*: any*/)
                     ],
+                    "storageKey": "scores(first:2147483647)"
+                  },
+                  {
+                    "alias": null,
+                    "args": (v10/*: any*/),
+                    "filters": null,
+                    "handle": "connection",
+                    "key": "Scores_scores",
+                    "kind": "LinkedHandle",
+                    "name": "scores"
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "body",
                     "storageKey": null
-                  }
+                  },
+                  (v11/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v12/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v13/*: any*/)
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "filters": null,
+        "handle": "connection",
+        "key": "CoursesComponent_query_courses",
+        "kind": "LinkedHandle",
+        "name": "courses"
       }
     ]
   },
   "params": {
-    "cacheID": "71ff6ac3048cba400efebf2d95191af6",
+    "cacheID": "31dc952b33885ada0907173d5c8cd995",
     "id": null,
     "metadata": {},
     "name": "CoursesQuery",
     "operationKind": "query",
-    "text": "query CoursesQuery(\n  $count: Int\n  $cursor: String\n) {\n  courses(first: $count, after: $cursor) {\n    data {\n      edges {\n        node {\n          id\n          _id\n          authorId\n          author\n          title\n          description\n          avatar\n          likes\n          ...CourseComponent_course\n          ...CoursePlayerComponent_course\n        }\n      }\n    }\n  }\n  ...CoursesComponent\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        _id\n        userId\n        username\n        score\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n  scores(first: 2147483647) {\n    edges {\n      node {\n        userId\n        score\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursesComponent on Query {\n  courses(first: $count, after: $cursor) {\n    data {\n      edges {\n        node {\n          id\n          _id\n          authorId\n          author\n          title\n          description\n          avatar\n          likes\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query CoursesQuery(\n  $count: Int\n  $cursor: String\n) {\n  courses(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        _id\n        authorId\n        author\n        title\n        description\n        avatar\n        likes\n        ...CourseComponent_course\n        ...CoursePlayerComponent_course\n      }\n    }\n  }\n  ...CoursesComponent\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        _id\n        userId\n        username\n        score\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n  scores(first: 2147483647) {\n    edges {\n      node {\n        userId\n        score\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursesComponent on Query {\n  courses(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        _id\n        authorId\n        author\n        title\n        description\n        avatar\n        likes\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3d10c6606d0c159703f66013292d75d1";
+(node as any).hash = "c66d9b79b1f5dbe6bee1d1395b129bc7";
 
 export default node;

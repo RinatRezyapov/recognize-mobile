@@ -153,7 +153,7 @@ export const updateCourse = (id: string, data, pgPool: Pool) =>
 export const removeCourse = (courseId: string, pgPool: Pool) =>
   pgPool?.query(`DELETE FROM courses WHERE id = '${courseId}'`).then(response => response.rows?.[0]);
 
-export const fetchPaginatedCourses = async (first, after, last, before, pgPool: Pool) => {
+export const fetchPaginatedCourses = async (first = 2, after, last, before, pgPool: Pool) => {
   let query = 'SELECT * FROM courses';
 
   if (first && after) {

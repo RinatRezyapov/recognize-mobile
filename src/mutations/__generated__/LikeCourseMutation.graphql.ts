@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dfabd00e77101c48b3afc10064c32c03>>
+ * @generated SignedSource<<85166c2eea771a30c10e3828c41d6605>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ export type LikeCourseMutation$data = {
         readonly title: string | null;
         readonly updatedAt: number | null;
       } | null;
-    };
+    } | null;
   } | null;
 };
 export type LikeCourseMutation = {

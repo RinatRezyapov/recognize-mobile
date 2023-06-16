@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd1e46e1a83fda7084c6ef683544ce62>>
+ * @generated SignedSource<<7266dc23b04fe2c13142b366a018a816>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,20 +12,18 @@ import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CoursesComponent$data = {
   readonly courses: {
-    readonly data: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly _id: string | null;
-          readonly author: string | null;
-          readonly authorId: string | null;
-          readonly avatar: string | null;
-          readonly description: string | null;
-          readonly id: string;
-          readonly likes: ReadonlyArray<string | null> | null;
-          readonly title: string | null;
-        } | null;
-      } | null> | null;
-    } | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly _id: string | null;
+        readonly author: string | null;
+        readonly authorId: string | null;
+        readonly avatar: string | null;
+        readonly description: string | null;
+        readonly id: string;
+        readonly likes: ReadonlyArray<string | null> | null;
+        readonly title: string | null;
+      } | null;
+    } | null> | null;
   } | null;
   readonly " $fragmentType": "CoursesComponent";
 };
@@ -34,7 +32,11 @@ export type CoursesComponent$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CoursesComponent">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  "courses"
+];
+return {
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
@@ -47,8 +49,23 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": {
+    "connection": [
+      {
+        "count": "count",
+        "cursor": "cursor",
+        "direction": "forward",
+        "path": (v0/*: any*/)
+      }
+    ],
     "refetch": {
-      "connection": null,
+      "connection": {
+        "forward": {
+          "count": "count",
+          "cursor": "cursor"
+        },
+        "backward": null,
+        "path": (v0/*: any*/)
+      },
       "fragmentPathInResult": [],
       "operation": require('./CoursesPaginationQuery.graphql')
     }
@@ -56,108 +73,125 @@ const node: ReaderFragment = {
   "name": "CoursesComponent",
   "selections": [
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "cursor"
-        },
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "count"
-        }
-      ],
-      "concreteType": "Courses",
+      "alias": "courses",
+      "args": null,
+      "concreteType": "CourseConnection",
       "kind": "LinkedField",
-      "name": "courses",
+      "name": "__CoursesComponent_query_courses_connection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "CourseConnection",
+          "concreteType": "CourseEdge",
           "kind": "LinkedField",
-          "name": "data",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Course",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "_id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "authorId",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "author",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "title",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "description",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "avatar",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "likes",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
               "alias": null,
               "args": null,
-              "concreteType": "CourseEdge",
-              "kind": "LinkedField",
-              "name": "edges",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Course",
-                  "kind": "LinkedField",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "id",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "_id",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "authorId",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "author",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "title",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "description",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "avatar",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "likes",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             }
           ],
@@ -170,7 +204,8 @@ const node: ReaderFragment = {
   "type": "Query",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "91f4ec937c39c6b27fcf6d1cbba892a9";
+(node as any).hash = "3febb3eb92ec6542835ebfcf9ded8ced";
 
 export default node;

@@ -11,7 +11,6 @@ const UserQuery = {
   resolve: async (_, {id, email}, {pgPool}) => {
     if (email) {
       const user = await getUserByEmail(email, pgPool);
-      console.log(user);
       return user;
     }
     return getUser(id, pgPool);
