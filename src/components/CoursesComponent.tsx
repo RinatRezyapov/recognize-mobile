@@ -11,7 +11,6 @@ import {
 } from '../components/__generated__/CoursesPaginationQuery.graphql';
 import CourseCardComponent from './CourseCardComponent';
 
-//  why @connection(key: "CoursesComponent_courses") ???
 const CoursesComponentFragment = graphql`
   fragment CoursesComponent on Query @refetchable(queryName: "CoursesPaginationQuery") {
     courses(first: $count, after: $cursor) @connection(key: "CoursesComponent_query_courses") {
@@ -64,12 +63,7 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
         data={paginatedData.courses.edges}
         renderItem={renderItem}
         keyExtractor={item => item.node.id}
-        onEndReached={() => {
-          console.log('hm', hasNext);
-          if (hasNext) {
-            loadNext(1); // Load next page with count 1
-          }
-        }}
+        onEndReached={() => {}}
       />
       <Button title="Load" onPress={() => loadNext(2)} />
     </Wrapper>
