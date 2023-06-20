@@ -39,16 +39,16 @@ const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
           </LogoutWrapper>
         </PersonalInfo>
       </PersonalCard>
-      <CoursesWrapper>
+      <View>
         <Text variant="h5">My Courses</Text>
         <ScrollView>
           {user?.courses?.edges?.map(edge => {
             return (
-              <TouchableOpacity
-                key={edge?.node?.id}
-                onPress={() => navigation.navigate('Course', {courseRef: edge?.node, userRef: user})}>
-                <CourseCardComponent user={user} course={edge?.node} />
-              </TouchableOpacity>
+              <View key={edge?.node?.id}>
+                <TouchableOpacity onPress={() => navigation.navigate('Course', {courseRef: edge?.node, userRef: user})}>
+                  <CourseCardComponent user={user} course={edge?.node} />
+                </TouchableOpacity>
+              </View>
             );
           })}
         </ScrollView>
@@ -59,7 +59,7 @@ const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
             onPress={() => navigation.navigate('CourseCreate', {userId})}
           />
         </AddCourseButtonWrapper>
-      </CoursesWrapper>
+      </View>
     </Wrapper>
   );
 };
@@ -108,8 +108,4 @@ const LogoutWrapper = styled.View`
 const AddCourseButtonWrapper = styled.View`
   display: flex;
   align-items: flex-end;
-`;
-
-const CoursesWrapper = styled.View`
-  margin-top: 32px;
 `;

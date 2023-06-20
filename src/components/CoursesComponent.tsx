@@ -56,11 +56,11 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
       </TouchableOpacity>
     );
   };
-  //?.filter(v => v?.node?.authorId !== route.params.userId)
+
   return (
     <Wrapper>
       <FlatList
-        data={paginatedData.courses.edges}
+        data={paginatedData.courses.edges?.filter(v => v?.node?.authorId !== route.params.userId)}
         renderItem={renderItem}
         keyExtractor={item => item.node.id}
         onEndReached={() => {}}

@@ -32,10 +32,11 @@ export const GraphQLCourses = new GraphQLObjectType({
       args: {
         ...connectionArgs,
       },
-      resolve: async (parent, {after, before, first, last}, {pgPool}) => {
+      resolve: async (parent, {first, after, last, before}, {pgPool}) => {
         try {
+          console.log(first, after, last, before);
           const courses = await fetchPaginatedCourses(first, after, last, before, pgPool);
-          return connectionFromArray(courses, {after, before, first, last});
+          return connectionFromArray(courses, {first, after, last, before});
         } catch (err) {
           console.error(err);
         }

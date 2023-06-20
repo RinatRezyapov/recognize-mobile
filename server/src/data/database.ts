@@ -153,29 +153,32 @@ export const updateCourse = (id: string, data, pgPool: Pool) =>
 export const removeCourse = (courseId: string, pgPool: Pool) =>
   pgPool?.query(`DELETE FROM courses WHERE id = '${courseId}'`).then(response => response.rows?.[0]);
 
-export const fetchPaginatedCourses = async (first = 2, after, last, before, pgPool: Pool) => {
+export const fetchPaginatedCourses = async (first, after, last, before, pgPool: Pool) => {
   let query = 'SELECT * FROM courses';
 
-  if (first && after) {
-    query += ` WHERE id > $1 LIMIT ${first};`;
-  } else if (last && before) {
-    query += ` WHERE id < $1 ORDER BY id DESC LIMIT ${last};`;
-  } else if (first) {
+  if (first) {
     query += ` LIMIT ${first};`;
-  } else if (last) {
-    query += ` ORDER BY id DESC LIMIT ${last};`;
+  } else if (!first) {
+    query += ` LIMIT 1;`;
   }
+  // } else if (last && before) {
+  //   query += ` WHERE id < $1 ORDER BY id DESC LIMIT ${last};`;
+  // } else if (first) {
+  //   query += ` LIMIT ${first};`;
+  // } else if (last) {
+  //   query += ` ORDER BY id DESC LIMIT ${last};`;
+  // }
 
-  let offset = null; // TODO
-  if (after) {
-    offset = parseInt(after, 10);
-  } else if (before) {
-    offset = parseInt(before, 10) - last;
-  }
-  const values = offset === null ? [] : [offset];
+  // let offset = null; // TODO
+  // if (after) {
+  //   offset = parseInt(after, 10);
+  // } else if (before) {
+  //   offset = parseInt(before, 10) - last;
+  // }
+  // const values = offset === null ? [] : [offset];
 
-  const result = await pgPool.query(query, values);
-
+  const result = await pgPool.query(query);
+  console.log('Query ', query);
   return result.rows.map(
     v => new Course(v.id, v.title, v.description, v.body, v.created_at, v.updated_at, v.author_id, v.avatar),
   );
