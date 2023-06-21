@@ -60,7 +60,7 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
   return (
     <Wrapper>
       <FlatList
-        data={paginatedData.courses.edges?.filter(v => v?.node?.authorId !== route.params.userId)}
+        data={paginatedData?.courses?.edges?.filter(v => v?.node?.authorId !== route.params.userId)}
         renderItem={renderItem}
         keyExtractor={item => item.node.id}
         onEndReached={() => {}}

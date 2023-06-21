@@ -19,33 +19,33 @@
 //   },
 // });
 
-import {GraphQLInt, GraphQLList, GraphQLObjectType} from 'graphql';
-import {connectionArgs, connectionDefinitions, connectionFromArray} from 'graphql-relay';
-import {Course, fetchPaginatedCourses, getCourses} from '../../database';
-import {GraphQLCourse} from './Course';
+// import {GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString} from 'graphql';
+// import {connectionArgs, connectionDefinitions, connectionFromArray} from 'graphql-relay';
+// import {Course, fetchPaginatedCourses, getCourses} from '../../database';
+// import {GraphQLCourse} from './Course';
+// import {fromGlobalId} from 'graphql-relay';
 
-export const GraphQLCourses = new GraphQLObjectType({
-  name: 'Courses',
-  fields: {
-    data: {
-      type: GraphQLList(GraphQLCourse),
-      args: {
-        ...connectionArgs,
-      },
-      resolve: async (parent, {first, after, last, before}, {pgPool}) => {
-        try {
-          console.log(first, after, last, before);
-          const courses = await fetchPaginatedCourses(first, after, last, before, pgPool);
-          return connectionFromArray(courses, {first, after, last, before});
-        } catch (err) {
-          console.error(err);
-        }
-      },
-    },
-  },
-});
+// export const GraphQLCourses = new GraphQLObjectType({
+//   name: 'Courses',
+//   fields: {
+//     data: {
+//       type: GraphQLList(GraphQLCourse),
+//       args: {
+//         ...connectionArgs,
+//       },
+//       resolve: async (parent, {first, after, last, before}, {pgPool}) => {
+//         try {
+//           const courses = await fetchPaginatedCourses(first, after, last, before, pgPool);
+//           return connectionFromArray(courses, {first, after, last, before});
+//         } catch (err) {
+//           console.error(err);
+//         }
+//       },
+//     },
+//   },
+// });
 
-export default connectionDefinitions({
-  name: 'Courses',
-  nodeType: GraphQLCourses,
-});
+// export default connectionDefinitions({
+//   name: 'Course',
+//   nodeType: GraphQLCourse,
+// });

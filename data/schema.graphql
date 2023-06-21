@@ -85,6 +85,7 @@ type Course implements Node {
   createdAt: Int
   updatedAt: Int
   likes: [String]
+  cursor: String
   scores(after: String, first: Int, before: String, last: Int, courseId: ID): ScoreConnection
 }
 

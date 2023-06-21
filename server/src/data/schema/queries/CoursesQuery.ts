@@ -1,7 +1,7 @@
-import {connectionArgs, connectionFromArray} from 'graphql-relay';
+// import {connectionArgs, connectionFromArray} from 'graphql-relay';
 
-import {fetchPaginatedCourses} from '../../database';
-import {GraphQLCourses} from '../nodes/Courses';
+// import {fetchPaginatedCourses} from '../../database';
+// import {GraphQLCourses} from '../nodes/Courses';
 
 // const CoursesQuery = {
 //   type: GraphQLCourses,
