@@ -1,4 +1,5 @@
 import {Pool} from 'pg';
+import {parseCursor} from '../utils/relay';
 
 export class Course {
   id: string;
@@ -154,37 +155,39 @@ export const removeCourse = (courseId: string, pgPool: Pool) =>
   pgPool?.query(`DELETE FROM courses WHERE id = '${courseId}'`).then(response => response.rows?.[0]);
 
 export const fetchPaginatedCourses = async (first, after, last, before, pgPool: Pool) => {
-  let query = 'SELECT * FROM courses ORDER BY created_at ASC';
+  if (after) after = parseCursor(after)._id;
+  if (before) before = parseCursor(before)._id;
+
+  let query = 'SELECT * FROM courses';
 
   let params = [];
 
-  // if (after) {
-  //   query += ' WHERE id > $1';
-  //   params.push(after);
-  // }
+  if (after) {
+    query += ' WHERE id > $1';
+    params.push(after);
+  }
 
-  // if (before) {
-  //   query += ' WHERE id < $1';
-  //   params.push(before);
-  // }
+  if (before) {
+    query += ' WHERE id < $1';
+    params.push(before);
+  }
 
-  // query += ' ORDER BY id';
+  query += ' ORDER BY id';
 
   if (first) {
-    query += ' LIMIT $1';
+    if (!after) {
+      query += ' LIMIT $1';
+    } else {
+      query += ' LIMIT $2';
+    }
     params.push(first);
   }
 
-  // if (last) {
-  //   query += ' ORDER BY id DESC';
-  //   query += ' LIMIT $2';
-  //   params.push(last);
-  // }
-
-  // if (params.length === 0) {
-  //   query += ' LIMIT 2';
-  // }
-
+  if (last) {
+    query += ' ORDER BY id DESC';
+    query += ' LIMIT $2';
+    params.push(last);
+  }
   const result = await pgPool.query(query, params);
   console.log('Query ', query, params);
   return result.rows.map(

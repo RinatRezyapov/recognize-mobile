@@ -52,14 +52,6 @@ export var GraphQLCourse = new GraphQLObjectType<Course>({
         return likes.map(v => v.user_id);
       },
     },
-    cursor: {
-      type: GraphQLString,
-      resolve: (course, {}, {pgPool}) => {
-        // Resolve the cursor based on the desired column value
-        const cursorValue = '123'; // Replace <COLUMN_NAME> with the actual column name
-        return '1';
-      },
-    },
     scores: {
       type: (() => require('./Score').default.connectionType)(),
       args: {...connectionArgs, courseId: {type: GraphQLID}},

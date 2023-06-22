@@ -1,29 +1,41 @@
-// import {connectionArgs, connectionFromArray} from 'graphql-relay';
+import {connectionArgs, connectionFromArray, connectionFromArraySlice} from 'graphql-relay';
+import {fetchPaginatedCourses} from '../../database';
 
-// import {fetchPaginatedCourses} from '../../database';
-// import {GraphQLCourses} from '../nodes/Courses';
+const CoursesQuery = {
+  type: (() => require('../nodes/Course').default.connectionType)(),
+  args: connectionArgs,
+  resolve: async (root, {first, after, last, before}, {pgPool}) => {
+    const courses = await fetchPaginatedCourses(first, after, last, before, pgPool);
 
-// const CoursesQuery = {
-//   type: GraphQLCourses,
-//   args: connectionArgs,
-//   resolve: (root, {first, after, last, before}, {pgPool}) => {
-//     console.log('Query', first, after, last, before);
-//     return fetchPaginatedCourses(first, after, last, before, pgPool);
-//   },
-// };
+    const edges = courses.map(course => ({
+      node: course,
+      cursor: Buffer.from(`course:${course.id}`).toString('base64'), // Example: using the course's ID as the cursor
+    }));
 
-// const CoursesQuery = {
-//   type: (() => require('../nodes/Courses').default.connectionType)(),
-//   args: {
-//     ...connectionArgs,
-//   },
-//   resolve: async (parent, args, {pgPool}) => {
-//     try {
-//       return {args, pgPool};
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   },
-// };
+    const connection = {
+      edges,
+      pageInfo: {
+        // Set the appropriate pageInfo values
+        hasNextPage: false, // Example: assuming no more pages
+        hasPreviousPage: false, // Example: assuming no previous pages
+        startCursor: edges.length > 0 ? edges[0].cursor : null,
+        endCursor: edges.length > 0 ? edges[edges.length - 1].cursor : null,
+      },
+    };
 
-// export {CoursesQuery};
+    return connection;
+    // return connectionFromArraySlice(
+    //   connection,
+    //   {first, after, last, before},
+    //   {
+    //     sliceStart: 0,
+    //     arrayLength: courses.length,
+    //     sliceEnd: courses.length,
+    //     after,
+    //     before,
+    //   },
+    // );
+  },
+};
+
+export default CoursesQuery;
