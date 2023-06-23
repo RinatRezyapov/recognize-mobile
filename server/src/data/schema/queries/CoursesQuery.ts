@@ -5,6 +5,7 @@ const CoursesQuery = {
   type: (() => require('../nodes/Course').default.connectionType)(),
   args: connectionArgs,
   resolve: async (root, {first, after, last, before}, {pgPool}) => {
+    console.log('CoursesQuery', first, after, last, before);
     const courses = await fetchPaginatedCourses(first, after, last, before, pgPool);
 
     const edges = courses.map(course => ({

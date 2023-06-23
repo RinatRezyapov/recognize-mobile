@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {Button, FlatList, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, Button, FlatList, TouchableOpacity} from 'react-native';
 import {graphql, usePaginationFragment} from 'react-relay';
 
 import {CoursesQuery$data as CoursesQueryDataType} from '../queries/__generated__/CoursesQuery.graphql';
@@ -42,29 +42,28 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
     data: paginatedData,
     loadNext,
     hasNext,
+    isLoadingNext,
   } = usePaginationFragment<CoursesPaginationQueryType, CoursesPaginationQueryDataType>(
     CoursesComponentFragment,
     courses,
   );
 
-  const renderItem = ({item}) => {
+  const renderItem = ({node}) => {
     return (
-      <TouchableOpacity
-        key={item?.node?.id}
-        onPress={() => navigation.navigate('Course', {courseRef: item?.node, userRef: user})}>
-        <CourseCardComponent user={user} course={item?.node} />
+      <TouchableOpacity key={node?.id} onPress={() => navigation.navigate('Course', {courseRef: node, userRef: user})}>
+        <CourseCardComponent user={user} course={node} />
       </TouchableOpacity>
     );
   };
 
+  if (isLoadingNext) return <ActivityIndicator size="small" />;
+
   return (
     <Wrapper>
-      <FlatList
-        data={paginatedData?.courses?.edges?.filter(v => v?.node?.authorId !== route.params.userId)}
-        renderItem={renderItem}
-        keyExtractor={item => item.node.id}
-        onEndReached={() => {}}
-      />
+      {paginatedData?.courses?.edges
+        ?.filter(v => v?.node?.authorId !== route.params.userId)
+        .map(v => renderItem(v))
+        .slice(-2)}
       <Button title="Load" onPress={() => loadNext(2)} />
     </Wrapper>
   );
