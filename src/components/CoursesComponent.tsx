@@ -48,23 +48,24 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
     courses,
   );
 
-  const renderItem = ({node}) => {
+  const renderItem = ({item}) => {
     return (
-      <TouchableOpacity key={node?.id} onPress={() => navigation.navigate('Course', {courseRef: node, userRef: user})}>
-        <CourseCardComponent user={user} course={node} />
+      <TouchableOpacity
+        key={item?.node?.id}
+        onPress={() => navigation.navigate('Course', {courseRef: item?.node, userRef: user})}>
+        <CourseCardComponent user={user} course={item?.node} />
       </TouchableOpacity>
     );
   };
 
-  if (isLoadingNext) return <ActivityIndicator size="small" />;
-
   return (
     <Wrapper>
-      {paginatedData?.courses?.edges
-        ?.filter(v => v?.node?.authorId !== route.params.userId)
-        .map(v => renderItem(v))
-        .slice(-2)}
-      <Button title="Load" onPress={() => loadNext(2)} />
+      <FlatList
+        data={paginatedData?.courses?.edges?.filter(v => v?.node?.authorId !== route.params.userId)}
+        renderItem={renderItem}
+        keyExtractor={item => item.node.id}
+        onEndReached={() => loadNext(7)}
+      />
     </Wrapper>
   );
 };

@@ -25,17 +25,6 @@ const CoursesQuery = {
     };
 
     return connection;
-    // return connectionFromArraySlice(
-    //   connection,
-    //   {first, after, last, before},
-    //   {
-    //     sliceStart: 0,
-    //     arrayLength: courses.length,
-    //     sliceEnd: courses.length,
-    //     after,
-    //     before,
-    //   },
-    // );
   },
 };
 
