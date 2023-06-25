@@ -191,7 +191,8 @@ export const fetchPaginatedCourses = async (first, after, last, before, pgPool: 
     params.push(last);
   }
   const result = await pgPool.query(query, params);
-  console.log('Query ', query, params);
+  console.log('Query', query, params);
+
   return result.rows.map(
     v => new Course(v.id, v.title, v.description, v.body, v.created_at, v.updated_at, v.author_id, v.avatar),
   );

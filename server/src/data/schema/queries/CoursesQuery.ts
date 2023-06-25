@@ -1,4 +1,4 @@
-import {connectionArgs, connectionFromArray, connectionFromArraySlice} from 'graphql-relay';
+import {connectionArgs} from 'graphql-relay';
 import {fetchPaginatedCourses} from '../../database';
 
 const CoursesQuery = {
@@ -10,15 +10,14 @@ const CoursesQuery = {
 
     const edges = courses.map(course => ({
       node: course,
-      cursor: Buffer.from(`course:${course.id}`).toString('base64'), // Example: using the course's ID as the cursor
+      cursor: Buffer.from(`course:${course.id}`).toString('base64'),
     }));
 
     const connection = {
       edges,
       pageInfo: {
-        // Set the appropriate pageInfo values
-        hasNextPage: false, // Example: assuming no more pages
-        hasPreviousPage: false, // Example: assuming no previous pages
+        hasNextPage: courses.length === first,
+        hasPreviousPage: !!before,
         startCursor: edges.length > 0 ? edges[0].cursor : null,
         endCursor: edges.length > 0 ? edges[edges.length - 1].cursor : null,
       },

@@ -57,14 +57,16 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
       </TouchableOpacity>
     );
   };
-
+  console.log('hasNext', hasNext);
   return (
     <Wrapper>
       <FlatList
         data={paginatedData?.courses?.edges?.filter(v => v?.node?.authorId !== route.params.userId)}
         renderItem={renderItem}
         keyExtractor={item => item.node.id}
-        onEndReached={() => loadNext(7)}
+        onEndReached={() => {
+          loadNext(7);
+        }}
       />
     </Wrapper>
   );
