@@ -1,29 +1,29 @@
 import {GraphQLFloat, GraphQLObjectType, GraphQLString} from 'graphql';
 import {connectionDefinitions, globalIdField} from 'graphql-relay';
-import {getCourse, getUser} from '../../database';
+import {Score, getCourse, getUser} from '../../database';
 
-export const GraphQLScore = new GraphQLObjectType({
+export const GraphQLScore = new GraphQLObjectType<Score>({
   name: 'Score',
   fields: {
     id: globalIdField('Score', score => score.user_id + ':' + score.course_id),
     _id: {
       type: GraphQLString,
-      resolve: score => score.user_id + ':' + score.course_id,
+      resolve: score => score.userId + ':' + score.courseId,
     },
     userId: {
       type: GraphQLString,
-      resolve: async score => score.user_id,
+      resolve: async score => score.userId,
     },
     username: {
       type: GraphQLString,
       resolve: async (score, {}, {pgPool}) => {
-        const user = await getUser(score.user_id, pgPool);
+        const user = await getUser(score.userId, pgPool);
         return user.username;
       },
     },
     courseId: {
       type: GraphQLString,
-      resolve: async score => score.course_id,
+      resolve: async score => score.courseId,
     },
     score: {
       type: GraphQLFloat,
@@ -36,7 +36,7 @@ export const GraphQLScore = new GraphQLObjectType({
     course: {
       type: GraphQLString,
       resolve: async (score, {}, {pgPool}) => {
-        const course = await getCourse(score.course_id, pgPool);
+        const course = await getCourse(score.courseId, pgPool);
         return course.title;
       },
     },

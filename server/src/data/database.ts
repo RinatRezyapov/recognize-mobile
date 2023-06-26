@@ -106,7 +106,7 @@ export const getCourses = (userId: string, pgPool): Promise<Course[]> =>
       ),
     );
 
-export const getCourse = (courseId: number, pgPool): Promise<Course> =>
+export const getCourse = (courseId: string, pgPool): Promise<Course> =>
   pgPool?.query(`SELECT * FROM courses WHERE id = '${courseId}'`).then(response => {
     const course = response.rows?.[0];
     return new Course(
