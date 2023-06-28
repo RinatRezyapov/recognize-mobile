@@ -16,36 +16,38 @@ import {CoursePlayerComponent_course$key} from './__generated__/CoursePlayerComp
 interface IProps extends NavigationType<'Course'> {}
 
 const CoursePlayerComponent: React.FC<IProps> = ({route}) => {
-  const user = useFragment(
-    graphql`
-      fragment CoursePlayerComponent_user on User {
-        id
-        _id
-        username
-      }
-    `,
-    route.params.userRef,
-  );
+  const user = route.params.user;
+  // const user = useFragment(
+  //   graphql`
+  //     fragment CoursePlayerComponent_user on User {
+  //       id
+  //       _id
+  //       username
+  //     }
+  //   `,
+  //   route.params.user,
+  // );
 
-  const course = useFragment<CoursePlayerComponent_course$key>(
-    graphql`
-      fragment CoursePlayerComponent_course on Course {
-        id
-        title
-        description
-        body
-        scores(first: 2147483647) @connection(key: "Scores_scores") {
-          edges {
-            node {
-              userId
-              score
-            }
-          }
-        }
-      }
-    `,
-    route.params.courseRef,
-  );
+  const course = route.params.course;
+  // const course = useFragment<CoursePlayerComponent_course$key>(
+  //   graphql`
+  //     fragment CoursePlayerComponent_course on Course {
+  //       id
+  //       title
+  //       description
+  //       body
+  //       scores(first: 2147483647) @connection(key: "Scores_scores") {
+  //         edges {
+  //           node {
+  //             userId
+  //             score
+  //           }
+  //         }
+  //       }
+  //     }
+  //   `,
+  //   route.params.course,
+  // );
 
   const userScore = course.scores?.edges?.find(edge => edge?.node?.userId === user?._id)?.node?.score;
 

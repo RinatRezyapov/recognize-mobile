@@ -47,12 +47,12 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
     CoursesComponentFragment,
     courses,
   );
-
+  console.log('CoursesComponent user', user);
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
         key={item?.node?.id}
-        onPress={() => navigation.navigate('Course', {courseRef: item?.node, userRef: user})}>
+        onPress={() => navigation.navigate('Course', {course: item?.node, user: user})}>
         <CourseCardComponent user={user} course={item?.node} />
       </TouchableOpacity>
     );

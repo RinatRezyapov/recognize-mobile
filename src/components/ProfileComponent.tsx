@@ -45,7 +45,7 @@ const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
           {user?.courses?.edges?.map(edge => {
             return (
               <View key={edge?.node?.id}>
-                <TouchableOpacity onPress={() => navigation.navigate('Course', {courseRef: edge?.node, userRef: user})}>
+                <TouchableOpacity onPress={() => navigation.navigate('Course', {course: edge?.node, user: user})}>
                   <CourseCardComponent user={user} course={edge?.node} />
                 </TouchableOpacity>
               </View>

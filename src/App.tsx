@@ -20,10 +20,10 @@ const Stack = createNativeStackNavigator();
 type RootStackParamList = {
   Profile: {userId: string};
   Home: {userId: string};
-  Course: {userRef: any; courseRef: any};
+  Course: {user: any; course: any};
   CourseCreate: {userId: string};
-  CourseEdit: {courseRef: any};
-  CoursePlayer: {courseId: string; courseRef: any; userRef: any};
+  CourseEdit: {course: any};
+  CoursePlayer: {course: any; user: any};
   Courses: {userId: string};
 };
 

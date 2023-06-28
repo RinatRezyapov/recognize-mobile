@@ -22,7 +22,6 @@ export const UserQuery = graphql`
             author
             avatar
             likes
-            ...CourseComponent_course
             ...CoursePlayerComponent_course
             ...CourseEditComponent_course
           }

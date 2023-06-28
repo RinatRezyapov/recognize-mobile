@@ -13,7 +13,6 @@ export const CoursesQuery = graphql`
           description
           avatar
           likes
-          ...CourseComponent_course
           ...CoursePlayerComponent_course
         }
       }

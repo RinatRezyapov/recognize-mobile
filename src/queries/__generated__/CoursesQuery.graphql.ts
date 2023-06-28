@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<882eb1d0bb98024492e5ba8beed31319>>
+ * @generated SignedSource<<91c4c5d19fdd8ce10edfb70b26508470>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type CoursesQuery$data = {
         readonly id: string;
         readonly likes: ReadonlyArray<string | null> | null;
         readonly title: string | null;
-        readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_course" | "CoursePlayerComponent_course">;
+        readonly " $fragmentSpreads": FragmentRefs<"CoursePlayerComponent_course">;
       } | null;
     } | null> | null;
   } | null;
@@ -206,11 +206,6 @@ return {
                   {
                     "args": null,
                     "kind": "FragmentSpread",
-                    "name": "CourseComponent_course"
-                  },
-                  {
-                    "args": null,
-                    "kind": "FragmentSpread",
                     "name": "CoursePlayerComponent_course"
                   }
                 ],
@@ -271,6 +266,13 @@ return {
                   (v9/*: any*/),
                   {
                     "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "body",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
                     "args": (v10/*: any*/),
                     "concreteType": "ScoreConnection",
                     "kind": "LinkedField",
@@ -293,8 +295,6 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              (v2/*: any*/),
-                              (v3/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -306,23 +306,10 @@ return {
                                 "alias": null,
                                 "args": null,
                                 "kind": "ScalarField",
-                                "name": "username",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
                                 "name": "score",
                                 "storageKey": null
                               },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "sequence",
-                                "storageKey": null
-                              },
+                              (v2/*: any*/),
                               (v11/*: any*/)
                             ],
                             "storageKey": null
@@ -343,13 +330,6 @@ return {
                     "key": "Scores_scores",
                     "kind": "LinkedHandle",
                     "name": "scores"
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "body",
-                    "storageKey": null
                   },
                   (v11/*: any*/)
                 ],
@@ -375,16 +355,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "31dc952b33885ada0907173d5c8cd995",
+    "cacheID": "e3c68c1bba59697356a331ea3ce5e52e",
     "id": null,
     "metadata": {},
     "name": "CoursesQuery",
     "operationKind": "query",
-    "text": "query CoursesQuery(\n  $count: Int\n  $cursor: String\n) {\n  courses(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        _id\n        authorId\n        author\n        title\n        description\n        avatar\n        likes\n        ...CourseComponent_course\n        ...CoursePlayerComponent_course\n      }\n    }\n  }\n  ...CoursesComponent\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        _id\n        userId\n        username\n        score\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n  scores(first: 2147483647) {\n    edges {\n      node {\n        userId\n        score\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursesComponent on Query {\n  courses(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        _id\n        authorId\n        author\n        title\n        description\n        avatar\n        likes\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CoursesQuery(\n  $count: Int\n  $cursor: String\n) {\n  courses(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        _id\n        authorId\n        author\n        title\n        description\n        avatar\n        likes\n        ...CoursePlayerComponent_course\n      }\n    }\n  }\n  ...CoursesComponent\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n  scores(first: 2147483647) {\n    edges {\n      node {\n        userId\n        score\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursesComponent on Query {\n  courses(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        _id\n        authorId\n        author\n        title\n        description\n        avatar\n        likes\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c66d9b79b1f5dbe6bee1d1395b129bc7";
+(node as any).hash = "b343d4b2fd973ceee0b5714e32f62d30";
 
 export default node;
