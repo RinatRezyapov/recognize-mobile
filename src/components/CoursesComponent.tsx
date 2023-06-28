@@ -24,6 +24,7 @@ const CoursesComponentFragment = graphql`
           description
           avatar
           likes
+          ...CourseComponent_course
         }
       }
     }

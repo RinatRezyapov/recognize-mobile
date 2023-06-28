@@ -12,9 +12,9 @@ interface IProps extends NavigationType<'Courses'> {}
 
 const CoursesPage: React.FC<IProps> = ({navigation, route}) => {
   const courses = useLazyLoadQuery<CoursesQueryType>(CoursesQuery, {});
-  const user = useLazyLoadQuery<UserQueryType>(UserQuery, {id: route.params.userId});
+  const userData = useLazyLoadQuery<UserQueryType>(UserQuery, {id: route.params.userId});
 
-  return <CoursesComponent route={route} navigation={navigation} courses={courses} user={user} />;
+  return <CoursesComponent route={route} navigation={navigation} courses={courses} user={userData.user} />;
 };
 
 export default CoursesPage;

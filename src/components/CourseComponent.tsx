@@ -10,8 +10,40 @@ import styled from '@emotion/native';
 interface IProps extends NavigationType<'Course'> {}
 
 const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
-  const user = route.params.user;
-  const course = route.params.course;
+  const course = useFragment<CourseComponent_course$key>(
+    graphql`
+      fragment CourseComponent_course on Course {
+        id
+        _id
+        title
+        description
+        authorId
+        scores(first: 2147483647) @connection(key: "Scores_scores") {
+          edges {
+            node {
+              id
+              _id
+              userId
+              username
+              score
+              sequence
+            }
+          }
+        }
+      }
+    `,
+    route.params.course,
+  );
+
+  const user = useFragment<CourseComponent_course$key>(
+    graphql`
+      fragment CourseComponent_user on User {
+        id
+        _id
+      }
+    `,
+    route.params.user,
+  );
 
   const isUserOwned = course.authorId === user?._id;
   const userScore = course.scores?.edges?.find(edge => edge?.node?.userId === user?._id)?.node?.score;
@@ -29,14 +61,14 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
 
   const onEditCourseClick = (courseId: string | null) => async () => {
     if (!courseId) return;
-    navigation.navigate('CourseEdit', {course});
+    navigation.navigate('CourseEdit', {course: route.params.course});
   };
 
   const onStartCourseClick = (courseId: string | null) => async () => {
     if (!courseId) return;
     navigation.navigate('CoursePlayer', {
-      course,
-      user,
+      course: route.params.course,
+      user: route.params.user,
     });
   };
 

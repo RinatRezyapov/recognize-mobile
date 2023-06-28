@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7266dc23b04fe2c13142b366a018a816>>
+ * @generated SignedSource<<77fbec2f06bb7e7b23bb5619076f5a1c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type CoursesComponent$data = {
         readonly id: string;
         readonly likes: ReadonlyArray<string | null> | null;
         readonly title: string | null;
+        readonly " $fragmentSpreads": FragmentRefs<"CourseComponent_course">;
       } | null;
     } | null> | null;
   } | null;
@@ -153,6 +154,11 @@ return {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CourseComponent_course"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -206,6 +212,6 @@ return {
 };
 })();
 
-(node as any).hash = "3febb3eb92ec6542835ebfcf9ded8ced";
+(node as any).hash = "8a4381a8e0090db4539137bb850ba571";
 
 export default node;
