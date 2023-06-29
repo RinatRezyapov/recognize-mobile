@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<04123171c0ac8d60fc34c661f7966001>>
+ * @generated SignedSource<<bb45ed16da6be995ab9ca5ef70bd06b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -272,6 +272,13 @@ return {
                     "kind": "LinkedHandle",
                     "name": "scores"
                   },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "body",
+                    "storageKey": null
+                  },
                   (v5/*: any*/)
                 ],
                 "storageKey": null
@@ -296,16 +303,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f71fd92f34af9951b3ce0f4fab283fc4",
+    "cacheID": "dca8c9e5f6561de69298a9ec06b67b26",
     "id": null,
     "metadata": {},
     "name": "CoursesPaginationQuery",
     "operationKind": "query",
-    "text": "query CoursesPaginationQuery(\n  $count: Int\n  $cursor: String\n) {\n  ...CoursesComponent\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        _id\n        userId\n        username\n        score\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursesComponent on Query {\n  courses(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        _id\n        authorId\n        author\n        title\n        description\n        avatar\n        likes\n        ...CourseComponent_course\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CoursesPaginationQuery(\n  $count: Int\n  $cursor: String\n) {\n  ...CoursesComponent\n}\n\nfragment CourseComponent_course on Course {\n  id\n  _id\n  title\n  description\n  authorId\n  avatar\n  scores(first: 2147483647) {\n    edges {\n      node {\n        id\n        _id\n        userId\n        username\n        score\n        sequence\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursePlayerComponent_course on Course {\n  id\n  title\n  description\n  body\n  scores(first: 2147483647) {\n    edges {\n      node {\n        userId\n        score\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CoursesComponent on Query {\n  courses(first: $count, after: $cursor) {\n    edges {\n      node {\n        id\n        _id\n        authorId\n        author\n        title\n        description\n        avatar\n        likes\n        ...CourseComponent_course\n        ...CoursePlayerComponent_course\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8a4381a8e0090db4539137bb850ba571";
+(node as any).hash = "03dd1fc10e066cad358da7d221e8cd89";
 
 export default node;

@@ -20,7 +20,7 @@ const CourseEditComponent: React.FC<IProps> = ({navigation, route}) => {
         avatar
       }
     `,
-    route.params.courseRef,
+    route.params.course,
   );
   const commitUpdateCourseMutation = useUpdateCourseMutation(course.id);
 

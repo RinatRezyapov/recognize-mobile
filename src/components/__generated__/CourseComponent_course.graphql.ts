@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b22389625d091cb205c8cc4e0bf97b9>>
+ * @generated SignedSource<<fdc78f357a621754f91d6c6d92ee00ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CourseComponent_course$data = {
   readonly _id: string | null;
   readonly authorId: string | null;
+  readonly avatar: string | null;
   readonly description: string | null;
   readonly id: string;
   readonly scores: {
@@ -88,6 +89,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "authorId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "avatar",
       "storageKey": null
     },
     {
@@ -198,6 +206,6 @@ return {
 };
 })();
 
-(node as any).hash = "21612e3e3c3e5ff36c0ff0de622ecd8a";
+(node as any).hash = "d9dbff87f9655d37875fac0c1eca609b";
 
 export default node;

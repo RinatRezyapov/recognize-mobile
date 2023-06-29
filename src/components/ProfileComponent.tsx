@@ -30,9 +30,9 @@ const ProfileComponent: React.FC<IProps> = ({navigation, userId}) => {
   return (
     <Wrapper>
       <PersonalCard>
-        <Avatar source={{uri: userProfile.picture}} />
+        <Avatar source={{uri: userProfile?.picture}} />
         <PersonalInfo>
-          <UsernameText>{userProfile.nickname}</UsernameText>
+          <UsernameText>{userProfile?.nickname}</UsernameText>
           <EmailText>{userProfile?.email}</EmailText>
           <LogoutWrapper>
             <IconButton icon={props => <IconMaterial name="logout-variant" {...props} />} onPress={onLogoutPress} />

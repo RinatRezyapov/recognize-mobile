@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {graphql, useFragment} from 'react-relay';
 import {NavigationType} from '../App';
@@ -18,6 +18,7 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
         title
         description
         authorId
+        avatar
         scores(first: 2147483647) @connection(key: "Scores_scores") {
           edges {
             node {
@@ -72,11 +73,13 @@ const CourseComponent: React.FC<IProps> = ({navigation, route}) => {
     });
   };
 
+  const avatarUri = 'data:image/png;base64,' + course.avatar;
+
   return (
     <Wrapper>
-      <View style={styles.iconContainer}>
-        <Icon name="eye" size={120} />
-      </View>
+      <ImageContainer>
+        <StyledImage source={{uri: avatarUri}} />
+      </ImageContainer>
       <CourseTitle>{course.title}</CourseTitle>
       <CourseDescription>{course.description}</CourseDescription>
       <ScoreContainer>
@@ -153,6 +156,18 @@ const ScoreRow = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const StyledImage = styled(Image)`
+  width: 135px;
+  height: 135px;
+  border-radius: 16px;
+`;
+
+const ImageContainer = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const styles = StyleSheet.create({

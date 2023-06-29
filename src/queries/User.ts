@@ -24,6 +24,7 @@ export const UserQuery = graphql`
             likes
             ...CoursePlayerComponent_course
             ...CourseEditComponent_course
+            ...CourseComponent_course
           }
         }
       }
