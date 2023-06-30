@@ -8,9 +8,11 @@ import {useAddUserMutation} from '../mutations/AddUserMutation';
 import {UserQuery} from '../queries/User';
 import {UserQuery as UserQueryType} from '../queries/__generated__/UserQuery.graphql';
 import {IIDToken} from '../types/oauth2';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App';
 
 interface IProps {
-  navigation: any;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>;
   userInfo: IIDToken | null;
 }
 

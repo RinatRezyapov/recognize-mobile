@@ -17,7 +17,7 @@ import {Auth0Provider} from 'react-native-auth0';
 
 const Stack = createNativeStackNavigator();
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Profile: {userId: string};
   Home: {userId: string};
   Course: {user: any; course: any};
@@ -25,6 +25,7 @@ type RootStackParamList = {
   CourseEdit: {course: any};
   CoursePlayer: {course: any; user: any};
   Courses: {userId: string};
+  Login: {};
 };
 
 export type NavigationType<T> = NativeStackScreenProps<RootStackParamList, T>;

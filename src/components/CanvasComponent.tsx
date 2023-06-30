@@ -36,7 +36,7 @@ interface IProps {
 }
 
 const CanvasComponent: React.FC<IProps> = ({children}) => {
-  const particles: any[] = [];
+  const particles: (typeof Particle)[] = [];
 
   function initParticles(x: number, y: number) {
     for (var i = 0; i < 100; i++) {

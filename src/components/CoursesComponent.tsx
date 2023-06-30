@@ -10,6 +10,9 @@ import {
   CoursesPaginationQuery$data as CoursesPaginationQueryDataType,
 } from '../components/__generated__/CoursesPaginationQuery.graphql';
 import CourseCardComponent from './CourseCardComponent';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App';
+import {RouteProp} from '@react-navigation/native';
 
 const CoursesComponentFragment = graphql`
   fragment CoursesComponent on Query @refetchable(queryName: "CoursesPaginationQuery") {
@@ -33,8 +36,8 @@ const CoursesComponentFragment = graphql`
 `;
 
 interface IProps {
-  route: any;
-  navigation: any;
+  route: RouteProp<RootStackParamList, 'Courses'>;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Courses'>;
   courses: CoursesQueryDataType;
   user: UserQueryType$data;
 }
@@ -49,7 +52,7 @@ const CoursesComponent: React.FC<IProps> = ({navigation, route, user, courses}) 
     CoursesComponentFragment,
     courses,
   );
-  console.log('CoursesComponent user', user);
+
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity

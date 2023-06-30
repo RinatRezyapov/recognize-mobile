@@ -9,9 +9,11 @@ import {ProfileComponentQuery as ProfileComponentQueryType} from './__generated_
 import {useAuth0} from 'react-native-auth0';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App';
 
 interface IProps {
-  navigation: any;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Profile'>;
   userId: string;
 }
 

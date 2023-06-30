@@ -3,9 +3,10 @@ import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useLikeCourseMutation} from '../mutations/LikeCourseMutation';
+import {UserQuery$data as UserQueryType$data} from '../queries/__generated__/UserQuery.graphql';
 
 interface IProps {
-  user: any;
+  user: UserQueryType$data;
   course: any;
 }
 
