@@ -13,7 +13,7 @@ export interface IFormFields {
   title: string;
   description: string;
   avatar: string;
-  words: {value: string}[];
+  words: {word: string; translation: string}[];
   text: string;
 }
 
@@ -46,8 +46,8 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
       title: defaultValues?.title,
       description: defaultValues?.description,
       avatar: defaultValues?.avatar,
-      words: defaultValues?.words || new Array(5).fill(null).map(() => ({value: ''})),
-      text: defaultValues?.words?.map(v => v.value)?.join(' ') || '',
+      words: defaultValues?.words || new Array(5).fill(null).map(() => ({word: '', translation: ''})),
+      text: defaultValues?.words?.map(v => `${v.word}:${v.translation}`)?.join(';') || '',
     },
   });
 
@@ -75,18 +75,6 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
 
   const avatarUri = avatar ? 'data:image/png;base64,' + avatar : undefined;
 
-  const onWordsGeneratorSubmit = (words: string[]) => {
-    setValue(
-      'words',
-      words.map(word => ({value: word})),
-    );
-    setValue('text', words.join(' '));
-  };
-
-  const onGenerateWords = () => {
-    openDialog('Generate words', <WordsGeneratorComponent onSubmit={onWordsGeneratorSubmit} onClose={closeDialog} />);
-  };
-
   const onCustomSubmit = (values: IFormFields) => {
     if (isOneInput) {
       return onSubmit(values);
@@ -94,7 +82,7 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
 
     return onSubmit({
       ...values,
-      text: values.words.map(v => v.value).join(' '),
+      text: values.words.map(v => `${v.word}:${v.translation}`).join(';'),
     });
   };
 
@@ -127,7 +115,7 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
         <WordWrapper>
           <Controller
             key={field.id}
-            name={`words.${idx}.value`}
+            name={`words.${idx}.word`}
             rules={{required: {value: true, message: 'Required'}}}
             control={control}
             render={({field: {value, onChange, onBlur}}) => (
@@ -138,7 +126,24 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
                   onChangeText={value => onChange(value)}
                   onBlur={onBlur}
                 />
-                {errors.words?.[idx] && <ErrorText>{errors.words?.[idx]?.value?.message}</ErrorText>}
+                {errors.words?.[idx] && <ErrorText>{errors.words?.[idx]?.word?.message}</ErrorText>}
+              </FieldWithHelper>
+            )}
+          />
+          <Controller
+            key={field.id}
+            name={`words.${idx}.translation`}
+            rules={{required: {value: true, message: 'Required'}}}
+            control={control}
+            render={({field: {value, onChange, onBlur}}) => (
+              <FieldWithHelper>
+                <TextInputNeo
+                  placeholder="Translation"
+                  value={value}
+                  onChangeText={value => onChange(value)}
+                  onBlur={onBlur}
+                />
+                {errors.words?.[idx] && <ErrorText>{errors.words?.[idx]?.translation?.message}</ErrorText>}
               </FieldWithHelper>
             )}
           />
@@ -201,7 +206,6 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
           </DetailsWrapper>
         </ImageWithDetailsWrapper>
         <Settings>
-          <Button title="Generate words" onPress={onGenerateWords} />
           <SwitchWithLabel>
             <Text>Change input type</Text>
             <Switch
@@ -212,7 +216,7 @@ const NewCourseForm: FC<IProps> = ({mode, defaultValues, onSubmit}) => {
         </Settings>
         {renderWordsInput()}
         {!isOneInput && (
-          <AddTouchableWrapper onPress={() => append({value: ''})}>
+          <AddTouchableWrapper onPress={() => append({word: '', translation: ''})}>
             <Icon name="add" size={30} />
           </AddTouchableWrapper>
         )}
